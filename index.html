@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>SESOMU GPT</title>
 
   <style>
@@ -16,51 +16,188 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       color: white;
+      overflow: hidden;
+
+      background:
+        radial-gradient(circle at 50% 25%, #172554 0%, transparent 35%),
+        radial-gradient(circle at 15% 80%, #24104d 0%, transparent 35%),
+        radial-gradient(circle at 85% 75%, #003d4d 0%, transparent 35%),
+        #020617;
+    }
+
+    /* Futuristic grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background-image:
+        linear-gradient(rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.055) 1px, transparent 1px);
+
+      background-size: 50px 50px;
+
+      mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 25%,
+        black 75%,
+        transparent
+      );
+
+      pointer-events: none;
+    }
+
+    /* Floating futuristic particles */
+
+    .particle {
+      position: fixed;
+
+      width: 4px;
+      height: 4px;
+
+      border-radius: 50%;
+
+      background: #22d3ee;
+
+      box-shadow:
+        0 0 12px #22d3ee,
+        0 0 25px #22d3ee;
+
+      opacity: 0.7;
+
+      animation: float 8s infinite ease-in-out;
+
+      pointer-events: none;
+    }
+
+    .p1 {
+      top: 15%;
+      left: 12%;
+    }
+
+    .p2 {
+      top: 30%;
+      left: 88%;
+      animation-delay: 2s;
+    }
+
+    .p3 {
+      top: 75%;
+      left: 15%;
+      animation-delay: 4s;
+    }
+
+    .p4 {
+      top: 65%;
+      left: 82%;
+      animation-delay: 1s;
+    }
+
+    .p5 {
+      top: 12%;
+      left: 70%;
+      animation-delay: 3s;
+    }
+
+    @keyframes float {
+
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-30px) scale(1.5);
+      }
+
+    }
+
+    /* Main container */
+
+    .container {
+      position: relative;
+      z-index: 2;
+
+      width: 90%;
+      max-width: 850px;
+
+      min-height: 100vh;
+
+      margin: auto;
+
       display: flex;
+      flex-direction: column;
+
       justify-content: center;
       align-items: center;
 
-      background:
-        radial-gradient(circle at center, #172554, #020617 70%);
-    }
-
-    .container {
-      width: 90%;
-      max-width: 850px;
       text-align: center;
     }
 
+    /* Title */
+
     h1 {
-      font-size: 64px;
+      font-size: clamp(44px, 8vw, 76px);
+
       margin: 0;
 
-      letter-spacing: 4px;
+      letter-spacing: 5px;
 
-      background: linear-gradient(
-        90deg,
-        #22d3ee,
-        #a78bfa,
-        #22d3ee
-      );
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #22d3ee,
+          #a78bfa,
+          #22d3ee,
+          #ffffff
+        );
 
-      background-size: 200%;
+      background-size: 300%;
 
       color: transparent;
+
       background-clip: text;
       -webkit-background-clip: text;
+
+      animation: titleMove 6s linear infinite;
+
+      text-shadow:
+        0 0 30px rgba(34, 211, 238, 0.2);
+    }
+
+    @keyframes titleMove {
+
+      0% {
+        background-position: 0%;
+      }
+
+      100% {
+        background-position: 300%;
+      }
+
     }
 
     .subtitle {
       color: #94a3b8;
-      letter-spacing: 2px;
-      margin-top: 15px;
+
+      letter-spacing: 3px;
+
+      margin-top: 12px;
+      margin-bottom: 0;
+
+      font-size: 14px;
+
+      text-transform: uppercase;
     }
+
+    /* Logo */
 
     .logo {
       width: 130px;
       height: 130px;
 
-      margin: 35px auto;
+      margin: 32px auto 40px;
 
       display: block;
 
@@ -72,30 +209,108 @@
 
       box-shadow:
         0 0 20px #22d3ee,
-        0 0 45px rgba(34, 211, 238, 0.35);
+        0 0 45px rgba(34, 211, 238, 0.35),
+        inset 0 0 25px rgba(34, 211, 238, 0.15);
 
       background: #071329;
+
+      animation: logoGlow 3s infinite ease-in-out;
     }
 
+    @keyframes logoGlow {
+
+      50% {
+        transform: scale(1.04);
+
+        box-shadow:
+          0 0 30px #22d3ee,
+          0 0 70px rgba(34, 211, 238, 0.35),
+          inset 0 0 30px rgba(34, 211, 238, 0.2);
+      }
+
+    }
+
+    /* Chat */
+
+    #chat {
+      width: 100%;
+
+      max-height: 230px;
+
+      overflow-y: auto;
+
+      margin-bottom: 18px;
+
+      padding: 5px;
+    }
+
+    .message {
+      text-align: left;
+
+      padding: 13px 16px;
+
+      margin-bottom: 10px;
+
+      border-radius: 14px;
+
+      line-height: 1.5;
+
+      white-space: pre-wrap;
+
+      backdrop-filter: blur(12px);
+    }
+
+    .user {
+      background: rgba(34, 211, 238, 0.10);
+
+      border: 1px solid rgba(34, 211, 238, 0.20);
+    }
+
+    .bot {
+      background: rgba(255, 255, 255, 0.05);
+
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    /* Search */
+
     .search {
+      width: 100%;
+
       display: flex;
 
       padding: 8px;
 
-      border: 1px solid #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.65);
 
       border-radius: 20px;
 
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.40);
+
+      backdrop-filter: blur(18px);
 
       box-shadow:
-        0 0 25px rgba(34, 211, 238, 0.2);
+        0 0 25px rgba(34, 211, 238, 0.20),
+        inset 0 0 20px rgba(255, 255, 255, 0.02);
+
+      transition: 0.3s;
+    }
+
+    .search:focus-within {
+      border-color: #67e8f9;
+
+      box-shadow:
+        0 0 35px rgba(34, 211, 238, 0.35),
+        0 0 70px rgba(34, 211, 238, 0.08);
     }
 
     input {
       flex: 1;
 
+      min-width: 0;
+
       border: none;
+
       outline: none;
 
       background: transparent;
@@ -130,25 +345,72 @@
         );
 
       color: #020617;
+
+      transition: 0.25s;
     }
 
     button:hover {
       transform: scale(1.03);
+
+      box-shadow:
+        0 0 20px rgba(34, 211, 238, 0.4);
     }
+
+    button:disabled {
+      opacity: 0.6;
+
+      cursor: wait;
+
+      transform: none;
+    }
+
+    .hint {
+      margin-top: 14px;
+
+      color: #475569;
+
+      font-size: 12px;
+    }
+
+    /* Mobile */
 
     @media (max-width: 600px) {
 
+      .container {
+        width: 92%;
+      }
+
       h1 {
         font-size: 42px;
+
+        letter-spacing: 3px;
+      }
+
+      .subtitle {
+        font-size: 11px;
+
+        letter-spacing: 2px;
+      }
+
+      .logo {
+        width: 110px;
+        height: 110px;
+
+        margin-bottom: 30px;
       }
 
       .search {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row;
+      }
+
+      input {
+        font-size: 15px;
+
+        padding: 14px 10px;
       }
 
       button {
-        height: 48px;
+        padding: 0 17px;
       }
 
     }
@@ -156,6 +418,15 @@
 </head>
 
 <body>
+
+  <!-- Futuristic particles -->
+
+  <div class="particle p1"></div>
+  <div class="particle p2"></div>
+  <div class="particle p3"></div>
+  <div class="particle p4"></div>
+  <div class="particle p5"></div>
+
 
   <div class="container">
 
@@ -165,27 +436,207 @@
       Your intelligent AI companion
     </p>
 
+
     <img
       class="logo"
       src="logo.jpeg"
       alt="Sesomu GPT logo"
     >
 
+
+    <!-- Chat messages appear here -->
+
+    <div id="chat"></div>
+
+
+    <!-- Search / Chat box -->
+
     <div class="search">
 
       <input
+        id="messageInput"
         type="text"
         placeholder="Ask Sesomu GPT anything..."
+        autocomplete="off"
       >
 
-      <button>
+      <button id="sendButton">
         Send
       </button>
 
     </div>
 
+    <div class="hint">
+      Powered by Sesomu GPT
+    </div>
+
   </div>
+
+
+  <script>
+
+    const input =
+      document.getElementById("messageInput");
+
+    const button =
+      document.getElementById("sendButton");
+
+    const chat =
+      document.getElementById("chat");
+
+
+    /*
+      Your Cloudflare Worker
+    */
+
+    const WORKER_URL =
+      "https://sesomu-gpt-api.ghanu-bhai01.workers.dev/";
+
+
+    async function sendMessage() {
+
+      const message =
+        input.value.trim();
+
+
+      if (!message) {
+        return;
+      }
+
+
+      /* Show user message */
+
+      const userMessage =
+        document.createElement("div");
+
+      userMessage.className =
+        "message user";
+
+      userMessage.textContent =
+        message;
+
+      chat.appendChild(userMessage);
+
+
+      /* Clear input */
+
+      input.value = "";
+
+
+      /* Disable button */
+
+      button.disabled = true;
+
+      button.textContent =
+        "Thinking...";
+
+
+      /* Temporary AI message */
+
+      const botMessage =
+        document.createElement("div");
+
+      botMessage.className =
+        "message bot";
+
+      botMessage.textContent =
+        "Sesomu GPT is thinking...";
+
+      chat.appendChild(botMessage);
+
+
+      chat.scrollTop =
+        chat.scrollHeight;
+
+
+      try {
+
+        const response =
+          await fetch(WORKER_URL, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              message: message
+            })
+
+          });
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            "Request failed."
+          );
+
+        }
+
+
+        /* Show Gemini answer */
+
+        botMessage.textContent =
+          data.answer ||
+          "I couldn't generate a response.";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        botMessage.textContent =
+          "Sorry, something went wrong: " +
+          error.message;
+
+      }
+
+
+      /* Re-enable button */
+
+      button.disabled = false;
+
+      button.textContent =
+        "Send";
+
+
+      chat.scrollTop =
+        chat.scrollHeight;
+
+    }
+
+
+    /* Send button */
+
+    button.addEventListener(
+      "click",
+      sendMessage
+    );
+
+
+    /* Enter key */
+
+    input.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
-```
