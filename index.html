@@ -1,10 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Sesomu GPT</title>
+  <title>SESOMU GPT</title>
 
   <style>
     * {
@@ -16,381 +16,176 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       color: white;
-      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       background:
-        radial-gradient(circle at 50% 30%, #16295c 0%, transparent 35%),
-        radial-gradient(circle at 20% 80%, #24104d 0%, transparent 35%),
-        radial-gradient(circle at 80% 70%, #003d4d 0%, transparent 35%),
-        #030712;
+        radial-gradient(circle at center, #172554, #020617 70%);
     }
 
-    /* Futuristic grid */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0, 200, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 200, 255, 0.06) 1px, transparent 1px);
-      background-size: 50px 50px;
-      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-      pointer-events: none;
-    }
-
-    /* Glowing particles */
-    .particle {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #55eaff;
-      box-shadow: 0 0 15px #55eaff;
-      opacity: 0.7;
-      animation: float 8s infinite ease-in-out;
-    }
-
-    .p1 { top: 20%; left: 15%; animation-delay: 0s; }
-    .p2 { top: 35%; left: 85%; animation-delay: 2s; }
-    .p3 { top: 75%; left: 20%; animation-delay: 4s; }
-    .p4 { top: 65%; left: 80%; animation-delay: 1s; }
-    .p5 { top: 15%; left: 70%; animation-delay: 3s; }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) scale(1);
-      }
-
-      50% {
-        transform: translateY(-35px) scale(1.5);
-      }
-    }
-
-    .page {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 20px 30px;
-    }
-
-    /* Title */
-    .title {
-      margin: 0;
-      font-size: clamp(42px, 8vw, 82px);
-      font-weight: 700;
-      letter-spacing: 4px;
+    .container {
+      width: 90%;
+      max-width: 850px;
       text-align: center;
+    }
+
+    h1 {
+      font-size: 64px;
+      margin: 0;
+
+      letter-spacing: 4px;
 
       background: linear-gradient(
         90deg,
-        #ffffff,
-        #67e8f9,
+        #22d3ee,
         #a78bfa,
-        #ffffff
+        #22d3ee
       );
 
-      background-size: 300% auto;
+      background-size: 200%;
+
       color: transparent;
       background-clip: text;
       -webkit-background-clip: text;
-
-      animation: titleGlow 6s linear infinite;
-      text-shadow: 0 0 35px rgba(80, 220, 255, 0.25);
     }
 
-    @keyframes titleGlow {
-      to {
-        background-position: 300% center;
-      }
-    }
-
-    .tagline {
-      margin-top: 12px;
+    .subtitle {
       color: #94a3b8;
-      font-size: 16px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-align: center;
+      letter-spacing: 2px;
+      margin-top: 15px;
     }
 
-    /* AI Logo */
     .logo {
-      width: 125px;
-      height: 125px;
-      margin: 35px 0 55px;
+      width: 130px;
+      height: 130px;
+
+      margin: 35px auto;
+
+      display: block;
+
       border-radius: 50%;
-      position: relative;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      object-fit: contain;
 
-      background:
-        radial-gradient(circle, #0b172d 35%, #07101f 36%);
-
-      border: 2px solid rgba(103, 232, 249, 0.8);
+      border: 2px solid #22d3ee;
 
       box-shadow:
-        0 0 20px rgba(34, 211, 238, 0.6),
-        0 0 60px rgba(34, 211, 238, 0.25),
-        inset 0 0 30px rgba(34, 211, 238, 0.2);
+        0 0 20px #22d3ee,
+        0 0 45px rgba(34, 211, 238, 0.35);
 
-      animation: logoPulse 3s infinite ease-in-out;
+      background: #071329;
     }
 
-    .logo::before {
-      content: "";
-      position: absolute;
-      inset: -12px;
-      border-radius: 50%;
-      border: 1px solid rgba(167, 139, 250, 0.6);
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      animation: spin 5s linear infinite;
-    }
-
-    .logo::after {
-      content: "✦";
-      font-size: 48px;
-      color: #67e8f9;
-      text-shadow:
-        0 0 10px #22d3ee,
-        0 0 30px #22d3ee;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes logoPulse {
-      50% {
-        transform: scale(1.05);
-        box-shadow:
-          0 0 30px rgba(34, 211, 238, 0.8),
-          0 0 80px rgba(34, 211, 238, 0.3),
-          inset 0 0 35px rgba(34, 211, 238, 0.25);
-      }
-    }
-
-    /* Search area */
-    .search-area {
-      width: min(850px, 100%);
-    }
-
-    .search-box {
+    .search {
       display: flex;
-      align-items: center;
+
       padding: 8px;
 
-      border: 1px solid rgba(103, 232, 249, 0.35);
-      border-radius: 22px;
+      border: 1px solid #22d3ee;
 
-      background: rgba(8, 15, 30, 0.72);
-      backdrop-filter: blur(20px);
+      border-radius: 20px;
 
-      box-shadow:
-        0 0 30px rgba(34, 211, 238, 0.12),
-        inset 0 0 20px rgba(255, 255, 255, 0.02);
-
-      transition: 0.3s;
-    }
-
-    .search-box:focus-within {
-      border-color: rgba(103, 232, 249, 0.9);
+      background: rgba(0, 0, 0, 0.35);
 
       box-shadow:
-        0 0 35px rgba(34, 211, 238, 0.25),
-        0 0 80px rgba(34, 211, 238, 0.08);
+        0 0 25px rgba(34, 211, 238, 0.2);
     }
 
-    #messageInput {
+    input {
       flex: 1;
+
       border: none;
       outline: none;
+
       background: transparent;
+
       color: white;
 
       font-size: 17px;
-      padding: 17px 18px;
+
+      padding: 16px;
     }
 
-    #messageInput::placeholder {
+    input::placeholder {
       color: #64748b;
     }
 
-    #sendButton {
+    button {
       border: none;
-      border-radius: 16px;
 
-      padding: 16px 26px;
+      border-radius: 14px;
 
-      font-size: 15px;
+      padding: 0 25px;
+
       font-weight: bold;
-
-      color: #031018;
-      background: linear-gradient(135deg, #67e8f9, #a78bfa);
 
       cursor: pointer;
 
-      box-shadow:
-        0 0 20px rgba(103, 232, 249, 0.3);
+      background:
+        linear-gradient(
+          135deg,
+          #22d3ee,
+          #a78bfa
+        );
 
-      transition: 0.25s;
+      color: #020617;
     }
 
-    #sendButton:hover {
-      transform: translateY(-2px) scale(1.03);
-
-      box-shadow:
-        0 0 30px rgba(103, 232, 249, 0.55);
-    }
-
-    .hint {
-      text-align: center;
-      color: #64748b;
-      margin-top: 18px;
-      font-size: 13px;
-    }
-
-    /* Chat messages */
-    #chat {
-      width: min(850px, 100%);
-      max-height: 230px;
-      overflow-y: auto;
-      margin-bottom: 20px;
-    }
-
-    .message {
-      padding: 13px 16px;
-      margin-bottom: 10px;
-      border-radius: 14px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      backdrop-filter: blur(10px);
-    }
-
-    .user {
-      background: rgba(103, 232, 249, 0.1);
-      border: 1px solid rgba(103, 232, 249, 0.15);
-    }
-
-    .bot {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    button:hover {
+      transform: scale(1.03);
     }
 
     @media (max-width: 600px) {
-      .page {
-        padding-top: 55px;
+
+      h1 {
+        font-size: 42px;
       }
 
-      .logo {
-        margin-bottom: 40px;
+      .search {
+        flex-direction: column;
+        gap: 8px;
       }
 
-      .search-box {
-        border-radius: 18px;
+      button {
+        height: 48px;
       }
 
-      #messageInput {
-        min-width: 0;
-        font-size: 15px;
-      }
-
-      #sendButton {
-        padding: 14px 16px;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="particle p1"></div>
-  <div class="particle p2"></div>
-  <div class="particle p3"></div>
-  <div class="particle p4"></div>
-  <div class="particle p5"></div>
+  <div class="container">
 
-  <main class="page">
+    <h1>Sesomu GPT</h1>
 
-    <h1 class="title">Sesomu GPT</h1>
-
-    <div class="tagline">
+    <p class="subtitle">
       Your intelligent AI companion
-    </div>
+    </p>
 
-    <div class="logo"></div>
+    <img
+      class="logo"
+      src="logo.jpeg"
+      alt="Sesomu GPT logo"
+    >
 
-    <div id="chat"></div>
+    <div class="search">
 
-    <div class="search-area">
+      <input
+        type="text"
+        placeholder="Ask Sesomu GPT anything..."
+      >
 
-      <div class="search-box">
-
-        <input
-          id="messageInput"
-          type="text"
-          placeholder="Ask Sesomu GPT anything..."
-          autocomplete="off"
-        >
-
-        <button id="sendButton">
-          Send
-        </button>
-
-      </div>
-
-      <div class="hint">
-        Sesomu GPT • AI Assistant
-      </div>
+      <button>
+        Send
+      </button>
 
     </div>
 
-  </main>
-
-  <script>
-    const input = document.getElementById("messageInput");
-    const button = document.getElementById("sendButton");
-    const chat = document.getElementById("chat");
-
-    function sendMessage() {
-
-      const message = input.value.trim();
-
-      if (!message) return;
-
-      const userMessage = document.createElement("div");
-      userMessage.className = "message user";
-      userMessage.textContent = message;
-
-      chat.appendChild(userMessage);
-
-      input.value = "";
-
-      const botMessage = document.createElement("div");
-      botMessage.className = "message bot";
-      botMessage.textContent =
-        "Hello! I'm Sesomu GPT. My AI brain will be connected next.";
-
-      chat.appendChild(botMessage);
-
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    button.addEventListener("click", sendMessage);
-
-    input.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-  </script>
+  </div>
 
 </body>
 </html>
+```
