@@ -1,1658 +1,1658 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SESOMU GPT</title>
-
-<script src="https://js.puter.com/v2/"></script>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --cyan: #00f6ff;
-  --blue: #3b82ff;
-  --purple: #a855f7;
-  --pink: #ec4899;
-  --bg: #03050d;
-  --text: #eefcff;
-  --muted: #8ea4bd;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-}
-
-body {
-  position: relative;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(0,246,255,.10), transparent 28%),
-    radial-gradient(circle at 85% 15%, rgba(168,85,247,.12), transparent 30%),
-    radial-gradient(circle at 50% 90%, rgba(59,130,255,.08), transparent 35%),
-    #03050d;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(0,246,255,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,246,255,.035) 1px, transparent 1px);
-  background-size: 45px 45px;
-  mask-image: linear-gradient(to bottom, black, transparent);
-  animation: gridMove 18s linear infinite;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,246,255,.08), transparent 68%);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: pulseGlow 5s ease-in-out infinite;
-}
-
-@keyframes gridMove {
-  from { transform: translateY(0); }
-  to { transform: translateY(45px); }
-}
-
-@keyframes pulseGlow {
-  0%,100% {
-    opacity: .45;
-    transform: translate(-50%,-50%) scale(.9);
-  }
-  50% {
-    opacity: .8;
-    transform: translate(-50%,-50%) scale(1.12);
-  }
-}
-
-/* LOGIN */
-
-#loginScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background:
-    radial-gradient(circle at center, rgba(0,246,255,.08), transparent 40%),
-    #03050d;
-}
-
-.loginBox {
-  width: 100%;
-  max-width: 430px;
-  padding: 38px 30px;
-  border: 1px solid rgba(0,246,255,.28);
-  border-radius: 24px;
-  background: rgba(5,10,24,.86);
-  backdrop-filter: blur(22px);
-  box-shadow:
-    0 0 45px rgba(0,246,255,.08),
-    inset 0 0 30px rgba(168,85,247,.035);
-  text-align: center;
-  animation: loginAppear .8s ease;
-}
-
-@keyframes loginAppear {
-  from {
-    opacity: 0;
-    transform: translateY(25px) scale(.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.loginLogo {
-  width: 115px;
-  height: 115px;
-  object-fit: contain;
-  border-radius: 50%;
-  margin-bottom: 18px;
-  filter:
-    drop-shadow(0 0 10px rgba(0,246,255,.7))
-    drop-shadow(0 0 28px rgba(168,85,247,.35));
-}
-
-.loginBox h1 {
-  font-size: 32px;
-  letter-spacing: 3px;
-  margin-bottom: 7px;
-  background: linear-gradient(90deg,var(--cyan),#fff,var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.loginSubtitle {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 28px;
-}
-
-.loginBox input,
-.loginBox select {
-  width: 100%;
-  height: 48px;
-  margin-bottom: 13px;
-  padding: 0 15px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,246,255,.18);
-  outline: none;
-  background: rgba(0,0,0,.35);
-  color: white;
-  font-size: 14px;
-}
-
-.loginBox input:focus,
-.loginBox select:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 18px rgba(0,246,255,.12);
-}
-
-.loginBox select option {
-  background: #07101e;
-  color: white;
-}
-
-.loginButton {
-  width: 100%;
-  height: 48px;
-  margin-top: 8px;
-  border: 1px solid rgba(0,246,255,.45);
-  border-radius: 12px;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    rgba(0,246,255,.18),
-    rgba(168,85,247,.18)
-  );
-  box-shadow: 0 0 20px rgba(0,246,255,.08);
-  transition: .25s;
-}
-
-.loginButton:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 25px rgba(0,246,255,.22),
-    0 0 35px rgba(168,85,247,.12);
-}
-
-/* MAIN APP */
-
-#app {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100vh;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 18px;
-}
-
-.topBar {
-  width: 100%;
-  max-width: 1050px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 5px;
-  position: relative;
-  z-index: 10;
-}
-
-.smallButton {
-  border: 1px solid rgba(0,246,255,.20);
-  border-radius: 9px;
-  padding: 8px 12px;
-  color: #c9faff;
-  background: rgba(5,15,30,.65);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  font-size: 12px;
-  transition: .2s;
-}
-
-.smallButton:hover {
-  border-color: var(--cyan);
-  color: white;
-  box-shadow: 0 0 15px rgba(0,246,255,.12);
-}
-
-.container {
-  width: 100%;
-  max-width: 1050px;
-  height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.logoWrap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-55%);
-  text-align: center;
-  z-index: 1;
-  transition:
-    top .7s cubic-bezier(.2,.8,.2,1),
-    transform .7s cubic-bezier(.2,.8,.2,1);
-  pointer-events: none;
-}
-
-.logoWrap.chatStarted {
-  top: 2px;
-  transform: translate(-50%,0);
-}
-
-.logo {
-  width: 115px;
-  height: 115px;
-  object-fit: contain;
-  border-radius: 50%;
-  filter:
-    drop-shadow(0 0 9px rgba(0,246,255,.8))
-    drop-shadow(0 0 28px rgba(168,85,247,.45));
-  animation: logoFloat 4s ease-in-out infinite;
-}
-
-.logoWrap.chatStarted .logo {
-  width: 72px;
-  height: 72px;
-}
-
-@keyframes logoFloat {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-.title {
-  margin-top: 9px;
-  font-size: 31px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-shadow:
-    0 0 10px rgba(0,246,255,.35),
-    0 0 25px rgba(168,85,247,.2);
-  background: linear-gradient(90deg,var(--cyan),white,var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-  margin-top: 5px;
-  color: #8195ad;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-#chat {
-  width: 100%;
-  max-width: 950px;
-  height: 330px;
-  overflow-y: auto;
-  margin-top: 115px;
-  padding: 15px;
-  border: 1px solid rgba(0,246,255,.10);
-  border-radius: 18px;
-  background: rgba(2,7,18,.32);
-  backdrop-filter: blur(8px);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,246,255,.3) transparent;
-}
-
-#chat::-webkit-scrollbar {
-  width: 5px;
-}
-
-#chat::-webkit-scrollbar-thumb {
-  background: rgba(0,246,255,.35);
-  border-radius: 10px;
-}
-
-.message {
-  max-width: 82%;
-  margin-bottom: 14px;
-  padding: 12px 15px;
-  border-radius: 15px;
-  line-height: 1.55;
-  font-size: 14px;
-  white-space: pre-wrap;
-  animation: messageAppear .3s ease;
-}
-
-@keyframes messageAppear {
-  from {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.userMessage {
-  margin-left: auto;
-  border: 1px solid rgba(0,246,255,.22);
-  background: linear-gradient(
-    135deg,
-    rgba(0,246,255,.10),
-    rgba(59,130,255,.09)
-  );
-  box-shadow: 0 0 20px rgba(0,246,255,.05);
-}
-
-.botMessage {
-  margin-right: auto;
-  border: 1px solid rgba(168,85,247,.20);
-  background: linear-gradient(
-    135deg,
-    rgba(168,85,247,.08),
-    rgba(0,246,255,.05)
-  );
-  box-shadow: 0 0 20px rgba(168,85,247,.04);
-}
-
-/* SEARCH AREA */
-
-.searchArea {
-  width: 100%;
-  max-width: 950px;
-  margin-top: 12px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.search {
-  flex: 1;
-  height: 50px;
-  padding: 0 17px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,246,255,.20);
-  outline: none;
-  color: white;
-  background: rgba(5,12,27,.78);
-  backdrop-filter: blur(15px);
-  box-shadow:
-    inset 0 0 20px rgba(0,246,255,.025),
-    0 0 20px rgba(0,0,0,.2);
-  transition: .25s;
-}
-
-.search:focus {
-  border-color: rgba(0,246,255,.55);
-  box-shadow:
-    0 0 20px rgba(0,246,255,.10),
-    inset 0 0 15px rgba(0,246,255,.03);
-}
-
-.search::placeholder {
-  color: #70859e;
-}
-
-.actionButton {
-  height: 50px;
-  padding: 0 17px;
-  border-radius: 14px;
-  cursor: pointer;
-  color: white;
-  font-weight: 600;
-  border: 1px solid rgba(0,246,255,.28);
-  background: linear-gradient(
-    135deg,
-    rgba(0,246,255,.13),
-    rgba(59,130,255,.10)
-  );
-  transition: .2s;
-  white-space: nowrap;
-}
-
-.actionButton:hover {
-  transform: translateY(-2px);
-  border-color: var(--cyan);
-  box-shadow: 0 0 20px rgba(0,246,255,.16);
-}
-
-/* MICROPHONE */
-
-.micButton {
-  width: 50px;
-  padding: 0;
-  font-size: 19px;
-}
-
-.micButton.listening {
-  border-color: #ff3b81;
-  background: rgba(255,59,129,.15);
-  box-shadow:
-    0 0 15px rgba(255,59,129,.35),
-    0 0 30px rgba(255,59,129,.15);
-  animation: micPulse 1s infinite;
-}
-
-@keyframes micPulse {
-  0%,100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.06);
-  }
-}
-
-.aiButton {
-  border-color: rgba(168,85,247,.35);
-  background: linear-gradient(
-    135deg,
-    rgba(168,85,247,.15),
-    rgba(236,72,153,.10)
-  );
-}
-
-.aiButton:hover {
-  border-color: var(--purple);
-  box-shadow: 0 0 20px rgba(168,85,247,.20);
-}
-
-.status {
-  min-height: 18px;
-  margin-top: 7px;
-  font-size: 11px;
-  color: #6e849e;
-  text-align: center;
-}
-
-.footer {
-  margin-top: auto;
-  padding-top: 5px;
-  font-size: 10px;
-  color: #50657d;
-  letter-spacing: .5px;
-}
-
-/* RECENT CHATS */
-
-#recentPanel {
-  display: none;
-  position: fixed;
-  z-index: 200;
-  top: 0;
-  right: 0;
-  width: min(390px,92vw);
-  height: 100vh;
-  padding: 22px;
-  background: rgba(3,8,20,.96);
-  border-left: 1px solid rgba(0,246,255,.18);
-  backdrop-filter: blur(20px);
-  box-shadow: -15px 0 45px rgba(0,0,0,.35);
-  overflow-y: auto;
-}
-
-.recentHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
-
-.recentHeader h2 {
-  font-size: 20px;
-  letter-spacing: 1px;
-}
-
-.closeRecent {
-  border: none;
-  background: transparent;
-  color: #9fb5ca;
-  cursor: pointer;
-  font-size: 22px;
-}
-
-.recentItem {
-  width: 100%;
-  padding: 13px;
-  margin-bottom: 9px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,246,255,.10);
-  background: rgba(0,246,255,.035);
-  color: #dffaff;
-  cursor: pointer;
-  text-align: left;
-  transition: .2s;
-}
-
-.recentItem:hover {
-  border-color: rgba(0,246,255,.30);
-  background: rgba(0,246,255,.07);
-}
-
-.emptyRecent {
-  color: #687d95;
-  font-size: 13px;
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* MOBILE */
-
-@media (max-width:700px) {
-
-  #app {
-    padding: 10px;
-  }
-
-  .topBar {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .container {
-    height: calc(100vh - 70px);
-  }
-
-  .logo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .logoWrap.chatStarted .logo {
-    width: 65px;
-    height: 65px;
-  }
-
-  .title {
-    font-size: 25px;
-    letter-spacing: 3px;
-  }
-
-  .subtitle {
-    font-size: 10px;
-  }
-
-  #chat {
-    height: 300px;
-    margin-top: 105px;
-    padding: 10px;
-  }
-
-  .message {
-    max-width: 91%;
-    font-size: 13px;
-  }
-
-  .searchArea {
-    gap: 5px;
-  }
-
-  .search {
-    min-width: 0;
-    height: 47px;
-    font-size: 13px;
-  }
-
-  .actionButton {
-    height: 47px;
-    padding: 0 11px;
-    font-size: 12px;
-  }
-
-  .micButton {
-    width: 47px;
-    padding: 0;
-    font-size: 18px;
-  }
-
-  .footer {
-    font-size: 9px;
-  }
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SESOMU GPT</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, #15152f 0%, #080812 45%, #030307 100%);
+      color: white;
+    }
+
+    body {
+      min-height: 100dvh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at center, #17173a 0%, #07070f 65%, #020204 100%);
+      z-index: 100;
+    }
+
+    .loginBox {
+      width: min(420px, 100%);
+      padding: 32px 25px;
+      border: 1px solid rgba(0, 220, 255, 0.25);
+      border-radius: 24px;
+      background: rgba(12, 12, 28, 0.88);
+      box-shadow:
+        0 0 35px rgba(0, 200, 255, 0.08),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      backdrop-filter: blur(18px);
+    }
+
+    .loginLogo {
+      width: 95px;
+      height: 95px;
+      object-fit: contain;
+      border-radius: 20px;
+      margin-bottom: 15px;
+    }
+
+    .loginBox h2 {
+      margin: 0 0 7px;
+      font-size: 27px;
+    }
+
+    .loginBox p {
+      margin: 0 0 25px;
+      color: #aaaac4;
+      font-size: 14px;
+    }
+
+    .loginInput {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 12px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      outline: none;
+      background: rgba(255,255,255,0.06);
+      color: white;
+    }
+
+    .loginInput::placeholder {
+      color: #77778e;
+    }
+
+    .loginInput:focus {
+      border-color: #00d9ff;
+      box-shadow: 0 0 15px rgba(0,217,255,0.12);
+    }
+
+    #loginButton {
+      width: 100%;
+      height: 50px;
+      margin-top: 7px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #00cfff, #786cff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* =========================
+       MAIN APP
+    ========================= */
+
+    #app {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .topBar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding:
+        max(12px, env(safe-area-inset-top))
+        18px
+        12px;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(3,3,10,0.95),
+        rgba(3,3,10,0.7),
+        transparent
+      );
+    }
+
+    .topButtons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .smallButton {
+      height: 36px;
+      padding: 0 13px;
+      border: 1px solid rgba(0, 220, 255, 0.25);
+      border-radius: 10px;
+      background: rgba(12, 15, 30, 0.78);
+      color: #d8faff;
+      font-size: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .smallButton:hover {
+      border-color: #00d9ff;
+      background: rgba(0, 217, 255, 0.1);
+    }
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .logoWrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -55%);
+      z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      transition:
+        top 0.45s ease,
+        transform 0.45s ease;
+      pointer-events: none;
+    }
+
+    .logoWrap.chatStarted {
+      top: 62px;
+      transform: translateX(-50%);
+    }
+
+    .logo {
+      width: 115px;
+      height: 115px;
+      object-fit: contain;
+      border-radius: 24px;
+      filter: drop-shadow(0 0 20px rgba(0,210,255,0.15));
+    }
+
+    .title {
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #00eaff, #9d7cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: #8888a4;
+      font-size: 13px;
+    }
+
+    /* =========================
+       CHAT
+    ========================= */
+
+    #chat {
+      position: absolute;
+      top: 190px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      width: min(900px, calc(100% - 40px));
+      height: calc(100dvh - 310px);
+
+      padding: 20px 5px 20px;
+
+      overflow-y: auto;
+      overscroll-behavior: contain;
+
+      scrollbar-width: thin;
+      scrollbar-color: #30304c transparent;
+
+      z-index: 5;
+    }
+
+    #chat::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #chat::-webkit-scrollbar-thumb {
+      background: #30304c;
+      border-radius: 10px;
+    }
+
+    .message {
+      max-width: 82%;
+      margin-bottom: 15px;
+      padding: 13px 16px;
+      border-radius: 17px;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .userMessage {
+      margin-left: auto;
+      background: linear-gradient(135deg, #124b68, #24305d);
+      border-bottom-right-radius: 5px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    }
+
+    .botMessage {
+      margin-right: auto;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-bottom-left-radius: 5px;
+    }
+
+    /* =========================
+       INPUT AREA
+    ========================= */
+
+    .inputArea {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+
+      width: min(900px, calc(100% - 40px));
+
+      padding:
+        10px
+        0
+        max(14px, env(safe-area-inset-bottom));
+
+      z-index: 30;
+    }
+
+    .inputBox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      min-height: 58px;
+      padding: 7px;
+
+      border: 1px solid rgba(0, 220, 255, 0.2);
+      border-radius: 18px;
+
+      background: rgba(10, 10, 23, 0.93);
+      box-shadow:
+        0 10px 35px rgba(0,0,0,0.45),
+        0 0 25px rgba(0,180,255,0.04);
+
+      backdrop-filter: blur(18px);
+    }
+
+    .search {
+      flex: 1;
+      min-width: 0;
+      height: 44px;
+
+      padding: 0 13px;
+
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: white;
+
+      font-size: 15px;
+    }
+
+    .search::placeholder {
+      color: #77778d;
+    }
+
+    .actionButton {
+      flex: 0 0 auto;
+
+      height: 44px;
+      border: 0;
+      border-radius: 13px;
+
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    /* =========================
+       CYLINDRICAL MICROPHONE
+    ========================= */
+
+    .micButton {
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(255,255,255,0.07);
+      color: #d7faff;
+    }
+
+    .micButton:hover {
+      background: rgba(0,220,255,0.12);
+      color: #00eaff;
+    }
+
+    .micButton.listening {
+      background: rgba(255,70,100,0.16);
+      color: #ff6680;
+      box-shadow: 0 0 15px rgba(255,70,100,0.18);
+    }
+
+    .micIcon {
+      width: 27px;
+      height: 34px;
+      overflow: visible;
+    }
+
+    .micIcon .micBody {
+      fill: currentColor;
+    }
+
+    .micIcon .micLine {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+    }
+
+    .micIcon .micBase {
+      fill: currentColor;
+    }
+
+    #sendButton {
+      min-width: 76px;
+      padding: 0 17px;
+
+      background: linear-gradient(135deg, #00cfff, #7168ff);
+      color: white;
+      font-weight: 600;
+    }
+
+    #sendButton:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(0,210,255,0.2);
+    }
+
+    #sendButton:disabled,
+    .micButton:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      text-align: center;
+      margin-top: 6px;
+      color: #5d5d73;
+      font-size: 10px;
+    }
+
+    /* =========================
+       RECENT CHATS PANEL
+    ========================= */
+
+    #recentPanel {
+      position: fixed;
+      top: 0;
+      right: -390px;
+
+      width: min(370px, 88vw);
+      height: 100dvh;
+
+      z-index: 80;
+
+      padding:
+        max(60px, calc(env(safe-area-inset-top) + 35px))
+        18px
+        20px;
+
+      background: rgba(9, 9, 20, 0.97);
+      border-left: 1px solid rgba(0,220,255,0.16);
+
+      box-shadow: -15px 0 45px rgba(0,0,0,0.45);
+
+      transition: right 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    #recentPanel.open {
+      right: 0;
+    }
+
+    .recentHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .recentHeader h3 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    #closeRecent {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.07);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .recentItem {
+      padding: 13px;
+      margin-bottom: 9px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      cursor: pointer;
+    }
+
+    .recentItem:hover {
+      border-color: rgba(0,220,255,0.25);
+      background: rgba(0,220,255,0.06);
+    }
+
+    .recentTitle {
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .recentDate {
+      color: #77778c;
+      font-size: 10px;
+    }
+
+    .emptyRecent {
+      color: #77778c;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 13px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      #app {
+        height: 100dvh;
+      }
+
+      .topBar {
+        padding:
+          max(9px, env(safe-area-inset-top))
+          10px
+          8px;
+      }
+
+      .topButtons {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .smallButton {
+        height: 34px;
+        padding: 0 10px;
+        font-size: 11px;
+      }
+
+      .logoWrap {
+        top: 47%;
+      }
+
+      .logoWrap.chatStarted {
+        top: 57px;
+      }
+
+      .logo {
+        width: 82px;
+        height: 82px;
+        border-radius: 18px;
+      }
+
+      .title {
+        font-size: 23px;
+        margin-top: 7px;
+      }
+
+      .subtitle {
+        font-size: 11px;
+        margin-top: 3px;
+      }
+
+      #chat {
+        top: 130px;
+        width: 100%;
+        height: calc(100dvh - 205px);
+        padding:
+          8px
+          12px
+          12px;
+      }
+
+      .message {
+        max-width: 90%;
+        padding: 11px 13px;
+        margin-bottom: 11px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 15px;
+      }
+
+      .inputArea {
+        width: 100%;
+        padding:
+          7px
+          9px
+          max(9px, env(safe-area-inset-bottom));
+      }
+
+      .inputBox {
+        min-height: 54px;
+        padding: 5px;
+        border-radius: 17px;
+        gap: 5px;
+      }
+
+      .search {
+        height: 42px;
+        padding: 0 9px;
+        font-size: 15px;
+      }
+
+      .micButton {
+        width: 44px;
+        height: 42px;
+      }
+
+      .micIcon {
+        width: 25px;
+        height: 32px;
+      }
+
+      #sendButton {
+        min-width: 65px;
+        height: 42px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .hint {
+        display: none;
+      }
+
+      #recentPanel {
+        width: 92vw;
+      }
+    }
+
+    /* Very small phones */
+    @media (max-width: 360px) {
+
+      .smallButton {
+        font-size: 10px;
+        padding: 0 8px;
+      }
+
+      .search {
+        font-size: 14px;
+      }
+
+      #sendButton {
+        min-width: 58px;
+        padding: 0 9px;
+      }
+
+      .micButton {
+        width: 41px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+  <!-- =========================
+       LOGIN SCREEN
+  ========================= -->
 
-<div id="loginScreen">
+  <div id="loginScreen">
 
-  <div class="loginBox">
+    <div class="loginBox">
 
-```
-<img
-  src="logo.jpeg"
-  class="loginLogo"
-  alt="SESOMU"
->
+      <img
+        src="logo.jpeg"
+        class="loginLogo"
+        alt="SESOMU School"
+      >
 
-<h1>SESOMU GPT</h1>
+      <h2>SESOMU GPT</h2>
 
-<div class="loginSubtitle">
-  Enter the system to continue
-</div>
+      <p>Enter your details to continue</p>
 
-<input
-  id="nameInput"
-  type="text"
-  placeholder="Enter your name"
-  autocomplete="name"
->
+      <input
+        id="nameInput"
+        class="loginInput"
+        type="text"
+        placeholder="Your name"
+        autocomplete="name"
+      >
 
-<select id="designationInput">
-  <option value="">Select designation</option>
-  <option value="Student">Student</option>
-  <option value="Teacher">Teacher</option>
-  <option value="Staff">Staff</option>
-  <option value="Parent">Parent</option>
-  <option value="Other">Other</option>
-</select>
+      <input
+        id="designationInput"
+        class="loginInput"
+        type="text"
+        placeholder="Designation / Class"
+      >
 
-<button
-  class="loginButton"
-  id="loginButton"
->
-  ENTER SESOMU GPT
-</button>
-```
+      <button id="loginButton">
+        Continue
+      </button>
+
+    </div>
 
   </div>
 
-</div>
 
-<!-- RECENT CHATS -->
+  <!-- =========================
+       MAIN APP
+  ========================= -->
 
-<div id="recentPanel">
+  <div id="app">
 
-  <div class="recentHeader">
+    <!-- TOP BAR -->
 
-```
-<h2>Recent Chats</h2>
+    <div class="topBar">
 
-<button
-  class="closeRecent"
-  id="closeRecent"
->
-  ×
-</button>
-```
+      <div class="topButtons">
+
+        <button
+          class="smallButton"
+          id="newChatButton"
+        >
+          + New Chat
+        </button>
+
+        <button
+          class="smallButton"
+          id="recentButton"
+        >
+          Recent Chats
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOGO -->
+
+    <div
+      class="logoWrap"
+      id="logoWrap"
+    >
+
+      <img
+        src="logo.jpeg"
+        class="logo"
+        alt="SESOMU GPT"
+      >
+
+      <div class="title">
+        SESOMU GPT
+      </div>
+
+      <div class="subtitle">
+        Your intelligent AI companion
+      </div>
+
+    </div>
+
+
+    <!-- CHAT -->
+
+    <div id="chat"></div>
+
+
+    <!-- INPUT -->
+
+    <div class="inputArea">
+
+      <div class="inputBox">
+
+        <input
+          id="messageInput"
+          class="search"
+          type="text"
+          placeholder="Ask SESOMU GPT anything..."
+          autocomplete="off"
+        >
+
+        <!-- CYLINDRICAL MICROPHONE WITH STAND -->
+
+        <button
+          id="micButton"
+          class="actionButton micButton"
+          title="Voice input"
+          aria-label="Voice input"
+        >
+
+          <svg
+            class="micIcon"
+            viewBox="0 0 32 40"
+            aria-hidden="true"
+          >
+
+            <!-- cylindrical microphone -->
+            <rect
+              class="micBody"
+              x="9"
+              y="2"
+              width="14"
+              height="23"
+              rx="7"
+            />
+
+            <!-- microphone grille lines -->
+            <path
+              class="micLine"
+              d="M11.5 9h9"
+            />
+
+            <path
+              class="micLine"
+              d="M11.5 13h9"
+            />
+
+            <path
+              class="micLine"
+              d="M11.5 17h9"
+            />
+
+            <!-- curved microphone support -->
+            <path
+              class="micLine"
+              d="M5 18v2a11 11 0 0 0 22 0v-2"
+            />
+
+            <!-- stand stem -->
+            <path
+              class="micLine"
+              d="M16 31V25"
+            />
+
+            <!-- stand base -->
+            <rect
+              class="micBase"
+              x="9"
+              y="31"
+              width="14"
+              height="3"
+              rx="1.5"
+            />
+
+          </svg>
+
+        </button>
+
+
+        <!-- SEND -->
+
+        <button
+          id="sendButton"
+          class="actionButton"
+        >
+          Send
+        </button>
+
+      </div>
+
+      <div class="hint">
+        Made with ❤️ by RG
+      </div>
+
+    </div>
+
+
+    <!-- RECENT CHATS -->
+
+    <div id="recentPanel">
+
+      <div class="recentHeader">
+
+        <h3>
+          Recent Chats
+        </h3>
+
+        <button id="closeRecent">
+          ×
+        </button>
+
+      </div>
+
+      <div id="recentList"></div>
+
+    </div>
 
   </div>
 
-  <div id="recentList"></div>
 
-</div>
+  <script>
 
-<!-- MAIN APP -->
+    /* =========================
+       CONFIGURATION
+    ========================= */
 
-<div id="app">
+    const API_URL =
+      "https://sesomu-gpt-api.ghanu-bhai01.workers.dev/";
 
-  <div class="topBar">
 
-```
-<button
-  class="smallButton"
-  id="newChatButton"
->
-  + New Chat
-</button>
+    /* =========================
+       ELEMENTS
+    ========================= */
 
-<button
-  class="smallButton"
-  id="recentButton"
->
-  Recent Chats
-</button>
-```
+    const loginScreen =
+      document.getElementById("loginScreen");
 
-  </div>
+    const app =
+      document.getElementById("app");
 
-  <div class="container">
+    const nameInput =
+      document.getElementById("nameInput");
 
-```
-<div
-  class="logoWrap"
-  id="logoWrap"
->
+    const designationInput =
+      document.getElementById("designationInput");
 
-  <img
-    src="logo.jpeg"
-    class="logo"
-    alt="SESOMU GPT"
-  >
+    const loginButton =
+      document.getElementById("loginButton");
 
-  <div class="title">
-    SESOMU GPT
-  </div>
+    const newChatButton =
+      document.getElementById("newChatButton");
 
-  <div class="subtitle">
-    YOUR INTELLIGENT AI COMPANION
-  </div>
+    const recentButton =
+      document.getElementById("recentButton");
 
-</div>
+    const recentPanel =
+      document.getElementById("recentPanel");
 
+    const closeRecent =
+      document.getElementById("closeRecent");
 
-<div id="chat"></div>
+    const recentList =
+      document.getElementById("recentList");
 
+    const chat =
+      document.getElementById("chat");
 
-<div class="searchArea">
+    const messageInput =
+      document.getElementById("messageInput");
 
-  <input
-    id="messageInput"
-    class="search"
-    type="text"
-    placeholder="Ask SESOMU GPT anything..."
-    autocomplete="off"
-  >
+    const sendButton =
+      document.getElementById("sendButton");
 
-  <button
-    id="micButton"
-    class="actionButton micButton"
-    title="Voice input"
-    aria-label="Voice input"
-  >
-    🎙️
-  </button>
+    const micButton =
+      document.getElementById("micButton");
 
-  <button
-    id="sendButton"
-    class="actionButton"
-  >
-    Send
-  </button>
+    const logoWrap =
+      document.getElementById("logoWrap");
 
-  <button
-    id="grokButton"
-    class="actionButton aiButton"
-  >
-    + AI
-  </button>
 
-</div>
+    /* =========================
+       USER STORAGE
+    ========================= */
 
+    function getSavedUser() {
 
-<div
-  id="status"
-  class="status"
-></div>
+      try {
+        return JSON.parse(
+          localStorage.getItem("sesomuUser")
+        );
+      } catch {
+        return null;
+      }
 
-
-<div class="footer">
-  Made with ❤️ by RG
-</div>
-```
-
-  </div>
-
-</div>
-
-<script>
-
-/* ================================
-   CONFIGURATION
-================================ */
-
-const WORKER_URL =
-  "https://sesomu-gpt-api.ghanu-bhai01.workers.dev/";
-
-
-/* ================================
-   ELEMENTS
-================================ */
-
-const loginScreen =
-  document.getElementById("loginScreen");
-
-const app =
-  document.getElementById("app");
-
-const nameInput =
-  document.getElementById("nameInput");
-
-const designationInput =
-  document.getElementById("designationInput");
-
-const loginButton =
-  document.getElementById("loginButton");
-
-const messageInput =
-  document.getElementById("messageInput");
-
-const sendButton =
-  document.getElementById("sendButton");
-
-const grokButton =
-  document.getElementById("grokButton");
-
-const micButton =
-  document.getElementById("micButton");
-
-const chat =
-  document.getElementById("chat");
-
-const logoWrap =
-  document.getElementById("logoWrap");
-
-const status =
-  document.getElementById("status");
-
-const newChatButton =
-  document.getElementById("newChatButton");
-
-const recentButton =
-  document.getElementById("recentButton");
-
-const recentPanel =
-  document.getElementById("recentPanel");
-
-const recentList =
-  document.getElementById("recentList");
-
-const closeRecent =
-  document.getElementById("closeRecent");
-
-
-/* ================================
-   USER DATA
-================================ */
-
-function getSavedUser() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem("sesomuGPTUser")
-    );
-
-  } catch {
-
-    return null;
-
-  }
-
-}
-
-
-function saveUser(user) {
-
-  localStorage.setItem(
-    "sesomuGPTUser",
-    JSON.stringify(user)
-  );
-
-}
-
-
-/* ================================
-   CHAT STORAGE
-================================ */
-
-function getChatKey() {
-
-  const user =
-    getSavedUser();
-
-  if (!user) {
-    return "sesomuGPTChats_guest";
-  }
-
-  return (
-    "sesomuGPTChats_" +
-    user.name.toLowerCase().trim()
-  );
-
-}
-
-
-function getChats() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(getChatKey())
-    ) || [];
-
-  } catch {
-
-    return [];
-
-  }
-
-}
-
-
-function saveChats(chats) {
-
-  localStorage.setItem(
-    getChatKey(),
-    JSON.stringify(chats)
-  );
-
-}
-
-
-function saveCurrentChat() {
-
-  if (chat.children.length === 0) {
-    return;
-  }
-
-  const chats =
-    getChats();
-
-  const messages =
-    Array.from(chat.children)
-      .map(message => ({
-        type:
-          message.classList.contains("userMessage")
-            ? "user"
-            : "bot",
-        text:
-          message.textContent
-      }));
-
-  if (messages.length === 0) {
-    return;
-  }
-
-  chats.push({
-    id: Date.now(),
-    date:
-      new Date().toLocaleString(),
-    messages
-  });
-
-  saveChats(chats);
-
-}
-
-
-/* ================================
-   SHOW APP
-================================ */
-
-function showApp() {
-
-  loginScreen.style.display =
-    "none";
-
-  app.style.display =
-    "flex";
-
-  messageInput.focus();
-
-}
-
-
-/* ================================
-   LOGIN
-================================ */
-
-function login() {
-
-  const name =
-    nameInput.value.trim();
-
-  const designation =
-    designationInput.value;
-
-  if (!name) {
-
-    alert("Please enter your name.");
-
-    return;
-
-  }
-
-  if (!designation) {
-
-    alert("Please select your designation.");
-
-    return;
-
-  }
-
-  saveUser({
-    name,
-    designation
-  });
-
-  showApp();
-
-}
-
-
-loginButton.addEventListener(
-  "click",
-  login
-);
-
-
-nameInput.addEventListener(
-  "keydown",
-  event => {
-
-    if (event.key === "Enter") {
-      login();
     }
 
-  }
-);
+
+    function saveUser(user) {
+
+      localStorage.setItem(
+        "sesomuUser",
+        JSON.stringify(user)
+      );
+
+    }
 
 
-/* ================================
-   NEW CHAT
-================================ */
+    /* =========================
+       CHAT STORAGE
+    ========================= */
 
-function startNewChat() {
+    function getChats() {
 
-  if (chat.children.length > 0) {
-    saveCurrentChat();
-  }
+      try {
 
-  chat.innerHTML = "";
+        return JSON.parse(
+          localStorage.getItem("sesomuChats")
+        ) || [];
 
-  logoWrap.classList.remove(
-    "chatStarted"
-  );
+      } catch {
 
-  status.textContent = "";
+        return [];
 
-  messageInput.value = "";
+      }
 
-  messageInput.focus();
-
-}
+    }
 
 
-newChatButton.addEventListener(
-  "click",
-  startNewChat
-);
+    function saveChats(chats) {
+
+      localStorage.setItem(
+        "sesomuChats",
+        JSON.stringify(chats)
+      );
+
+    }
 
 
-/* ================================
-   RECENT CHATS
-================================ */
+    function saveCurrentChat() {
 
-function showRecentChats() {
+      if (!chat.children.length) {
+        return;
+      }
 
-  recentList.innerHTML = "";
+      const messages = [];
 
-  const chats =
-    getChats();
+      chat.querySelectorAll(".message")
+        .forEach(element => {
 
-  if (chats.length === 0) {
+          messages.push({
+            type:
+              element.classList.contains("userMessage")
+                ? "user"
+                : "bot",
 
-    recentList.innerHTML =
-      '<div class="emptyRecent">No previous chats found.</div>';
+            text:
+              element.textContent
+          });
 
-  } else {
+        });
 
-    chats
-      .slice()
-      .reverse()
-      .forEach(savedChat => {
 
-        const button =
-          document.createElement("button");
+      if (!messages.length) {
+        return;
+      }
 
-        button.className =
-          "recentItem";
 
-        const firstMessage =
-          savedChat.messages.find(
-            message =>
-              message.type === "user"
-          );
+      const chats = getChats();
 
-        button.textContent =
-          firstMessage
-            ? firstMessage.text.slice(0,70)
-            : "Untitled chat";
+      chats.unshift({
 
-        button.title =
-          savedChat.date;
+        id: Date.now(),
 
-        button.addEventListener(
-          "click",
-          () => loadChat(savedChat)
-        );
+        title:
+          messages[0].text.substring(0, 55),
 
-        recentList.appendChild(
-          button
-        );
+        date:
+          new Date().toLocaleString(),
+
+        messages
 
       });
 
-  }
 
-  recentPanel.style.display =
-    "block";
+      /*
+        Keep the latest 20 chats.
+      */
 
-}
+      saveChats(
+        chats.slice(0, 20)
+      );
 
-
-recentButton.addEventListener(
-  "click",
-  showRecentChats
-);
+    }
 
 
-closeRecent.addEventListener(
-  "click",
-  () => {
+    /* =========================
+       SHOW APP
+    ========================= */
 
-    recentPanel.style.display =
-      "none";
+    function showApp() {
 
-  }
-);
+      loginScreen.style.display = "none";
+
+      app.style.display = "block";
+
+      messageInput.focus();
+
+    }
 
 
-/* ================================
-   LOAD CHAT
-================================ */
+    /* =========================
+       LOGIN
+    ========================= */
 
-function loadChat(savedChat) {
+    function login() {
 
-  chat.innerHTML = "";
+      const name =
+        nameInput.value.trim();
 
-  savedChat.messages.forEach(
-    message => {
+      const designation =
+        designationInput.value.trim();
 
-      if (message.type === "user") {
 
-        addUserMessage(
-          message.text
-        );
+      if (!name) {
 
-      } else {
+        nameInput.focus();
 
-        addBotMessage(
-          message.text
-        );
+        return;
 
       }
 
+
+      saveUser({
+
+        name,
+
+        designation
+
+      });
+
+
+      showApp();
+
     }
-  );
-
-  logoWrap.classList.add(
-    "chatStarted"
-  );
-
-  recentPanel.style.display =
-    "none";
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
 
 
-/* ================================
-   CHAT UI
-================================ */
-
-function addUserMessage(text) {
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "message userMessage";
-
-  div.textContent =
-    text;
-
-  chat.appendChild(div);
-
-}
+    loginButton.addEventListener(
+      "click",
+      login
+    );
 
 
-function addBotMessage(text) {
+    nameInput.addEventListener(
+      "keydown",
+      event => {
 
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "message botMessage";
-
-  div.textContent =
-    text;
-
-  chat.appendChild(div);
-
-}
-
-
-/* ================================
-   NORMAL AI
-================================ */
-
-async function sendMessage() {
-
-  const message =
-    messageInput.value.trim();
-
-  if (!message) {
-    return;
-  }
-
-  addUserMessage(message);
-
-  logoWrap.classList.add(
-    "chatStarted"
-  );
-
-  messageInput.value = "";
-
-  sendButton.disabled = true;
-  grokButton.disabled = true;
-  micButton.disabled = true;
-
-  status.textContent =
-    "AI is thinking...";
-
-
-  try {
-
-    const response =
-      await fetch(
-        WORKER_URL,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-
-          body:
-            JSON.stringify({
-              message
-            })
+        if (event.key === "Enter") {
+          designationInput.focus();
         }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.error ||
-        "Server error"
-      );
-
-    }
-
-
-    addBotMessage(
-      data.answer ||
-      "I couldn't generate a response."
-    );
-
-    status.textContent = "";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    addBotMessage(
-      "Sorry, I couldn't connect to the AI service right now."
-    );
-
-    status.textContent =
-      "Connection error.";
-
-  }
-
-
-  sendButton.disabled = false;
-  grokButton.disabled = false;
-  micButton.disabled = false;
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-/* ================================
-   + AI
-================================ */
-
-async function sendToGrok() {
-
-  const message =
-    messageInput.value.trim();
-
-  if (!message) {
-    return;
-  }
-
-  addUserMessage(message);
-
-  logoWrap.classList.add(
-    "chatStarted"
-  );
-
-  messageInput.value = "";
-
-  sendButton.disabled = true;
-  grokButton.disabled = true;
-  micButton.disabled = true;
-
-  status.textContent =
-    "AI is thinking...";
-
-
-  try {
-
-    const response =
-      await puter.ai.chat(
-        message,
-        {
-          model:
-            "x-ai/grok-4.7",
-          stream:
-            false
-        }
-      );
-
-
-    let answer = "";
-
-
-    if (
-      typeof response === "string"
-    ) {
-
-      answer = response;
-
-    } else if (
-      response &&
-      response.message &&
-      response.message.content
-    ) {
-
-      answer =
-        response.message.content;
-
-    } else if (
-      response &&
-      response.content
-    ) {
-
-      answer =
-        response.content;
-
-    } else {
-
-      answer =
-        JSON.stringify(response);
-
-    }
-
-
-    addBotMessage(answer);
-
-    status.textContent = "";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    addBotMessage(
-      "The + AI service is unavailable right now."
-    );
-
-    status.textContent =
-      "AI connection error.";
-
-  }
-
-
-  sendButton.disabled = false;
-  grokButton.disabled = false;
-  micButton.disabled = false;
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-/* ================================
-   VOICE INPUT
-================================ */
-
-let recognition = null;
-
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-
-if (SpeechRecognition) {
-
-  recognition =
-    new SpeechRecognition();
-
-  recognition.continuous = false;
-  recognition.interimResults = true;
-  recognition.lang = "en-IN";
-
-
-  recognition.onstart = () => {
-
-    micButton.classList.add(
-      "listening"
-    );
-
-    status.textContent =
-      "Listening... speak now";
-
-  };
-
-
-  recognition.onresult = event => {
-
-    let transcript = "";
-
-    for (
-      let i = event.resultIndex;
-      i < event.results.length;
-      i++
-    ) {
-
-      transcript +=
-        event.results[i][0].transcript;
-
-    }
-
-    messageInput.value =
-      transcript;
-
-  };
-
-
-  recognition.onend = () => {
-
-    micButton.classList.remove(
-      "listening"
-    );
-
-    status.textContent =
-      "Voice captured";
-
-  };
-
-
-  recognition.onerror = event => {
-
-    micButton.classList.remove(
-      "listening"
-    );
-
-    if (
-      event.error ===
-      "not-allowed"
-    ) {
-
-      status.textContent =
-        "Microphone permission was denied.";
-
-    } else {
-
-      status.textContent =
-        "Voice input error.";
-
-    }
-
-  };
-
-
-  micButton.addEventListener(
-    "click",
-    () => {
-
-      if (
-        micButton.classList.contains(
-          "listening"
-        )
-      ) {
-
-        recognition.stop();
-
-      } else {
-
-        recognition.start();
 
       }
-
-    }
-  );
-
-} else {
-
-  micButton.addEventListener(
-    "click",
-    () => {
-
-      status.textContent =
-        "Voice input is not supported by this browser.";
-
-    }
-  );
-
-}
+    );
 
 
-/* ================================
-   BUTTONS
-================================ */
+    designationInput.addEventListener(
+      "keydown",
+      event => {
 
-sendButton.addEventListener(
-  "click",
-  sendMessage
-);
+        if (event.key === "Enter") {
+          login();
+        }
 
-
-grokButton.addEventListener(
-  "click",
-  sendToGrok
-);
+      }
+    );
 
 
-messageInput.addEventListener(
-  "keydown",
-  event => {
+    /* =========================
+       NEW CHAT
+    ========================= */
 
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-
-      event.preventDefault();
-
-      sendMessage();
-
-    }
-
-  }
-);
-
-
-/* ================================
-   RETURNING USER
-================================ */
-
-const savedUser =
-  getSavedUser();
-
-if (savedUser) {
-
-  showApp();
-
-}
-
-
-/* ================================
-   SAVE CHAT
-================================ */
-
-window.addEventListener(
-  "beforeunload",
-  () => {
-
-    if (
-      app.style.display === "flex" &&
-      chat.children.length > 0
-    ) {
+    function startNewChat() {
 
       saveCurrentChat();
 
+      chat.innerHTML = "";
+
+      logoWrap.classList.remove(
+        "chatStarted"
+      );
+
+      messageInput.value = "";
+
+      recentPanel.classList.remove(
+        "open"
+      );
+
+      messageInput.focus();
+
     }
 
-  }
-);
 
-</script>
+    newChatButton.addEventListener(
+      "click",
+      startNewChat
+    );
+
+
+    /* =========================
+       RECENT CHATS
+    ========================= */
+
+    function showRecentChats() {
+
+      const chats =
+        getChats();
+
+      recentList.innerHTML = "";
+
+
+      if (!chats.length) {
+
+        recentList.innerHTML =
+          '<div class="emptyRecent">No recent chats yet.</div>';
+
+      } else {
+
+        chats.forEach(item => {
+
+          const div =
+            document.createElement("div");
+
+          div.className =
+            "recentItem";
+
+          div.innerHTML = `
+            <div class="recentTitle">
+              ${escapeHTML(item.title)}
+            </div>
+
+            <div class="recentDate">
+              ${escapeHTML(item.date)}
+            </div>
+          `;
+
+
+          div.addEventListener(
+            "click",
+            () => loadChat(item)
+          );
+
+
+          recentList.appendChild(div);
+
+        });
+
+      }
+
+
+      recentPanel.classList.add(
+        "open"
+      );
+
+    }
+
+
+    recentButton.addEventListener(
+      "click",
+      showRecentChats
+    );
+
+
+    closeRecent.addEventListener(
+      "click",
+      () => {
+
+        recentPanel.classList.remove(
+          "open"
+        );
+
+      }
+    );
+
+
+    function loadChat(item) {
+
+      chat.innerHTML = "";
+
+      item.messages.forEach(
+        message => {
+
+          if (message.type === "user") {
+
+            addUserMessage(
+              message.text
+            );
+
+          } else {
+
+            addBotMessage(
+              message.text
+            );
+
+          }
+
+        }
+      );
+
+
+      logoWrap.classList.add(
+        "chatStarted"
+      );
+
+
+      recentPanel.classList.remove(
+        "open"
+      );
+
+
+      scrollChat();
+
+    }
+
+
+    /* =========================
+       HTML ESCAPE
+    ========================= */
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        text;
+
+      return div.innerHTML;
+
+    }
+
+
+    /* =========================
+       ADD USER MESSAGE
+    ========================= */
+
+    function addUserMessage(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "message userMessage";
+
+      div.textContent =
+        text;
+
+      chat.appendChild(div);
+
+    }
+
+
+    /* =========================
+       ADD BOT MESSAGE
+    ========================= */
+
+    function addBotMessage(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "message botMessage";
+
+      div.textContent =
+        text;
+
+      chat.appendChild(div);
+
+    }
+
+
+    /* =========================
+       SCROLL CHAT
+    ========================= */
+
+    function scrollChat() {
+
+      requestAnimationFrame(() => {
+
+        chat.scrollTop =
+          chat.scrollHeight;
+
+      });
+
+    }
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================= */
+
+    async function sendMessage() {
+
+      const message =
+        messageInput.value.trim();
+
+
+      if (!message) {
+        return;
+      }
+
+
+      logoWrap.classList.add(
+        "chatStarted"
+      );
+
+
+      addUserMessage(message);
+
+      messageInput.value = "";
+
+      scrollChat();
+
+
+      sendButton.disabled = true;
+
+      micButton.disabled = true;
+
+
+      const thinking =
+        document.createElement("div");
+
+      thinking.className =
+        "message botMessage";
+
+      thinking.textContent =
+        "Thinking...";
+
+      chat.appendChild(thinking);
+
+      scrollChat();
+
+
+      try {
+
+        const response =
+          await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+                message
+              })
+
+          });
+
+
+        let data;
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch {
+
+          throw new Error(
+            "Invalid server response."
+          );
+
+        }
+
+
+        thinking.remove();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            "Server error."
+          );
+
+        }
+
+
+        addBotMessage(
+          data.answer ||
+          "I could not generate a response."
+        );
+
+
+      } catch (error) {
+
+        thinking.remove();
+
+
+        addBotMessage(
+          "Sorry, I couldn't connect to SESOMU GPT right now. Please try again."
+        );
+
+
+        console.error(
+          "SESOMU GPT error:",
+          error
+        );
+
+      }
+
+
+      sendButton.disabled = false;
+
+      micButton.disabled = false;
+
+      scrollChat();
+
+    }
+
+
+    sendButton.addEventListener(
+      "click",
+      sendMessage
+    );
+
+
+    messageInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       VOICE INPUT
+    ========================= */
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+
+    let recognition = null;
+
+
+    if (SpeechRecognition) {
+
+      recognition =
+        new SpeechRecognition();
+
+
+      recognition.continuous =
+        false;
+
+      recognition.interimResults =
+        true;
+
+      recognition.lang =
+        "en-IN";
+
+
+      recognition.onstart = () => {
+
+        micButton.classList.add(
+          "listening"
+        );
+
+      };
+
+
+      recognition.onend = () => {
+
+        micButton.classList.remove(
+          "listening"
+        );
+
+      };
+
+
+      recognition.onerror = () => {
+
+        micButton.classList.remove(
+          "listening"
+        );
+
+      };
+
+
+      recognition.onresult =
+        event => {
+
+          let transcript = "";
+
+          for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+          ) {
+
+            transcript +=
+              event.results[i][0].transcript;
+
+          }
+
+
+          messageInput.value =
+            transcript;
+
+        };
+
+
+      micButton.addEventListener(
+        "click",
+        () => {
+
+          try {
+
+            recognition.start();
+
+          } catch {
+
+            /*
+              Prevent error if recognition
+              is already running.
+            */
+
+          }
+
+        }
+      );
+
+
+    } else {
+
+      micButton.addEventListener(
+        "click",
+        () => {
+
+          alert(
+            "Voice input is not supported by this browser."
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       RETURNING USER
+    ========================= */
+
+    const savedUser =
+      getSavedUser();
+
+
+    if (savedUser) {
+
+      showApp();
+
+    }
+
+
+    /* =========================
+       SAVE BEFORE LEAVING
+    ========================= */
+
+    window.addEventListener(
+      "beforeunload",
+      () => {
+
+        saveCurrentChat();
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
