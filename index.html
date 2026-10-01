@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,20 +17,24 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
       font-family: Arial, Helvetica, sans-serif;
-      background: #05050e;
-      color: #ffffff;
+      background: #090914;
+      color: #f2f2f7;
+    }
+
+    body {
+      overflow: hidden;
     }
 
     button,
-    input {
-      font-family: inherit;
+    input,
+    textarea {
+      font: inherit;
     }
 
-    /* =========================
-       LOGIN SCREEN
-       ========================= */
+    /* =========================================================
+       LOGIN
+       ========================================================= */
 
     #loginScreen {
       position: fixed;
@@ -40,110 +43,91 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(circle at top, rgba(80, 70, 180, 0.18), transparent 40%),
-        #05050e;
+        radial-gradient(circle at top, #17172d 0%, #090914 55%);
       z-index: 1000;
-      padding: 20px;
     }
 
     .loginCard {
-      width: min(420px, 100%);
-      padding: 32px 26px;
-      border-radius: 24px;
-      background: rgba(18, 18, 35, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+      width: min(92%, 420px);
+      padding: 35px 28px;
+      border: 1px solid #2c2c46;
+      border-radius: 22px;
+      background: #11111f;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
       text-align: center;
     }
 
     .loginLogo {
-      width: 100px;
-      height: 100px;
+      width: 92px;
+      height: 92px;
       object-fit: contain;
-      border-radius: 50%;
+      border-radius: 18px;
       margin-bottom: 15px;
     }
 
     .loginTitle {
-      margin: 0 0 8px;
-      font-size: 28px;
-      font-weight: 700;
+      margin: 0;
+      font-size: 30px;
+      font-weight: 800;
     }
 
     .loginSubtitle {
-      margin: 0 0 25px;
-      color: #a7a7c2;
-      font-size: 14px;
+      margin: 8px 0 25px;
+      color: #9999b5;
     }
 
     .loginInput {
       width: 100%;
-      height: 48px;
-      margin-bottom: 14px;
-      padding: 0 15px;
-      border-radius: 13px;
-      border: 1px solid #30304c;
-      background: #0c0c19;
-      color: white;
+      height: 46px;
+      margin-bottom: 12px;
+      padding: 0 14px;
+      border: 1px solid #30304b;
+      border-radius: 12px;
       outline: none;
-      font-size: 15px;
+      background: #0b0b17;
+      color: white;
     }
 
     .loginInput:focus {
-      border-color: #7070ff;
+      border-color: #7777ff;
     }
 
     #loginButton {
       width: 100%;
-      height: 48px;
-      border: none;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #6969ff, #9b62ff);
+      height: 46px;
+      border: 0;
+      border-radius: 12px;
+      background: #6666ff;
       color: white;
-      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 5px;
     }
 
-    #loginButton:hover {
-      opacity: 0.92;
-    }
-
-    /* =========================
+    /* =========================================================
        APP
-       ========================= */
+       ========================================================= */
 
     #app {
       display: none;
-      position: relative;
       width: 100%;
       height: 100%;
+      flex-direction: column;
     }
 
-    /* =========================
-       TOP BAR
-       ========================= */
-
     .topBar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 54px;
+      height: 62px;
+      flex: 0 0 62px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 18px;
-      z-index: 100;
-      background: rgba(5, 5, 14, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid #25253a;
+      background: #0d0d19;
     }
 
     .brandSmall {
-      font-weight: 700;
-      font-size: 16px;
+      font-size: 17px;
+      font-weight: 800;
       letter-spacing: 0.4px;
     }
 
@@ -153,104 +137,86 @@
     }
 
     .smallButton {
-      border: 1px solid #30304c;
-      background: #10101f;
-      color: #d9d9ee;
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid #30304a;
       border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12px;
+      background: #131323;
+      color: #dcdced;
       cursor: pointer;
     }
 
     .smallButton:hover {
-      background: #18182a;
+      background: #1b1b30;
     }
 
-    /* =========================
-       LOGO
-       ========================= */
+    /* =========================================================
+       CHAT AREA
+       ========================================================= */
 
-    .logoWrap {
+    .chatArea {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #chatMessages {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 28px 20px 145px;
+      scroll-behavior: smooth;
+    }
+
+    .welcomeArea {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -55%);
-      z-index: 15;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      transition: top 0.45s ease, transform 0.45s ease;
+      justify-content: center;
       pointer-events: none;
+      padding-bottom: 70px;
+    }
+
+    .logoWrap {
+      width: 100px;
+      height: 100px;
+      transition: all 0.25s ease;
     }
 
     .logoWrap.chatStarted {
-      top: 58px;
-      transform: translateX(-50%);
-    }
-
-    .logoWrap.chatStarted::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: -18px;
-      width: 100vw;
-      height: 145px;
-      transform: translateX(-50%);
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(5, 5, 14, 0.99) 0%,
-          rgba(5, 5, 14, 0.97) 72%,
-          rgba(5, 5, 14, 0.72) 90%,
-          rgba(5, 5, 14, 0) 100%
-        );
-      z-index: -1;
-      pointer-events: none;
+      display: none;
     }
 
     .mainLogo {
-      width: 115px;
-      height: 115px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
-      border-radius: 50%;
+      border-radius: 22px;
     }
 
-    .logoTitle {
-      margin-top: 10px;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
+    .welcomeTitle {
+      margin-top: 18px;
+      font-size: 27px;
+      font-weight: 800;
     }
 
-    .logoSubtitle {
-      margin-top: 5px;
-      color: #9292ae;
-      font-size: 13px;
+    .welcomeText {
+      margin-top: 8px;
+      color: #9696ad;
+      text-align: center;
     }
 
-    /* =========================
-       CHAT
-       ========================= */
-
-    #chat {
-      position: absolute;
-      top: 165px;
-      bottom: 112px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(900px, calc(100% - 40px));
-      padding: 15px 5px 20px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      scrollbar-width: thin;
-      scrollbar-color: #30304c transparent;
-      z-index: 5;
-    }
+    /* =========================================================
+       MESSAGES
+       ========================================================= */
 
     .messageRow {
       display: flex;
-      margin-bottom: 16px;
+      width: 100%;
+      margin: 0 0 18px;
     }
 
     .messageRow.user {
@@ -262,32 +228,38 @@
     }
 
     .messageBubble {
-      max-width: 82%;
-      padding: 12px 15px;
+      max-width: min(820px, 82%);
+      padding: 13px 16px;
       border-radius: 16px;
       line-height: 1.55;
-      font-size: 15px;
-      overflow-wrap: anywhere;
+
+      /*
+       * IMPORTANT FIX:
+       * Prevent individual characters/words from being
+       * forced into separate vertical lines.
+       */
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: normal;
+      overflow: visible;
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
     }
 
-    .user .messageBubble {
-      background: #242444;
-      border: 1px solid #37375d;
+    .messageRow.user .messageBubble {
+      background: #29294b;
+      border-bottom-right-radius: 5px;
     }
 
-    .bot .messageBubble {
-      background: rgba(14, 14, 28, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    .messageRow.bot .messageBubble {
+      background: #151525;
+      border: 1px solid #25253c;
+      border-bottom-left-radius: 5px;
     }
 
-    .messageBubble strong {
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .messageBubble em {
-      font-style: italic;
-    }
+    /* =========================================================
+       MARKDOWN
+       ========================================================= */
 
     .messageBubble p {
       margin: 0 0 10px;
@@ -297,105 +269,132 @@
       margin-bottom: 0;
     }
 
+    .messageBubble h1,
+    .messageBubble h2,
+    .messageBubble h3 {
+      margin: 10px 0 8px;
+      line-height: 1.3;
+    }
+
     .messageBubble ul,
     .messageBubble ol {
-      margin: 8px 0;
-      padding-left: 23px;
+      margin: 8px 0 10px;
+      padding-left: 24px;
     }
 
     .messageBubble li {
       margin: 4px 0;
     }
 
-    .messageBubble h1,
-    .messageBubble h2,
-    .messageBubble h3 {
-      margin: 10px 0 7px;
-      line-height: 1.3;
+    .messageBubble strong {
+      font-weight: 700;
     }
 
-    .messageBubble h1 {
-      font-size: 22px;
-    }
-
-    .messageBubble h2 {
-      font-size: 19px;
-    }
-
-    .messageBubble h3 {
-      font-size: 17px;
+    .messageBubble em {
+      font-style: italic;
     }
 
     .messageBubble code {
       padding: 2px 5px;
       border-radius: 5px;
-      background: #171727;
-      font-family: monospace;
-      font-size: 0.9em;
+      background: #090910;
+      font-family: Consolas, monospace;
+      font-size: 0.92em;
     }
 
     .messageBubble pre {
       margin: 10px 0;
       padding: 12px;
+      max-width: 100%;
       overflow-x: auto;
       border-radius: 10px;
-      background: #0a0a13;
-      border: 1px solid #28283d;
+      background: #090910;
     }
 
     .messageBubble pre code {
       padding: 0;
       background: transparent;
+      white-space: pre;
     }
 
-    .messageBubble a {
-      color: #8b8bff;
-      text-decoration: underline;
+    /* =========================================================
+       TYPING
+       ========================================================= */
+
+    .typingDots {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .typing {
-      opacity: 0.65;
-      font-style: italic;
+    .typingDots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9999bb;
+      animation: typing 1s infinite ease-in-out;
     }
 
-    /* =========================
-       INPUT AREA
-       ========================= */
+    .typingDots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .typingDots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes typing {
+      0%,
+      60%,
+      100% {
+        opacity: 0.3;
+        transform: translateY(0);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* =========================================================
+       INPUT
+       ========================================================= */
 
     .inputArea {
-      position: fixed;
+      position: absolute;
       left: 50%;
-      bottom: 48px;
+      bottom: 18px;
       transform: translateX(-50%);
-      width: min(900px, calc(100% - 40px));
-      z-index: 50;
+      width: min(900px, calc(100% - 28px));
+      z-index: 20;
     }
 
-    .search {
+    .inputBox {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 7px;
-      border-radius: 17px;
-      background: rgba(15, 15, 28, 0.97);
-      border: 1px solid #30304c;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+      padding: 8px;
+      border: 1px solid #30304b;
+      border-radius: 16px;
+      background: #11111f;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
     }
 
     #messageInput {
       flex: 1;
       min-width: 0;
       height: 42px;
-      border: none;
+      padding: 0 10px;
+      border: 0;
       outline: none;
       background: transparent;
       color: white;
-      padding: 0 10px;
-      font-size: 15px;
+      resize: none;
     }
 
     #messageInput::placeholder {
-      color: #74748d;
+      color: #77778e;
     }
 
     .actionButton {
@@ -421,24 +420,32 @@
       background: #242449;
     }
 
+    .actionButton:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .webButton {
+      width: 52px;
+      flex-basis: 52px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
     .micIcon {
-      width: 22px;
-      height: 28px;
+      width: 20px;
+      height: 25px;
+    }
+
+    .micBody,
+    .micLine,
+    .micBase {
       fill: none;
       stroke: currentColor;
-      stroke-width: 1.7;
+      stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
-    }
-
-    .micBody {
-      fill: currentColor;
-      stroke: none;
-    }
-
-    .micLine {
-      stroke: #111121;
-      stroke-width: 1.3;
     }
 
     .micBase {
@@ -446,198 +453,103 @@
       stroke: none;
     }
 
-    .grokIcon {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
     #sendButton {
       height: 42px;
       padding: 0 17px;
-      border: none;
+      border: 0;
       border-radius: 12px;
-      background: linear-gradient(135deg, #6969ff, #9b62ff);
+      background: #6666ff;
       color: white;
-      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
 
     #sendButton:hover {
-      opacity: 0.92;
+      background: #7575ff;
     }
 
-    .hint {
-      position: fixed;
-      bottom: 14px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: #66667d;
-      font-size: 11px;
-      z-index: 30;
-    }
-
-    /* =========================
+    /* =========================================================
        RECENT CHATS
-       ========================= */
+       ========================================================= */
 
     #recentPanel {
-      display: none;
       position: fixed;
-      inset: 0;
-      z-index: 500;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(4px);
-    }
-
-    .recentCard {
-      position: absolute;
       top: 70px;
-      right: 18px;
-      width: min(390px, calc(100% - 36px));
-      max-height: calc(100vh - 100px);
+      right: 16px;
+      width: min(360px, calc(100% - 32px));
+      max-height: 70vh;
       overflow-y: auto;
-      padding: 18px;
-      border-radius: 18px;
-      background: #111120;
-      border: 1px solid #30304c;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+      display: none;
+      padding: 14px;
+      border: 1px solid #30304b;
+      border-radius: 14px;
+      background: #11111f;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      z-index: 100;
     }
 
-    .recentHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .recentHeader h3 {
-      margin: 0;
-      font-size: 17px;
-    }
-
-    #closeRecent {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
-      border: 1px solid #30304c;
-      background: #181829;
-      color: white;
-      cursor: pointer;
+    .recentTitle {
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .recentItem {
-      padding: 12px;
-      margin-bottom: 9px;
-      border-radius: 12px;
-      background: #181829;
-      border: 1px solid #292940;
+      padding: 10px;
+      margin-bottom: 7px;
+      border-radius: 9px;
+      background: #171727;
       cursor: pointer;
+      color: #d7d7e7;
     }
 
     .recentItem:hover {
       background: #202039;
     }
 
-    .recentItemTitle {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 5px;
-      color: #eeeeff;
-    }
-
-    .recentItemTime {
-      font-size: 11px;
-      color: #77778e;
-    }
-
-    .emptyRecent {
-      color: #77778e;
-      text-align: center;
-      padding: 25px 10px;
-      font-size: 13px;
-    }
-
-    /* =========================
+    /* =========================================================
        MOBILE
-       ========================= */
+       ========================================================= */
 
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
       .topBar {
-        height: 48px;
         padding: 0 10px;
       }
 
       .brandSmall {
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .smallButton {
-        padding: 7px 9px;
-        font-size: 10px;
+        padding: 0 9px;
+        font-size: 12px;
       }
 
-      .logoWrap.chatStarted {
-        top: 48px;
-        transform: translateX(-50%);
-      }
-
-      .logoWrap.chatStarted::before {
-        top: -12px;
-        height: 128px;
-      }
-
-      .mainLogo {
-        width: 85px;
-        height: 85px;
-      }
-
-      .logoTitle {
-        margin-top: 5px;
-        font-size: 21px;
-      }
-
-      .logoSubtitle {
-        font-size: 11px;
-      }
-
-      #chat {
-        top: 125px;
-        bottom: 76px;
-        width: 100%;
-        padding: 8px 12px 12px;
-        z-index: 5;
+      #chatMessages {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 130px;
       }
 
       .messageBubble {
-        max-width: 91%;
+        max-width: 92%;
         font-size: 14px;
+
+        /*
+         * Keep horizontal writing on mobile too.
+         */
+        writing-mode: horizontal-tb;
+        word-break: normal;
+        overflow-wrap: break-word;
       }
 
       .inputArea {
-        bottom: 38px;
-        width: calc(100% - 16px);
+        width: calc(100% - 14px);
+        bottom: 8px;
       }
 
-      .search {
+      .inputBox {
         gap: 5px;
-        padding: 5px;
-      }
-
-      #messageInput {
-        font-size: 14px;
-        padding: 0 7px;
-      }
-
-      #sendButton {
-        padding: 0 12px;
-        font-size: 12px;
+        padding: 6px;
       }
 
       .actionButton {
@@ -646,283 +558,268 @@
         flex-basis: 39px;
       }
 
-      .hint {
-        bottom: 10px;
+      .webButton {
+        width: 48px;
+        flex-basis: 48px;
+        font-size: 10px;
       }
 
-      .recentCard {
-        top: 58px;
-        right: 8px;
-        width: calc(100% - 16px);
+      #sendButton {
+        height: 39px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      #messageInput {
+        height: 39px;
+        font-size: 14px;
       }
     }
   </style>
-
 </head>
 
 <body>
 
-  <!-- =========================
+  <!-- =========================================================
        LOGIN
-       ========================= -->
+       ========================================================= -->
 
   <div id="loginScreen">
+    <div class="loginCard">
 
-
-<div class="loginCard">
-
-  <img
-    src="logo.jpeg"
-    alt="SESOMU"
-    class="loginLogo"
-  >
-
-  <h1 class="loginTitle">SESOMU GPT</h1>
-
-  <p class="loginSubtitle">
-    Your intelligent AI companion
-  </p>
-
-  <input
-    id="nameInput"
-    class="loginInput"
-    type="text"
-    placeholder="Enter your name"
-    autocomplete="name"
-  >
-
-  <input
-    id="designationInput"
-    class="loginInput"
-    type="text"
-    placeholder="Enter your designation"
-  >
-
-  <button id="loginButton">
-    Continue
-  </button>
-
-</div>
-
-
-  </div>
-
-  <!-- =========================
-       MAIN APP
-       ========================= -->
-
-  <div id="app">
-
-
-<div class="topBar">
-
-  <div class="brandSmall">
-    SESOMU GPT
-  </div>
-
-  <div class="topActions">
-
-    <button
-      class="smallButton"
-      id="newChatButton"
-    >
-      + New Chat
-    </button>
-
-    <button
-      class="smallButton"
-      id="recentButton"
-    >
-      Recent Chats
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- LOGO -->
-
-<div class="logoWrap" id="logoWrap">
-
-  <img
-    src="logo.jpeg"
-    alt="SESOMU GPT"
-    class="mainLogo"
-  >
-
-  <div class="logoTitle">
-    SESOMU GPT
-  </div>
-
-  <div class="logoSubtitle">
-    Your intelligent AI companion
-  </div>
-
-</div>
-
-
-<!-- CHAT -->
-
-<div id="chat"></div>
-
-
-<!-- INPUT -->
-
-<div class="inputArea">
-
-  <div class="search">
-
-    <input
-      id="messageInput"
-      type="text"
-      placeholder="Ask SESOMU GPT anything..."
-      autocomplete="off"
-    >
-
-
-    <!-- GROK WEB SEARCH -->
-
-    <button
-      id="grokButton"
-      class="actionButton"
-      title="Grok Web Search"
-      aria-label="Grok Web Search"
-    >
-
-      <svg
-        class="grokIcon"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path d="M5 5l14 14"></path>
-        <path d="M19 5L5 19"></path>
-        <path d="M7 5h4"></path>
-        <path d="M13 19h4"></path>
-      </svg>
-
-    </button>
-
-
-    <!-- MICROPHONE -->
-
-    <button
-      id="micButton"
-      class="actionButton micButton"
-      title="Voice input"
-      aria-label="Voice input"
-    >
-
-      <svg
-        class="micIcon"
-        viewBox="0 0 32 40"
-        aria-hidden="true"
+      <img
+        src="logo.jpeg"
+        alt="SESOMU"
+        class="loginLogo"
       >
 
-        <rect
-          class="micBody"
-          x="9"
-          y="2"
-          width="14"
-          height="23"
-          rx="7"
-        />
+      <h1 class="loginTitle">
+        SESOMU GPT
+      </h1>
 
-        <path
-          class="micLine"
-          d="M11.5 9h9"
-        />
+      <p class="loginSubtitle">
+        Your intelligent AI companion
+      </p>
 
-        <path
-          class="micLine"
-          d="M11.5 13h9"
-        />
+      <input
+        id="nameInput"
+        class="loginInput"
+        type="text"
+        placeholder="Enter your name"
+      >
 
-        <path
-          class="micLine"
-          d="M11.5 17h9"
-        />
+      <input
+        id="designationInput"
+        class="loginInput"
+        type="text"
+        placeholder="Enter your designation"
+      >
 
-        <path
-          class="micLine"
-          d="M5 18v2a11 11 0 0 0 22 0v-2"
-        />
-
-        <path
-          class="micLine"
-          d="M16 31V25"
-        />
-
-        <rect
-          class="micBase"
-          x="9"
-          y="31"
-          width="14"
-          height="3"
-          rx="1.5"
-        />
-
-      </svg>
-
-    </button>
-
-
-    <!-- SEND -->
-
-    <button id="sendButton">
-      Send
-    </button>
-
-  </div>
-
-</div>
-
-
-<div class="hint">
-  Made with ❤️ by RG
-</div>
-
-
-<!-- RECENT CHATS -->
-
-<div id="recentPanel">
-
-  <div class="recentCard">
-
-    <div class="recentHeader">
-
-      <h3>
-        Recent Chats
-      </h3>
-
-      <button id="closeRecent">
-        ×
+      <button id="loginButton">
+        Continue
       </button>
 
     </div>
+  </div>
+
+
+  <!-- =========================================================
+       APPLICATION
+       ========================================================= -->
+
+  <div id="app">
+
+    <div class="topBar">
+
+      <div class="brandSmall">
+        SESOMU GPT
+      </div>
+
+      <div class="topActions">
+
+        <button
+          class="smallButton"
+          id="newChatButton"
+        >
+          + New Chat
+        </button>
+
+        <button
+          class="smallButton"
+          id="recentButton"
+        >
+          Recent Chats
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="chatArea">
+
+      <div
+        id="chatMessages"
+      ></div>
+
+
+      <div
+        class="welcomeArea"
+        id="welcomeArea"
+      >
+
+        <div
+          class="logoWrap"
+          id="logoWrap"
+        >
+          <img
+            src="logo.jpeg"
+            alt="SESOMU"
+            class="mainLogo"
+          >
+        </div>
+
+        <div class="welcomeTitle">
+          SESOMU GPT
+        </div>
+
+        <div class="welcomeText">
+          Ask anything...
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           INPUT
+           ===================================================== -->
+
+      <div class="inputArea">
+
+        <div class="inputBox">
+
+          <input
+            id="messageInput"
+            type="text"
+            placeholder="Ask anything..."
+            autocomplete="off"
+          >
+
+
+          <!-- WEB BUTTON -->
+
+          <button
+            id="grokButton"
+            class="actionButton webButton"
+            title="Real-time Web Search"
+            aria-label="Real-time Web Search"
+          >
+            WEB
+          </button>
+
+
+          <!-- MICROPHONE -->
+
+          <button
+            id="micButton"
+            class="actionButton micButton"
+            title="Voice input"
+            aria-label="Voice input"
+          >
+
+            <svg
+              class="micIcon"
+              viewBox="0 0 32 40"
+              aria-hidden="true"
+            >
+
+              <rect
+                class="micBody"
+                x="9"
+                y="2"
+                width="14"
+                height="23"
+                rx="7"
+              />
+
+              <path
+                class="micLine"
+                d="M11.5 9h9"
+              />
+
+              <path
+                class="micLine"
+                d="M11.5 13h9"
+              />
+
+              <path
+                class="micLine"
+                d="M11.5 17h9"
+              />
+
+              <path
+                class="micLine"
+                d="M5 18v2a11 11 0 0 0 22 0v-2"
+              />
+
+              <path
+                class="micLine"
+                d="M16 31V25"
+              />
+
+              <rect
+                class="micBase"
+                x="9"
+                y="31"
+                width="14"
+                height="3"
+                rx="1.5"
+              />
+
+            </svg>
+
+          </button>
+
+
+          <button id="sendButton">
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       RECENT CHATS PANEL
+       ========================================================= -->
+
+  <div id="recentPanel">
+    <div class="recentTitle">
+      Recent Chats
+    </div>
 
     <div id="recentList"></div>
-
   </div>
 
-</div>
-
-
-  </div>
 
   <script>
 
-    /* =========================
-       CONFIG
-       ========================= */
+    /* ==========================================================
+       API
+       ========================================================== */
 
     const API_URL =
       "https://sesomu-gpt-api.ghanu-bhai01.workers.dev/";
 
 
-    /* =========================
+    /* ==========================================================
        ELEMENTS
-       ========================= */
+       ========================================================== */
 
     const loginScreen =
       document.getElementById("loginScreen");
@@ -945,17 +842,11 @@
     const sendButton =
       document.getElementById("sendButton");
 
-    const micButton =
-      document.getElementById("micButton");
-
     const grokButton =
       document.getElementById("grokButton");
 
-    const chat =
-      document.getElementById("chat");
-
-    const logoWrap =
-      document.getElementById("logoWrap");
+    const micButton =
+      document.getElementById("micButton");
 
     const newChatButton =
       document.getElementById("newChatButton");
@@ -969,144 +860,60 @@
     const recentList =
       document.getElementById("recentList");
 
-    const closeRecent =
-      document.getElementById("closeRecent");
+    const chatMessages =
+      document.getElementById("chatMessages");
+
+    const logoWrap =
+      document.getElementById("logoWrap");
+
+    const welcomeArea =
+      document.getElementById("welcomeArea");
 
 
-    /* =========================
-       USER STORAGE
-       ========================= */
-
-    function getSavedUser() {
-      try {
-        return JSON.parse(
-          localStorage.getItem("sesomu_user") || "null"
-        );
-      } catch {
-        return null;
-      }
-    }
-
-    function saveUser(user) {
-      localStorage.setItem(
-        "sesomu_user",
-        JSON.stringify(user)
-      );
-    }
-
-
-    /* =========================
-       CHAT STORAGE
-       ========================= */
-
-    function getChats() {
-      try {
-        return JSON.parse(
-          localStorage.getItem("sesomu_chats") || "[]"
-        );
-      } catch {
-        return [];
-      }
-    }
-
-    function saveChats(chats) {
-      localStorage.setItem(
-        "sesomu_chats",
-        JSON.stringify(chats)
-      );
-    }
-
-
-    function saveCurrentChat() {
-
-      const messages = [];
-
-      chat.querySelectorAll(".messageRow")
-        .forEach(row => {
-
-          const bubble =
-            row.querySelector(".messageBubble");
-
-          if (!bubble) return;
-
-          messages.push({
-            role: row.classList.contains("user")
-              ? "user"
-              : "bot",
-
-            text: bubble.textContent || ""
-          });
-
-        });
-
-      if (!messages.length) return;
-
-      const firstUser =
-        messages.find(m => m.role === "user");
-
-      const title =
-        firstUser
-          ? firstUser.text.substring(0, 60)
-          : "New Chat";
-
-      const chats = getChats();
-
-      chats.unshift({
-        id: Date.now(),
-        title,
-        time: new Date().toLocaleString(),
-        messages
-      });
-
-      saveChats(chats.slice(0, 30));
-    }
-
-
-    /* =========================
-       LOGIN
-       ========================= */
+    /* ==========================================================
+       USER LOGIN
+       ========================================================== */
 
     function showApp() {
-
       loginScreen.style.display = "none";
-      app.style.display = "block";
-
+      app.style.display = "flex";
       messageInput.focus();
     }
 
 
-    function login() {
-
-      const name =
-        nameInput.value.trim();
-
-      const designation =
-        designationInput.value.trim();
-
-      if (!name) {
-        alert("Please enter your name.");
-        nameInput.focus();
-        return;
-      }
-
-      if (!designation) {
-        alert("Please enter your designation.");
-        designationInput.focus();
-        return;
-      }
-
-      saveUser({
-        name,
-        designation
-      });
-
-      showApp();
+    function showLogin() {
+      loginScreen.style.display = "flex";
+      app.style.display = "none";
     }
 
 
     loginButton.addEventListener(
       "click",
-      login
+      () => {
+
+        const name =
+          nameInput.value.trim();
+
+        const designation =
+          designationInput.value.trim();
+
+        if (!name) {
+          nameInput.focus();
+          return;
+        }
+
+        const user = {
+          name,
+          designation
+        };
+
+        localStorage.setItem(
+          "sesomu_user",
+          JSON.stringify(user)
+        );
+
+        showApp();
+      }
     );
 
 
@@ -1124,150 +931,25 @@
       "keydown",
       event => {
         if (event.key === "Enter") {
-          login();
+          loginButton.click();
         }
       }
     );
 
 
-    /* =========================
-       NEW CHAT
-       ========================= */
+    const savedUser =
+      localStorage.getItem("sesomu_user");
 
-    function startNewChat() {
-
-      if (chat.children.length) {
-        saveCurrentChat();
-      }
-
-      chat.innerHTML = "";
-
-      logoWrap.classList.remove(
-        "chatStarted"
-      );
-
-      messageInput.value = "";
-      messageInput.focus();
+    if (savedUser) {
+      showApp();
+    } else {
+      showLogin();
     }
 
 
-    newChatButton.addEventListener(
-      "click",
-      startNewChat
-    );
-
-
-    /* =========================
-       RECENT CHATS
-       ========================= */
-
-    function showRecentChats() {
-
-      const chats = getChats();
-
-      recentList.innerHTML = "";
-
-      if (!chats.length) {
-
-        recentList.innerHTML =
-          '<div class="emptyRecent">No recent chats yet.</div>';
-
-        recentPanel.style.display = "block";
-
-        return;
-      }
-
-      chats.forEach(item => {
-
-        const div =
-          document.createElement("div");
-
-        div.className = "recentItem";
-
-        div.innerHTML = `
-          <div class="recentItemTitle">
-            ${escapeHTML(item.title)}
-          </div>
-
-          <div class="recentItemTime">
-            ${escapeHTML(item.time)}
-          </div>
-        `;
-
-        div.addEventListener(
-          "click",
-          () => loadChat(item)
-        );
-
-        recentList.appendChild(div);
-
-      });
-
-      recentPanel.style.display = "block";
-    }
-
-
-    recentButton.addEventListener(
-      "click",
-      showRecentChats
-    );
-
-
-    closeRecent.addEventListener(
-      "click",
-      () => {
-        recentPanel.style.display = "none";
-      }
-    );
-
-
-    recentPanel.addEventListener(
-      "click",
-      event => {
-
-        if (event.target === recentPanel) {
-          recentPanel.style.display = "none";
-        }
-
-      }
-    );
-
-
-    function loadChat(savedChat) {
-
-      chat.innerHTML = "";
-
-      savedChat.messages.forEach(
-        message => {
-
-          if (message.role === "user") {
-            addUserMessage(
-              message.text,
-              false
-            );
-          } else {
-            addBotMessage(
-              message.text,
-              false
-            );
-          }
-
-        }
-      );
-
-      logoWrap.classList.add(
-        "chatStarted"
-      );
-
-      recentPanel.style.display = "none";
-
-      messageInput.focus();
-    }
-
-
-    /* =========================
-       SAFE HTML
-       ========================= */
+    /* ==========================================================
+       HTML ESCAPE
+       ========================================================== */
 
     function escapeHTML(text) {
 
@@ -1280,20 +962,25 @@
     }
 
 
-    /* =========================
-       MARKDOWN RENDERER
-       ========================= */
+    /* ==========================================================
+       MARKDOWN
+       ========================================================== */
 
     function renderMarkdown(text) {
 
       let source =
-        escapeHTML(String(text || ""));
+        escapeHTML(text || "");
+
+
+      /*
+       * Protect code blocks.
+       */
 
       const codeBlocks = [];
 
       source = source.replace(
-        /([\s\S]*?)/g,
-        function (_, code) {
+        /```([\s\S]*?)```/g,
+        function(match, code) {
 
           const index =
             codeBlocks.length;
@@ -1302,601 +989,918 @@
             "<pre><code>" +
             code.trim() +
             "</code></pre>"
+          );
 
-
+          return `@@CODEBLOCK${index}@@`;
+        }
       );
 
-      return `@@CODEBLOCK${index}@@`;
-    }
-  );
+
+      /*
+       * Inline code.
+       */
+
+      source = source.replace(
+        /`([^`\n]+)`/g,
+        "<code>$1</code>"
+      );
 
 
-  source = source.replace(
-    /`([^`\n]+)`/g,
-    "<code>$1</code>"
-  );
+      /*
+       * Headings.
+       */
+
+      source = source.replace(
+        /^### (.*)$/gm,
+        "<h3>$1</h3>"
+      );
+
+      source = source.replace(
+        /^## (.*)$/gm,
+        "<h2>$1</h2>"
+      );
+
+      source = source.replace(
+        /^# (.*)$/gm,
+        "<h1>$1</h1>"
+      );
 
 
-  source = source.replace(
-    /^### (.+)$/gm,
-    "<h3>$1</h3>"
-  );
+      /*
+       * Bold.
+       */
 
-  source = source.replace(
-    /^## (.+)$/gm,
-    "<h2>$1</h2>"
-  );
+      source = source.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      );
 
-  source = source.replace(
-    /^# (.+)$/gm,
-    "<h1>$1</h1>"
-  );
-
-
-  source = source.replace(
-    /\*\*(.+?)\*\*/g,
-    "<strong>$1</strong>"
-  );
-
-  source = source.replace(
-    /__(.+?)__/g,
-    "<strong>$1</strong>"
-  );
-
-  source = source.replace(
-    /(^|[^*])\*([^*\n]+)\*/g,
-    "$1<em>$2</em>"
-  );
-
-  source = source.replace(
-    /(^|[^_])_([^_\n]+)_/g,
-    "$1<em>$2</em>"
-  );
+      source = source.replace(
+        /__(.*?)__/g,
+        "<strong>$1</strong>"
+      );
 
 
-  const lines =
-    source.split("\n");
+      /*
+       * Italic.
+       */
 
-  let result = "";
-  let inUL = false;
-  let inOL = false;
+      source = source.replace(
+        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+        "<em>$1</em>"
+      );
 
-  for (let i = 0; i < lines.length; i++) {
-
-    const line = lines[i];
-
-    const ulMatch =
-      line.match(/^\s*[-*+]\s+(.+)$/);
-
-    const olMatch =
-      line.match(/^\s*\d+\.\s+(.+)$/);
+      source = source.replace(
+        /(?<!_)_([^_\n]+)_(?!_)/g,
+        "<em>$1</em>"
+      );
 
 
-    if (ulMatch) {
+      /*
+       * Lists.
+       */
 
-      if (!inUL) {
-        result += "<ul>";
-        inUL = true;
+      const lines =
+        source.split("\n");
+
+      let html = "";
+      let inUL = false;
+      let inOL = false;
+
+      function closeLists() {
+
+        if (inUL) {
+          html += "</ul>";
+          inUL = false;
+        }
+
+        if (inOL) {
+          html += "</ol>";
+          inOL = false;
+        }
       }
 
-      result += "<li>" +
-        ulMatch[1] +
-        "</li>";
 
-      continue;
-    }
+      for (let i = 0; i < lines.length; i++) {
+
+        const line =
+          lines[i];
+
+        const unordered =
+          line.match(/^\s*[-*]\s+(.*)$/);
+
+        const ordered =
+          line.match(/^\s*\d+\.\s+(.*)$/);
 
 
-    if (olMatch) {
+        if (unordered) {
 
-      if (!inOL) {
-        result += "<ol>";
-        inOL = true;
+          if (inOL) {
+            html += "</ol>";
+            inOL = false;
+          }
+
+          if (!inUL) {
+            html += "<ul>";
+            inUL = true;
+          }
+
+          html +=
+            "<li>" +
+            unordered[1] +
+            "</li>";
+
+          continue;
+        }
+
+
+        if (ordered) {
+
+          if (inUL) {
+            html += "</ul>";
+            inUL = false;
+          }
+
+          if (!inOL) {
+            html += "<ol>";
+            inOL = true;
+          }
+
+          html +=
+            "<li>" +
+            ordered[1] +
+            "</li>";
+
+          continue;
+        }
+
+
+        closeLists();
+
+
+        if (!line.trim()) {
+          html += "<br>";
+        } else {
+          html +=
+            "<p>" +
+            line +
+            "</p>";
+        }
       }
 
-      result += "<li>" +
-        olMatch[1] +
-        "</li>";
 
-      continue;
+      closeLists();
+
+
+      /*
+       * Restore code blocks.
+       */
+
+      html =
+        html.replace(
+          /@@CODEBLOCK(\d+)@@/g,
+          function(match, index) {
+            return codeBlocks[
+              Number(index)
+            ];
+          }
+        );
+
+
+      /*
+       * Remove excessive empty paragraphs.
+       */
+
+      html =
+        html.replace(
+          /<p><br><\/p>/g,
+          "<br>"
+        );
+
+
+      return html;
     }
 
 
-    if (inUL) {
-      result += "</ul>";
-      inUL = false;
+    /* ==========================================================
+       ADD USER MESSAGE
+       ========================================================== */
+
+    function addUserMessage(text) {
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "messageRow user";
+
+
+      const bubble =
+        document.createElement("div");
+
+      bubble.className =
+        "messageBubble";
+
+
+      /*
+       * User messages use textContent.
+       * This prevents HTML injection.
+       */
+
+      bubble.textContent =
+        text;
+
+
+      row.appendChild(bubble);
+
+      chatMessages.appendChild(row);
+
+      scrollToBottom();
     }
 
-    if (inOL) {
-      result += "</ol>";
-      inOL = false;
+
+    /* ==========================================================
+       ADD BOT MESSAGE
+       ========================================================== */
+
+    function addBotMessage(text) {
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "messageRow bot";
+
+
+      const bubble =
+        document.createElement("div");
+
+      bubble.className =
+        "messageBubble";
+
+
+      /*
+       * IMPORTANT:
+       * Markdown is rendered as horizontal HTML.
+       */
+
+      bubble.innerHTML =
+        renderMarkdown(text);
+
+
+      row.appendChild(bubble);
+
+      chatMessages.appendChild(row);
+
+      scrollToBottom();
     }
 
 
-    if (!line.trim()) {
-      result += "<br>";
-    } else if (
-      line.startsWith("<h1>") ||
-      line.startsWith("<h2>") ||
-      line.startsWith("<h3>") ||
-      line.startsWith("<pre>")
-    ) {
-      result += line;
+    /* ==========================================================
+       TYPING
+       ========================================================== */
+
+    function addTypingMessage() {
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "messageRow bot";
+
+
+      const bubble =
+        document.createElement("div");
+
+      bubble.className =
+        "messageBubble";
+
+
+      bubble.innerHTML = `
+        <span class="typingDots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      `;
+
+
+      row.appendChild(bubble);
+
+      chatMessages.appendChild(row);
+
+      scrollToBottom();
+
+      return row;
+    }
+
+
+    /* ==========================================================
+       SCROLL
+       ========================================================== */
+
+    function scrollToBottom() {
+
+      requestAnimationFrame(() => {
+
+        chatMessages.scrollTop =
+          chatMessages.scrollHeight;
+
+      });
+    }
+
+
+    /* ==========================================================
+       SAVE CHAT
+       ========================================================== */
+
+    function saveCurrentChat() {
+
+      const rows =
+        Array.from(
+          chatMessages.querySelectorAll(
+            ".messageRow"
+          )
+        );
+
+      if (!rows.length) {
+        return;
+      }
+
+      const messages =
+        rows.map(row => {
+
+          const bubble =
+            row.querySelector(
+              ".messageBubble"
+            );
+
+          return {
+            role:
+              row.classList.contains("user")
+                ? "user"
+                : "assistant",
+
+            text:
+              bubble
+                ? bubble.innerText
+                : ""
+          };
+        });
+
+
+      const chats =
+        JSON.parse(
+          localStorage.getItem(
+            "sesomu_recent_chats"
+          ) || "[]"
+        );
+
+
+      chats.unshift({
+        date:
+          new Date().toLocaleString(),
+
+        messages
+      });
+
+
+      /*
+       * Keep last 20 chats.
+       */
+
+      const limited =
+        chats.slice(0, 20);
+
+
+      localStorage.setItem(
+        "sesomu_recent_chats",
+        JSON.stringify(limited)
+      );
+    }
+
+
+    /* ==========================================================
+       NORMAL CHAT
+       ========================================================== */
+
+    async function askAI() {
+
+      const message =
+        messageInput.value.trim();
+
+      if (!message) {
+        messageInput.focus();
+        return;
+      }
+
+
+      addUserMessage(message);
+
+      logoWrap.classList.add(
+        "chatStarted"
+      );
+
+      welcomeArea.style.display =
+        "none";
+
+      messageInput.value = "";
+
+
+      const typing =
+        addTypingMessage();
+
+
+      sendButton.disabled =
+        true;
+
+      grokButton.disabled =
+        true;
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+                  message
+                })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        typing.remove();
+
+
+        if (!response.ok) {
+
+          addBotMessage(
+            data?.answer ||
+            "The AI service is unavailable right now."
+          );
+
+          return;
+        }
+
+
+        addBotMessage(
+          data?.answer ||
+          "No answer was returned."
+        );
+
+
+        saveCurrentChat();
+
+      } catch (error) {
+
+        typing.remove();
+
+        addBotMessage(
+          "Unable to connect to SESOMU GPT."
+        );
+
+      } finally {
+
+        sendButton.disabled =
+          false;
+
+        grokButton.disabled =
+          false;
+
+        messageInput.focus();
+      }
+    }
+
+
+    /* ==========================================================
+       WEB / GROK
+       ========================================================== */
+
+    async function askGrok() {
+
+      const message =
+        messageInput.value.trim();
+
+      if (!message) {
+        messageInput.focus();
+        return;
+      }
+
+
+      addUserMessage(message);
+
+      logoWrap.classList.add(
+        "chatStarted"
+      );
+
+      welcomeArea.style.display =
+        "none";
+
+      messageInput.value = "";
+
+
+      const typing =
+        addTypingMessage();
+
+
+      grokButton.disabled =
+        true;
+
+      grokButton.classList.add(
+        "active"
+      );
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+                  message,
+                  mode: "grok"
+                })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        typing.remove();
+
+
+        if (!response.ok) {
+
+          addBotMessage(
+            data?.answer ||
+            "WEB search is unavailable right now."
+          );
+
+          return;
+        }
+
+
+        addBotMessage(
+          data?.answer ||
+          "WEB search did not return an answer."
+        );
+
+
+        saveCurrentChat();
+
+      } catch (error) {
+
+        typing.remove();
+
+        addBotMessage(
+          "Unable to connect to WEB search."
+        );
+
+      } finally {
+
+        grokButton.disabled =
+          false;
+
+        grokButton.classList.remove(
+          "active"
+        );
+
+        messageInput.focus();
+      }
+    }
+
+
+    /* ==========================================================
+       BUTTON EVENTS
+       ========================================================== */
+
+    sendButton.addEventListener(
+      "click",
+      askAI
+    );
+
+
+    grokButton.addEventListener(
+      "click",
+      askGrok
+    );
+
+
+    messageInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          askAI();
+        }
+      }
+    );
+
+
+    /* ==========================================================
+       NEW CHAT
+       ========================================================== */
+
+    newChatButton.addEventListener(
+      "click",
+      () => {
+
+        if (
+          chatMessages.children.length
+        ) {
+          saveCurrentChat();
+        }
+
+
+        chatMessages.innerHTML = "";
+
+        logoWrap.classList.remove(
+          "chatStarted"
+        );
+
+        welcomeArea.style.display =
+          "flex";
+
+        recentPanel.style.display =
+          "none";
+
+        messageInput.value = "";
+
+        messageInput.focus();
+      }
+    );
+
+
+    /* ==========================================================
+       RECENT CHATS
+       ========================================================== */
+
+    function loadRecentChats() {
+
+      const chats =
+        JSON.parse(
+          localStorage.getItem(
+            "sesomu_recent_chats"
+          ) || "[]"
+        );
+
+
+      recentList.innerHTML = "";
+
+
+      if (!chats.length) {
+
+        recentList.innerHTML =
+          "<div>No recent chats.</div>";
+
+        return;
+      }
+
+
+      chats.forEach(
+        (chat, index) => {
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+          item.className =
+            "recentItem";
+
+
+          const firstUserMessage =
+            chat.messages.find(
+              message =>
+                message.role === "user"
+            );
+
+
+          item.textContent =
+            firstUserMessage?.text ||
+            "Chat " + (index + 1);
+
+
+          item.addEventListener(
+            "click",
+            () => {
+
+              chatMessages.innerHTML =
+                "";
+
+              logoWrap.classList.add(
+                "chatStarted"
+              );
+
+              welcomeArea.style.display =
+                "none";
+
+
+              chat.messages.forEach(
+                message => {
+
+                  if (
+                    message.role === "user"
+                  ) {
+                    addUserMessage(
+                      message.text
+                    );
+                  } else {
+                    addBotMessage(
+                      message.text
+                    );
+                  }
+
+                }
+              );
+
+
+              recentPanel.style.display =
+                "none";
+
+              scrollToBottom();
+            }
+          );
+
+
+          recentList.appendChild(item);
+        }
+      );
+    }
+
+
+    recentButton.addEventListener(
+      "click",
+      () => {
+
+        if (
+          recentPanel.style.display ===
+          "block"
+        ) {
+
+          recentPanel.style.display =
+            "none";
+
+        } else {
+
+          loadRecentChats();
+
+          recentPanel.style.display =
+            "block";
+        }
+      }
+    );
+
+
+    /* ==========================================================
+       MICROPHONE
+       ========================================================== */
+
+    let recognition = null;
+
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+
+    if (SpeechRecognition) {
+
+      recognition =
+        new SpeechRecognition();
+
+      recognition.continuous =
+        false;
+
+      recognition.interimResults =
+        false;
+
+      recognition.lang =
+        "en-IN";
+
+
+      recognition.onstart =
+        () => {
+
+          micButton.classList.add(
+            "active"
+          );
+        };
+
+
+      recognition.onend =
+        () => {
+
+          micButton.classList.remove(
+            "active"
+          );
+        };
+
+
+      recognition.onerror =
+        () => {
+
+          micButton.classList.remove(
+            "active"
+          );
+        };
+
+
+      recognition.onresult =
+        event => {
+
+          const transcript =
+            event.results[0][0].transcript;
+
+          messageInput.value =
+            transcript;
+
+          messageInput.focus();
+        };
+
+
+      micButton.addEventListener(
+        "click",
+        () => {
+
+          try {
+            recognition.start();
+          } catch (error) {
+            // Ignore repeated start errors.
+          }
+
+        }
+      );
+
     } else {
-      result += "<p>" + line + "</p>";
-    }
-  }
 
+      micButton.addEventListener(
+        "click",
+        () => {
 
-  if (inUL) result += "</ul>";
-  if (inOL) result += "</ol>";
+          addBotMessage(
+            "Voice input is not supported by this browser."
+          );
 
-
-  result = result.replace(
-    /@@CODEBLOCK(\d+)@@/g,
-    (_, index) =>
-      codeBlocks[Number(index)]
-  );
-
-
-  return result;
-}
-
-
-/* =========================
-   ADD USER MESSAGE
-   ========================= */
-
-function addUserMessage(
-  text,
-  scroll = true
-) {
-
-  const row =
-    document.createElement("div");
-
-  row.className =
-    "messageRow user";
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "messageBubble";
-
-  bubble.textContent =
-    text;
-
-  row.appendChild(bubble);
-
-  chat.appendChild(row);
-
-  if (scroll) {
-    chat.scrollTop =
-      chat.scrollHeight;
-  }
-}
-
-
-/* =========================
-   ADD BOT MESSAGE
-   ========================= */
-
-function addBotMessage(
-  text,
-  scroll = true
-) {
-
-  const row =
-    document.createElement("div");
-
-  row.className =
-    "messageRow bot";
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "messageBubble";
-
-  bubble.innerHTML =
-    renderMarkdown(text);
-
-  row.appendChild(bubble);
-
-  chat.appendChild(row);
-
-  if (scroll) {
-    chat.scrollTop =
-      chat.scrollHeight;
-  }
-}
-
-
-/* =========================
-   TYPING MESSAGE
-   ========================= */
-
-function addTypingMessage() {
-
-  const row =
-    document.createElement("div");
-
-  row.className =
-    "messageRow bot";
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "messageBubble typing";
-
-  bubble.textContent =
-    "Thinking...";
-
-  row.appendChild(bubble);
-
-  chat.appendChild(row);
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-  return row;
-}
-
-
-/* =========================
-   NORMAL CHAT
-   ========================= */
-
-async function sendMessage() {
-
-  const message =
-    messageInput.value.trim();
-
-  if (!message) return;
-
-  addUserMessage(message);
-
-  logoWrap.classList.add(
-    "chatStarted"
-  );
-
-  messageInput.value = "";
-
-  const typing =
-    addTypingMessage();
-
-  sendButton.disabled = true;
-
-  try {
-
-    const response =
-      await fetch(API_URL, {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body: JSON.stringify({
-          message
-        })
-
-      });
-
-
-    const data =
-      await response.json();
-
-
-    typing.remove();
-
-
-    if (!response.ok) {
-
-      addBotMessage(
-        data?.answer ||
-        "The AI service is temporarily unavailable."
+        }
       );
 
-      return;
     }
 
 
-    addBotMessage(
-      data?.answer ||
-      "I couldn't generate an answer."
-    );
-
-
-  } catch (error) {
-
-    typing.remove();
-
-    addBotMessage(
-      "Unable to connect to SESOMU GPT right now."
-    );
-
-  } finally {
-
-    sendButton.disabled =
-      false;
-
-    messageInput.focus();
-
-  }
-}
-
-
-sendButton.addEventListener(
-  "click",
-  sendMessage
-);
-
-
-messageInput.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-      event.preventDefault();
-      sendMessage();
-    }
-
-  }
-);
-
-
-/* =========================
-   GROK WEB SEARCH
-   ========================= */
-
-async function askGrok() {
-
-  const message =
-    messageInput.value.trim();
-
-  if (!message) {
-
-    messageInput.focus();
-
-    return;
-  }
-
-
-  addUserMessage(message);
-
-  logoWrap.classList.add(
-    "chatStarted"
-  );
-
-  messageInput.value = "";
-
-  const typing =
-    addTypingMessage();
-
-  grokButton.disabled = true;
-  grokButton.classList.add("active");
-
-  try {
-
-    const response =
-      await fetch(API_URL, {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body: JSON.stringify({
-          message,
-          mode: "grok"
-        })
-
-      });
-
-
-    const data =
-      await response.json();
-
-
-    typing.remove();
-
-
-    if (!response.ok) {
-
-      addBotMessage(
-        data?.answer ||
-        "Grok Web Search is unavailable right now."
-      );
-
-      return;
-    }
-
-
-    addBotMessage(
-      data?.answer ||
-      "Grok did not return an answer."
-    );
-
-
-  } catch (error) {
-
-    typing.remove();
-
-    addBotMessage(
-      "Unable to connect to Grok Web Search."
-    );
-
-  } finally {
-
-    grokButton.disabled =
-      false;
-
-    grokButton.classList.remove(
-      "active"
-    );
-
-    messageInput.focus();
-
-  }
-}
-
-
-grokButton.addEventListener(
-  "click",
-  askGrok
-);
-
-
-/* =========================
-   VOICE INPUT
-   ========================= */
-
-let recognition = null;
-let isListening = false;
-
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-
-if (SpeechRecognition) {
-
-  recognition =
-    new SpeechRecognition();
-
-  recognition.continuous = false;
-  recognition.interimResults = true;
-  recognition.lang = "en-IN";
-
-
-  recognition.onstart =
-    () => {
-
-      isListening = true;
-
-      micButton.classList.add(
-        "active"
-      );
-
-    };
-
-
-  recognition.onresult =
-    event => {
-
-      let transcript = "";
-
-      for (
-        let i = event.resultIndex;
-        i < event.results.length;
-        i++
-      ) {
-
-        transcript +=
-          event.results[i][0].transcript;
-
+    /* ==========================================================
+       CLOSE RECENT PANEL WHEN CLICKING OUTSIDE
+       ========================================================== */
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        if (
+          !recentPanel.contains(
+            event.target
+          ) &&
+          !recentButton.contains(
+            event.target
+          )
+        ) {
+
+          recentPanel.style.display =
+            "none";
+        }
       }
-
-      messageInput.value =
-        transcript.trim();
-
-    };
-
-
-  recognition.onend =
-    () => {
-
-      isListening = false;
-
-      micButton.classList.remove(
-        "active"
-      );
-
-    };
-
-
-  recognition.onerror =
-    () => {
-
-      isListening = false;
-
-      micButton.classList.remove(
-        "active"
-      );
-
-    };
-
-
-  micButton.addEventListener(
-    "click",
-    () => {
-
-      if (isListening) {
-
-        recognition.stop();
-
-      } else {
-
-        recognition.start();
-
-      }
-
-    }
-  );
-
-} else {
-
-  micButton.addEventListener(
-    "click",
-    () => {
-
-      alert(
-        "Voice input is not supported in this browser."
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-   STARTUP
-   ========================= */
-
-const savedUser =
-  getSavedUser();
-
-
-if (savedUser) {
-
-  nameInput.value =
-    savedUser.name || "";
-
-  designationInput.value =
-    savedUser.designation || "";
-
-  showApp();
-
-} else {
-
-  loginScreen.style.display =
-    "flex";
-
-  app.style.display =
-    "none";
-
-}
+    );
 
   </script>
 
