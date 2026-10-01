@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -124,12 +125,16 @@
       overflow: hidden;
     }
 
+    /* =========================
+       TOP BAR
+    ========================= */
+
     .topBar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 20;
+      z-index: 30;
 
       display: flex;
       justify-content: space-between;
@@ -142,8 +147,8 @@
 
       background: linear-gradient(
         to bottom,
-        rgba(3,3,10,0.95),
-        rgba(3,3,10,0.7),
+        rgba(3,3,10,0.96),
+        rgba(3,3,10,0.72),
         transparent
       );
     }
@@ -158,7 +163,7 @@
       padding: 0 13px;
       border: 1px solid rgba(0, 220, 255, 0.25);
       border-radius: 10px;
-      background: rgba(12, 15, 30, 0.78);
+      background: rgba(12, 15, 30, 0.82);
       color: #d8faff;
       font-size: 12px;
       cursor: pointer;
@@ -171,7 +176,7 @@
     }
 
     /* =========================
-       LOGO
+       FIXED SESOMU HEADER
     ========================= */
 
     .logoWrap {
@@ -179,45 +184,93 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -55%);
-      z-index: 2;
+
+      z-index: 15;
 
       display: flex;
       flex-direction: column;
       align-items: center;
 
+      width: 100%;
+
       transition:
         top 0.45s ease,
         transform 0.45s ease;
+
       pointer-events: none;
     }
 
+    /*
+      Once chat starts, this becomes a fixed header.
+      The chat area begins below it.
+    */
+
     .logoWrap.chatStarted {
-      top: 62px;
+      top: 58px;
       transform: translateX(-50%);
     }
 
     .logo {
-      width: 115px;
-      height: 115px;
+      width: 90px;
+      height: 90px;
       object-fit: contain;
-      border-radius: 24px;
+      border-radius: 20px;
       filter: drop-shadow(0 0 20px rgba(0,210,255,0.15));
     }
 
     .title {
-      margin-top: 10px;
-      font-size: 30px;
+      margin-top: 6px;
+      font-size: 27px;
       font-weight: 700;
       letter-spacing: 1px;
-      background: linear-gradient(90deg, #00eaff, #9d7cff);
+
+      background: linear-gradient(
+        90deg,
+        #00eaff,
+        #9d7cff
+      );
+
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .subtitle {
-      margin-top: 5px;
+      margin-top: 4px;
       color: #8888a4;
-      font-size: 13px;
+      font-size: 12px;
+    }
+
+    /*
+      Header background layer.
+      This prevents scrolling messages from visually
+      showing behind the logo/header.
+    */
+
+    .logoWrap.chatStarted::before {
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+      top: -18px;
+
+      width: 100vw;
+      height: 145px;
+
+      transform: translateX(-50%);
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(5,5,14,0.99) 0%,
+          rgba(5,5,14,0.97) 72%,
+          rgba(5,5,14,0.72) 90%,
+          rgba(5,5,14,0) 100%
+        );
+
+      z-index: -1;
+
+      pointer-events: none;
     }
 
     /* =========================
@@ -226,14 +279,22 @@
 
     #chat {
       position: absolute;
-      top: 190px;
+
+      /*
+        IMPORTANT:
+        Chat begins below the fixed SESOMU GPT header.
+      */
+
+      top: 165px;
+      bottom: 112px;
+
       left: 50%;
       transform: translateX(-50%);
 
       width: min(900px, calc(100% - 40px));
-      height: calc(100dvh - 310px);
 
-      padding: 20px 5px 20px;
+      padding:
+        15px 5px 20px;
 
       overflow-y: auto;
       overscroll-behavior: contain;
@@ -258,23 +319,39 @@
       margin-bottom: 15px;
       padding: 13px 16px;
       border-radius: 17px;
+
       line-height: 1.5;
       font-size: 14px;
+
       white-space: pre-wrap;
       word-wrap: break-word;
     }
 
     .userMessage {
       margin-left: auto;
-      background: linear-gradient(135deg, #124b68, #24305d);
+
+      background:
+        linear-gradient(
+          135deg,
+          #124b68,
+          #24305d
+        );
+
       border-bottom-right-radius: 5px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+
+      box-shadow:
+        0 6px 20px rgba(0,0,0,0.18);
     }
 
     .botMessage {
       margin-right: auto;
-      background: rgba(255,255,255,0.055);
-      border: 1px solid rgba(255,255,255,0.07);
+
+      background:
+        rgba(255,255,255,0.055);
+
+      border:
+        1px solid rgba(255,255,255,0.07);
+
       border-bottom-left-radius: 5px;
     }
 
@@ -284,15 +361,16 @@
 
     .inputArea {
       position: absolute;
+
       left: 50%;
       bottom: 0;
+
       transform: translateX(-50%);
 
       width: min(900px, calc(100% - 40px));
 
       padding:
-        10px
-        0
+        10px 0
         max(14px, env(safe-area-inset-bottom));
 
       z-index: 30;
@@ -306,10 +384,14 @@
       min-height: 58px;
       padding: 7px;
 
-      border: 1px solid rgba(0, 220, 255, 0.2);
+      border:
+        1px solid rgba(0, 220, 255, 0.2);
+
       border-radius: 18px;
 
-      background: rgba(10, 10, 23, 0.93);
+      background:
+        rgba(10, 10, 23, 0.95);
+
       box-shadow:
         0 10px 35px rgba(0,0,0,0.45),
         0 0 25px rgba(0,180,255,0.04);
@@ -320,12 +402,14 @@
     .search {
       flex: 1;
       min-width: 0;
+
       height: 44px;
 
       padding: 0 13px;
 
       border: 0;
       outline: none;
+
       background: transparent;
       color: white;
 
@@ -340,11 +424,14 @@
       flex: 0 0 auto;
 
       height: 44px;
+
       border: 0;
       border-radius: 13px;
 
       cursor: pointer;
-      transition: 0.2s ease;
+
+      transition:
+        0.2s ease;
     }
 
     /* =========================
@@ -353,23 +440,32 @@
 
     .micButton {
       width: 48px;
+
       display: flex;
       align-items: center;
       justify-content: center;
 
-      background: rgba(255,255,255,0.07);
+      background:
+        rgba(255,255,255,0.07);
+
       color: #d7faff;
     }
 
     .micButton:hover {
-      background: rgba(0,220,255,0.12);
+      background:
+        rgba(0,220,255,0.12);
+
       color: #00eaff;
     }
 
     .micButton.listening {
-      background: rgba(255,70,100,0.16);
+      background:
+        rgba(255,70,100,0.16);
+
       color: #ff6680;
-      box-shadow: 0 0 15px rgba(255,70,100,0.18);
+
+      box-shadow:
+        0 0 15px rgba(255,70,100,0.18);
     }
 
     .micIcon {
@@ -397,14 +493,22 @@
       min-width: 76px;
       padding: 0 17px;
 
-      background: linear-gradient(135deg, #00cfff, #7168ff);
+      background:
+        linear-gradient(
+          135deg,
+          #00cfff,
+          #7168ff
+        );
+
       color: white;
       font-weight: 600;
     }
 
     #sendButton:hover {
       transform: translateY(-1px);
-      box-shadow: 0 5px 18px rgba(0,210,255,0.2);
+
+      box-shadow:
+        0 5px 18px rgba(0,210,255,0.2);
     }
 
     #sendButton:disabled,
@@ -416,16 +520,18 @@
     .hint {
       text-align: center;
       margin-top: 6px;
+
       color: #5d5d73;
       font-size: 10px;
     }
 
     /* =========================
-       RECENT CHATS PANEL
+       RECENT CHATS
     ========================= */
 
     #recentPanel {
       position: fixed;
+
       top: 0;
       right: -390px;
 
@@ -436,15 +542,20 @@
 
       padding:
         max(60px, calc(env(safe-area-inset-top) + 35px))
-        18px
-        20px;
+        18px 20px;
 
-      background: rgba(9, 9, 20, 0.97);
-      border-left: 1px solid rgba(0,220,255,0.16);
+      background:
+        rgba(9, 9, 20, 0.97);
 
-      box-shadow: -15px 0 45px rgba(0,0,0,0.45);
+      border-left:
+        1px solid rgba(0,220,255,0.16);
 
-      transition: right 0.3s ease;
+      box-shadow:
+        -15px 0 45px rgba(0,0,0,0.45);
+
+      transition:
+        right 0.3s ease;
+
       backdrop-filter: blur(20px);
     }
 
@@ -456,6 +567,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       margin-bottom: 18px;
     }
 
@@ -467,10 +579,15 @@
     #closeRecent {
       width: 34px;
       height: 34px;
+
       border: 0;
       border-radius: 10px;
-      background: rgba(255,255,255,0.07);
+
+      background:
+        rgba(255,255,255,0.07);
+
       color: white;
+
       cursor: pointer;
       font-size: 18px;
     }
@@ -478,22 +595,33 @@
     .recentItem {
       padding: 13px;
       margin-bottom: 9px;
-      border: 1px solid rgba(255,255,255,0.07);
+
+      border:
+        1px solid rgba(255,255,255,0.07);
+
       border-radius: 12px;
-      background: rgba(255,255,255,0.04);
+
+      background:
+        rgba(255,255,255,0.04);
+
       cursor: pointer;
     }
 
     .recentItem:hover {
-      border-color: rgba(0,220,255,0.25);
-      background: rgba(0,220,255,0.06);
+      border-color:
+        rgba(0,220,255,0.25);
+
+      background:
+        rgba(0,220,255,0.06);
     }
 
     .recentTitle {
       color: white;
       font-size: 13px;
       font-weight: 600;
+
       margin-bottom: 4px;
+
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -507,7 +635,9 @@
     .emptyRecent {
       color: #77778c;
       text-align: center;
+
       margin-top: 50px;
+
       font-size: 13px;
     }
 
@@ -517,15 +647,12 @@
 
     @media (max-width: 600px) {
 
-      #app {
-        height: 100dvh;
-      }
-
       .topBar {
         padding:
           max(9px, env(safe-area-inset-top))
-          10px
-          8px;
+          10px 8px;
+
+        z-index: 30;
       }
 
       .topButtons {
@@ -535,71 +662,106 @@
 
       .smallButton {
         height: 34px;
+
         padding: 0 10px;
+
         font-size: 11px;
       }
+
+      /* =====================
+         MOBILE HEADER
+      ===================== */
 
       .logoWrap {
         top: 47%;
       }
 
       .logoWrap.chatStarted {
-        top: 57px;
+        top: 48px;
+
+        transform:
+          translateX(-50%);
+      }
+
+      .logoWrap.chatStarted::before {
+        top: -12px;
+        height: 128px;
       }
 
       .logo {
-        width: 82px;
-        height: 82px;
-        border-radius: 18px;
+        width: 67px;
+        height: 67px;
+
+        border-radius: 16px;
       }
 
       .title {
-        font-size: 23px;
-        margin-top: 7px;
+        margin-top: 4px;
+        font-size: 21px;
       }
 
       .subtitle {
-        font-size: 11px;
-        margin-top: 3px;
+        margin-top: 2px;
+        font-size: 10px;
       }
 
+      /* =====================
+         MOBILE CHAT
+      ===================== */
+
       #chat {
-        top: 130px;
+        top: 125px;
+        bottom: 76px;
+
         width: 100%;
-        height: calc(100dvh - 205px);
+
         padding:
-          8px
-          12px
-          12px;
+          8px 12px 12px;
+
+        z-index: 5;
       }
 
       .message {
         max-width: 90%;
-        padding: 11px 13px;
+
+        padding:
+          11px 13px;
+
         margin-bottom: 11px;
+
         font-size: 14px;
         line-height: 1.45;
+
         border-radius: 15px;
       }
 
+      /* =====================
+         MOBILE INPUT
+      ===================== */
+
       .inputArea {
         width: 100%;
+
         padding:
-          7px
-          9px
+          7px 9px
           max(9px, env(safe-area-inset-bottom));
       }
 
       .inputBox {
         min-height: 54px;
+
         padding: 5px;
+
         border-radius: 17px;
+
         gap: 5px;
       }
 
       .search {
         height: 42px;
+
         padding: 0 9px;
+
         font-size: 15px;
       }
 
@@ -615,8 +777,11 @@
 
       #sendButton {
         min-width: 65px;
+
         height: 42px;
+
         padding: 0 12px;
+
         font-size: 13px;
       }
 
@@ -629,7 +794,10 @@
       }
     }
 
-    /* Very small phones */
+    /* =========================
+       VERY SMALL PHONES
+    ========================= */
+
     @media (max-width: 360px) {
 
       .smallButton {
@@ -649,53 +817,63 @@
       .micButton {
         width: 41px;
       }
+
+      .logoWrap.chatStarted {
+        top: 45px;
+      }
+
+      #chat {
+        top: 118px;
+      }
     }
   </style>
+
 </head>
 
 <body>
 
   <!-- =========================
-       LOGIN SCREEN
+       LOGIN
   ========================= -->
 
   <div id="loginScreen">
 
-    <div class="loginBox">
+```
+<div class="loginBox">
 
-      <img
-        src="logo.jpeg"
-        class="loginLogo"
-        alt="SESOMU School"
-      >
+  <img
+    src="logo.jpeg"
+    class="loginLogo"
+    alt="SESOMU School"
+  >
 
-      <h2>SESOMU GPT</h2>
+  <h2>SESOMU GPT</h2>
 
-      <p>Enter your details to continue</p>
+  <p>Enter your details to continue</p>
 
-      <input
-        id="nameInput"
-        class="loginInput"
-        type="text"
-        placeholder="Your name"
-        autocomplete="name"
-      >
+  <input
+    id="nameInput"
+    class="loginInput"
+    type="text"
+    placeholder="Your name"
+    autocomplete="name"
+  >
 
-      <input
-        id="designationInput"
-        class="loginInput"
-        type="text"
-        placeholder="Designation / Class"
-      >
+  <input
+    id="designationInput"
+    class="loginInput"
+    type="text"
+    placeholder="Designation / Class"
+  >
 
-      <button id="loginButton">
-        Continue
-      </button>
+  <button id="loginButton">
+    Continue
+  </button>
 
-    </div>
+</div>
+```
 
   </div>
-
 
   <!-- =========================
        MAIN APP
@@ -703,182 +881,183 @@
 
   <div id="app">
 
-    <!-- TOP BAR -->
+```
+<!-- TOP BAR -->
 
-    <div class="topBar">
+<div class="topBar">
 
-      <div class="topButtons">
+  <div class="topButtons">
 
-        <button
-          class="smallButton"
-          id="newChatButton"
-        >
-          + New Chat
-        </button>
-
-        <button
-          class="smallButton"
-          id="recentButton"
-        >
-          Recent Chats
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- LOGO -->
-
-    <div
-      class="logoWrap"
-      id="logoWrap"
+    <button
+      class="smallButton"
+      id="newChatButton"
     >
+      + New Chat
+    </button>
 
-      <img
-        src="logo.jpeg"
-        class="logo"
-        alt="SESOMU GPT"
-      >
-
-      <div class="title">
-        SESOMU GPT
-      </div>
-
-      <div class="subtitle">
-        Your intelligent AI companion
-      </div>
-
-    </div>
-
-
-    <!-- CHAT -->
-
-    <div id="chat"></div>
-
-
-    <!-- INPUT -->
-
-    <div class="inputArea">
-
-      <div class="inputBox">
-
-        <input
-          id="messageInput"
-          class="search"
-          type="text"
-          placeholder="Ask SESOMU GPT anything..."
-          autocomplete="off"
-        >
-
-        <!-- CYLINDRICAL MICROPHONE WITH STAND -->
-
-        <button
-          id="micButton"
-          class="actionButton micButton"
-          title="Voice input"
-          aria-label="Voice input"
-        >
-
-          <svg
-            class="micIcon"
-            viewBox="0 0 32 40"
-            aria-hidden="true"
-          >
-
-            <!-- cylindrical microphone -->
-            <rect
-              class="micBody"
-              x="9"
-              y="2"
-              width="14"
-              height="23"
-              rx="7"
-            />
-
-            <!-- microphone grille lines -->
-            <path
-              class="micLine"
-              d="M11.5 9h9"
-            />
-
-            <path
-              class="micLine"
-              d="M11.5 13h9"
-            />
-
-            <path
-              class="micLine"
-              d="M11.5 17h9"
-            />
-
-            <!-- curved microphone support -->
-            <path
-              class="micLine"
-              d="M5 18v2a11 11 0 0 0 22 0v-2"
-            />
-
-            <!-- stand stem -->
-            <path
-              class="micLine"
-              d="M16 31V25"
-            />
-
-            <!-- stand base -->
-            <rect
-              class="micBase"
-              x="9"
-              y="31"
-              width="14"
-              height="3"
-              rx="1.5"
-            />
-
-          </svg>
-
-        </button>
-
-
-        <!-- SEND -->
-
-        <button
-          id="sendButton"
-          class="actionButton"
-        >
-          Send
-        </button>
-
-      </div>
-
-      <div class="hint">
-        Made with ❤️ by RG
-      </div>
-
-    </div>
-
-
-    <!-- RECENT CHATS -->
-
-    <div id="recentPanel">
-
-      <div class="recentHeader">
-
-        <h3>
-          Recent Chats
-        </h3>
-
-        <button id="closeRecent">
-          ×
-        </button>
-
-      </div>
-
-      <div id="recentList"></div>
-
-    </div>
+    <button
+      class="smallButton"
+      id="recentButton"
+    >
+      Recent Chats
+    </button>
 
   </div>
 
+</div>
+
+
+<!-- FIXED HEADER -->
+
+<div
+  class="logoWrap"
+  id="logoWrap"
+>
+
+  <img
+    src="logo.jpeg"
+    class="logo"
+    alt="SESOMU GPT"
+  >
+
+  <div class="title">
+    SESOMU GPT
+  </div>
+
+  <div class="subtitle">
+    Your intelligent AI companion
+  </div>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div id="chat"></div>
+
+
+<!-- INPUT -->
+
+<div class="inputArea">
+
+  <div class="inputBox">
+
+    <input
+      id="messageInput"
+      class="search"
+      type="text"
+      placeholder="Ask SESOMU GPT anything..."
+      autocomplete="off"
+    >
+
+    <!-- CYLINDRICAL MICROPHONE + STAND -->
+
+    <button
+      id="micButton"
+      class="actionButton micButton"
+      title="Voice input"
+      aria-label="Voice input"
+    >
+
+      <svg
+        class="micIcon"
+        viewBox="0 0 32 40"
+        aria-hidden="true"
+      >
+
+        <!-- cylindrical microphone -->
+        <rect
+          class="micBody"
+          x="9"
+          y="2"
+          width="14"
+          height="23"
+          rx="7"
+        />
+
+        <!-- grille -->
+        <path
+          class="micLine"
+          d="M11.5 9h9"
+        />
+
+        <path
+          class="micLine"
+          d="M11.5 13h9"
+        />
+
+        <path
+          class="micLine"
+          d="M11.5 17h9"
+        />
+
+        <!-- microphone support -->
+        <path
+          class="micLine"
+          d="M5 18v2a11 11 0 0 0 22 0v-2"
+        />
+
+        <!-- stand -->
+        <path
+          class="micLine"
+          d="M16 31V25"
+        />
+
+        <!-- base -->
+        <rect
+          class="micBase"
+          x="9"
+          y="31"
+          width="14"
+          height="3"
+          rx="1.5"
+        />
+
+      </svg>
+
+    </button>
+
+
+    <!-- SEND -->
+
+    <button
+      id="sendButton"
+      class="actionButton"
+    >
+      Send
+    </button>
+
+  </div>
+
+  <div class="hint">
+    Made with ❤️ by RG
+  </div>
+
+</div>
+
+
+<!-- RECENT CHATS -->
+
+<div id="recentPanel">
+
+  <div class="recentHeader">
+
+    <h3>
+      Recent Chats
+    </h3>
+
+    <button id="closeRecent">
+      ×
+    </button>
+
+  </div>
+
+  <div id="recentList"></div>
+
+</div>
+```
+
+  </div>
 
   <script>
 
@@ -947,11 +1126,17 @@
     function getSavedUser() {
 
       try {
+
         return JSON.parse(
-          localStorage.getItem("sesomuUser")
+          localStorage.getItem(
+            "sesomuUser"
+          )
         );
+
       } catch {
+
         return null;
+
       }
 
     }
@@ -976,7 +1161,9 @@
       try {
 
         return JSON.parse(
-          localStorage.getItem("sesomuChats")
+          localStorage.getItem(
+            "sesomuChats"
+          )
         ) || [];
 
       } catch {
@@ -1004,19 +1191,25 @@
         return;
       }
 
+
       const messages = [];
+
 
       chat.querySelectorAll(".message")
         .forEach(element => {
 
           messages.push({
+
             type:
-              element.classList.contains("userMessage")
+              element.classList.contains(
+                "userMessage"
+              )
                 ? "user"
                 : "bot",
 
             text:
               element.textContent
+
           });
 
         });
@@ -1027,14 +1220,19 @@
       }
 
 
-      const chats = getChats();
+      const chats =
+        getChats();
+
 
       chats.unshift({
 
         id: Date.now(),
 
         title:
-          messages[0].text.substring(0, 55),
+          messages[0].text.substring(
+            0,
+            55
+          ),
 
         date:
           new Date().toLocaleString(),
@@ -1043,10 +1241,6 @@
 
       });
 
-
-      /*
-        Keep the latest 20 chats.
-      */
 
       saveChats(
         chats.slice(0, 20)
@@ -1061,9 +1255,11 @@
 
     function showApp() {
 
-      loginScreen.style.display = "none";
+      loginScreen.style.display =
+        "none";
 
-      app.style.display = "block";
+      app.style.display =
+        "block";
 
       messageInput.focus();
 
@@ -1117,7 +1313,9 @@
       event => {
 
         if (event.key === "Enter") {
+
           designationInput.focus();
+
         }
 
       }
@@ -1129,7 +1327,9 @@
       event => {
 
         if (event.key === "Enter") {
+
           login();
+
         }
 
       }
@@ -1189,10 +1389,13 @@
         chats.forEach(item => {
 
           const div =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
 
           div.className =
             "recentItem";
+
 
           div.innerHTML = `
             <div class="recentTitle">
@@ -1211,7 +1414,9 @@
           );
 
 
-          recentList.appendChild(div);
+          recentList.appendChild(
+            div
+          );
 
         });
 
@@ -1247,10 +1452,13 @@
 
       chat.innerHTML = "";
 
+
       item.messages.forEach(
         message => {
 
-          if (message.type === "user") {
+          if (
+            message.type === "user"
+          ) {
 
             addUserMessage(
               message.text
@@ -1290,7 +1498,9 @@
     function escapeHTML(text) {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       div.textContent =
         text;
@@ -1307,7 +1517,9 @@
     function addUserMessage(text) {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       div.className =
         "message userMessage";
@@ -1327,7 +1539,9 @@
     function addBotMessage(text) {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       div.className =
         "message botMessage";
@@ -1376,7 +1590,10 @@
       );
 
 
-      addUserMessage(message);
+      addUserMessage(
+        message
+      );
+
 
       messageInput.value = "";
 
@@ -1389,7 +1606,9 @@
 
 
       const thinking =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       thinking.className =
         "message botMessage";
@@ -1397,7 +1616,11 @@
       thinking.textContent =
         "Thinking...";
 
-      chat.appendChild(thinking);
+
+      chat.appendChild(
+        thinking
+      );
+
 
       scrollChat();
 
@@ -1405,24 +1628,28 @@
       try {
 
         const response =
-          await fetch(API_URL, {
+          await fetch(
+            API_URL,
+            {
 
-            method: "POST",
+              method: "POST",
 
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
 
-            body:
-              JSON.stringify({
-                message
-              })
+              body:
+                JSON.stringify({
+                  message
+                })
 
-          });
+            }
+          );
 
 
         let data;
+
 
         try {
 
@@ -1475,9 +1702,12 @@
       }
 
 
-      sendButton.disabled = false;
+      sendButton.disabled =
+        false;
 
-      micButton.disabled = false;
+      micButton.disabled =
+        false;
+
 
       scrollChat();
 
@@ -1518,7 +1748,8 @@
       window.webkitSpeechRecognition;
 
 
-    let recognition = null;
+    let recognition =
+      null;
 
 
     if (SpeechRecognition) {
@@ -1569,6 +1800,7 @@
 
           let transcript = "";
 
+
           for (
             let i = event.resultIndex;
             i < event.results.length;
@@ -1576,7 +1808,8 @@
           ) {
 
             transcript +=
-              event.results[i][0].transcript;
+              event.results[i][0]
+                .transcript;
 
           }
 
@@ -1598,8 +1831,8 @@
           } catch {
 
             /*
-              Prevent error if recognition
-              is already running.
+              Prevent an error if
+              recognition is already running.
             */
 
           }
