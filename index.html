@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>SESOMU GPT</title>
 
   <style>
@@ -14,673 +15,577 @@
     html,
     body {
       margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
       font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top, #15152f 0%, #080812 45%, #030307 100%);
-      color: white;
-    }
-
-    body {
-      min-height: 100dvh;
+      background: #05050e;
+      color: #ffffff;
     }
 
     button,
     input {
-      font: inherit;
+      font-family: inherit;
     }
 
     /* =========================
-       LOGIN
-    ========================= */
+       LOGIN SCREEN
+       ========================= */
 
     #loginScreen {
       position: fixed;
       inset: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
+      justify-content: center;
       background:
-        radial-gradient(circle at center, #17173a 0%, #07070f 65%, #020204 100%);
-      z-index: 100;
+        radial-gradient(circle at top, rgba(80, 70, 180, 0.18), transparent 40%),
+        #05050e;
+      z-index: 1000;
+      padding: 20px;
     }
 
-    .loginBox {
+    .loginCard {
       width: min(420px, 100%);
-      padding: 32px 25px;
-      border: 1px solid rgba(0, 220, 255, 0.25);
+      padding: 32px 26px;
       border-radius: 24px;
-      background: rgba(12, 12, 28, 0.88);
-      box-shadow:
-        0 0 35px rgba(0, 200, 255, 0.08),
-        0 20px 60px rgba(0, 0, 0, 0.5);
+      background: rgba(18, 18, 35, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
       text-align: center;
-      backdrop-filter: blur(18px);
     }
 
     .loginLogo {
-      width: 95px;
-      height: 95px;
+      width: 100px;
+      height: 100px;
       object-fit: contain;
-      border-radius: 20px;
+      border-radius: 50%;
       margin-bottom: 15px;
     }
 
-    .loginBox h2 {
-      margin: 0 0 7px;
-      font-size: 27px;
+    .loginTitle {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
     }
 
-    .loginBox p {
+    .loginSubtitle {
       margin: 0 0 25px;
-      color: #aaaac4;
+      color: #a7a7c2;
       font-size: 14px;
     }
 
     .loginInput {
       width: 100%;
-      height: 50px;
-      margin-bottom: 12px;
-      padding: 0 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      outline: none;
-      background: rgba(255,255,255,0.06);
+      height: 48px;
+      margin-bottom: 14px;
+      padding: 0 15px;
+      border-radius: 13px;
+      border: 1px solid #30304c;
+      background: #0c0c19;
       color: white;
-    }
-
-    .loginInput::placeholder {
-      color: #77778e;
+      outline: none;
+      font-size: 15px;
     }
 
     .loginInput:focus {
-      border-color: #00d9ff;
-      box-shadow: 0 0 15px rgba(0,217,255,0.12);
+      border-color: #7070ff;
     }
 
     #loginButton {
       width: 100%;
-      height: 50px;
-      margin-top: 7px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(90deg, #00cfff, #786cff);
+      height: 48px;
+      border: none;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #6969ff, #9b62ff);
       color: white;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      margin-top: 5px;
+    }
+
+    #loginButton:hover {
+      opacity: 0.92;
     }
 
     /* =========================
-       MAIN APP
-    ========================= */
+       APP
+       ========================= */
 
     #app {
       display: none;
       position: relative;
       width: 100%;
-      height: 100dvh;
-      overflow: hidden;
+      height: 100%;
     }
 
     /* =========================
        TOP BAR
-    ========================= */
+       ========================= */
 
     .topBar {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      z-index: 30;
-
+      width: 100%;
+      height: 54px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-
-      padding:
-        max(12px, env(safe-area-inset-top))
-        18px
-        12px;
-
-      background: linear-gradient(
-        to bottom,
-        rgba(3,3,10,0.96),
-        rgba(3,3,10,0.72),
-        transparent
-      );
+      justify-content: space-between;
+      padding: 0 18px;
+      z-index: 100;
+      background: rgba(5, 5, 14, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .topButtons {
+    .brandSmall {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.4px;
+    }
+
+    .topActions {
       display: flex;
       gap: 8px;
     }
 
     .smallButton {
-      height: 36px;
-      padding: 0 13px;
-      border: 1px solid rgba(0, 220, 255, 0.25);
+      border: 1px solid #30304c;
+      background: #10101f;
+      color: #d9d9ee;
       border-radius: 10px;
-      background: rgba(12, 15, 30, 0.82);
-      color: #d8faff;
+      padding: 8px 12px;
       font-size: 12px;
       cursor: pointer;
-      backdrop-filter: blur(12px);
     }
 
     .smallButton:hover {
-      border-color: #00d9ff;
-      background: rgba(0, 217, 255, 0.1);
+      background: #18182a;
     }
 
     /* =========================
-       FIXED SESOMU HEADER
-    ========================= */
+       LOGO
+       ========================= */
 
     .logoWrap {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -55%);
-
       z-index: 15;
-
       display: flex;
       flex-direction: column;
       align-items: center;
-
       width: 100%;
-
-      transition:
-        top 0.45s ease,
-        transform 0.45s ease;
-
+      transition: top 0.45s ease, transform 0.45s ease;
       pointer-events: none;
     }
-
-    /*
-      Once chat starts, this becomes a fixed header.
-      The chat area begins below it.
-    */
 
     .logoWrap.chatStarted {
       top: 58px;
       transform: translateX(-50%);
     }
 
-    .logo {
-      width: 90px;
-      height: 90px;
-      object-fit: contain;
-      border-radius: 20px;
-      filter: drop-shadow(0 0 20px rgba(0,210,255,0.15));
-    }
-
-    .title {
-      margin-top: 6px;
-      font-size: 27px;
-      font-weight: 700;
-      letter-spacing: 1px;
-
-      background: linear-gradient(
-        90deg,
-        #00eaff,
-        #9d7cff
-      );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      margin-top: 4px;
-      color: #8888a4;
-      font-size: 12px;
-    }
-
-    /*
-      Header background layer.
-      This prevents scrolling messages from visually
-      showing behind the logo/header.
-    */
-
     .logoWrap.chatStarted::before {
       content: "";
-
       position: absolute;
-
       left: 50%;
       top: -18px;
-
       width: 100vw;
       height: 145px;
-
       transform: translateX(-50%);
-
       background:
         linear-gradient(
           to bottom,
-          rgba(5,5,14,0.99) 0%,
-          rgba(5,5,14,0.97) 72%,
-          rgba(5,5,14,0.72) 90%,
-          rgba(5,5,14,0) 100%
+          rgba(5, 5, 14, 0.99) 0%,
+          rgba(5, 5, 14, 0.97) 72%,
+          rgba(5, 5, 14, 0.72) 90%,
+          rgba(5, 5, 14, 0) 100%
         );
-
       z-index: -1;
-
       pointer-events: none;
+    }
+
+    .mainLogo {
+      width: 115px;
+      height: 115px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .logoTitle {
+      margin-top: 10px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .logoSubtitle {
+      margin-top: 5px;
+      color: #9292ae;
+      font-size: 13px;
     }
 
     /* =========================
        CHAT
-    ========================= */
+       ========================= */
 
     #chat {
       position: absolute;
-
-      /*
-        IMPORTANT:
-        Chat begins below the fixed SESOMU GPT header.
-      */
-
       top: 165px;
       bottom: 112px;
-
       left: 50%;
       transform: translateX(-50%);
-
       width: min(900px, calc(100% - 40px));
-
-      padding:
-        15px 5px 20px;
-
+      padding: 15px 5px 20px;
       overflow-y: auto;
       overscroll-behavior: contain;
-
       scrollbar-width: thin;
       scrollbar-color: #30304c transparent;
-
       z-index: 5;
     }
 
-    #chat::-webkit-scrollbar {
-      width: 5px;
+    .messageRow {
+      display: flex;
+      margin-bottom: 16px;
     }
 
-    #chat::-webkit-scrollbar-thumb {
-      background: #30304c;
-      border-radius: 10px;
+    .messageRow.user {
+      justify-content: flex-end;
     }
 
-    .message {
+    .messageRow.bot {
+      justify-content: flex-start;
+    }
+
+    .messageBubble {
       max-width: 82%;
-      margin-bottom: 15px;
-      padding: 13px 16px;
-      border-radius: 17px;
-
-      line-height: 1.5;
-      font-size: 14px;
-
-      white-space: pre-wrap;
-      word-wrap: break-word;
+      padding: 12px 15px;
+      border-radius: 16px;
+      line-height: 1.55;
+      font-size: 15px;
+      overflow-wrap: anywhere;
     }
 
-    .userMessage {
-      margin-left: auto;
-
-      background:
-        linear-gradient(
-          135deg,
-          #124b68,
-          #24305d
-        );
-
-      border-bottom-right-radius: 5px;
-
-      box-shadow:
-        0 6px 20px rgba(0,0,0,0.18);
+    .user .messageBubble {
+      background: #242444;
+      border: 1px solid #37375d;
     }
 
-    .botMessage {
-      margin-right: auto;
+    .bot .messageBubble {
+      background: rgba(14, 14, 28, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
 
-      background:
-        rgba(255,255,255,0.055);
+    .messageBubble strong {
+      font-weight: 700;
+      color: #ffffff;
+    }
 
-      border:
-        1px solid rgba(255,255,255,0.07);
+    .messageBubble em {
+      font-style: italic;
+    }
 
-      border-bottom-left-radius: 5px;
+    .messageBubble p {
+      margin: 0 0 10px;
+    }
+
+    .messageBubble p:last-child {
+      margin-bottom: 0;
+    }
+
+    .messageBubble ul,
+    .messageBubble ol {
+      margin: 8px 0;
+      padding-left: 23px;
+    }
+
+    .messageBubble li {
+      margin: 4px 0;
+    }
+
+    .messageBubble h1,
+    .messageBubble h2,
+    .messageBubble h3 {
+      margin: 10px 0 7px;
+      line-height: 1.3;
+    }
+
+    .messageBubble h1 {
+      font-size: 22px;
+    }
+
+    .messageBubble h2 {
+      font-size: 19px;
+    }
+
+    .messageBubble h3 {
+      font-size: 17px;
+    }
+
+    .messageBubble code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #171727;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    .messageBubble pre {
+      margin: 10px 0;
+      padding: 12px;
+      overflow-x: auto;
+      border-radius: 10px;
+      background: #0a0a13;
+      border: 1px solid #28283d;
+    }
+
+    .messageBubble pre code {
+      padding: 0;
+      background: transparent;
+    }
+
+    .messageBubble a {
+      color: #8b8bff;
+      text-decoration: underline;
+    }
+
+    .typing {
+      opacity: 0.65;
+      font-style: italic;
     }
 
     /* =========================
        INPUT AREA
-    ========================= */
+       ========================= */
 
     .inputArea {
-      position: absolute;
-
+      position: fixed;
       left: 50%;
-      bottom: 0;
-
+      bottom: 48px;
       transform: translateX(-50%);
-
       width: min(900px, calc(100% - 40px));
-
-      padding:
-        10px 0
-        max(14px, env(safe-area-inset-bottom));
-
-      z-index: 30;
-    }
-
-    .inputBox {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      min-height: 58px;
-      padding: 7px;
-
-      border:
-        1px solid rgba(0, 220, 255, 0.2);
-
-      border-radius: 18px;
-
-      background:
-        rgba(10, 10, 23, 0.95);
-
-      box-shadow:
-        0 10px 35px rgba(0,0,0,0.45),
-        0 0 25px rgba(0,180,255,0.04);
-
-      backdrop-filter: blur(18px);
+      z-index: 50;
     }
 
     .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      border-radius: 17px;
+      background: rgba(15, 15, 28, 0.97);
+      border: 1px solid #30304c;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    #messageInput {
       flex: 1;
       min-width: 0;
-
-      height: 44px;
-
-      padding: 0 13px;
-
-      border: 0;
+      height: 42px;
+      border: none;
       outline: none;
-
       background: transparent;
       color: white;
-
+      padding: 0 10px;
       font-size: 15px;
     }
 
-    .search::placeholder {
-      color: #77778d;
+    #messageInput::placeholder {
+      color: #74748d;
     }
 
     .actionButton {
-      flex: 0 0 auto;
-
-      height: 44px;
-
-      border: 0;
-      border-radius: 13px;
-
-      cursor: pointer;
-
-      transition:
-        0.2s ease;
-    }
-
-    /* =========================
-       CYLINDRICAL MICROPHONE
-    ========================= */
-
-    .micButton {
-      width: 48px;
-
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border-radius: 12px;
+      border: 1px solid #30304c;
+      background: #111121;
+      color: #ddddee;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      background:
-        rgba(255,255,255,0.07);
-
-      color: #d7faff;
+      cursor: pointer;
     }
 
-    .micButton:hover {
-      background:
-        rgba(0,220,255,0.12);
-
-      color: #00eaff;
+    .actionButton:hover {
+      background: #1b1b30;
     }
 
-    .micButton.listening {
-      background:
-        rgba(255,70,100,0.16);
-
-      color: #ff6680;
-
-      box-shadow:
-        0 0 15px rgba(255,70,100,0.18);
+    .actionButton.active {
+      border-color: #7777ff;
+      background: #242449;
     }
 
     .micIcon {
-      width: 27px;
-      height: 34px;
-      overflow: visible;
-    }
-
-    .micIcon .micBody {
-      fill: currentColor;
-    }
-
-    .micIcon .micLine {
+      width: 22px;
+      height: 28px;
       fill: none;
       stroke: currentColor;
       stroke-width: 1.7;
       stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
-    .micIcon .micBase {
+    .micBody {
       fill: currentColor;
+      stroke: none;
+    }
+
+    .micLine {
+      stroke: #111121;
+      stroke-width: 1.3;
+    }
+
+    .micBase {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .grokIcon {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     #sendButton {
-      min-width: 76px;
+      height: 42px;
       padding: 0 17px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #00cfff,
-          #7168ff
-        );
-
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6969ff, #9b62ff);
       color: white;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     #sendButton:hover {
-      transform: translateY(-1px);
-
-      box-shadow:
-        0 5px 18px rgba(0,210,255,0.2);
-    }
-
-    #sendButton:disabled,
-    .micButton:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
+      opacity: 0.92;
     }
 
     .hint {
+      position: fixed;
+      bottom: 14px;
+      left: 0;
+      width: 100%;
       text-align: center;
-      margin-top: 6px;
-
-      color: #5d5d73;
-      font-size: 10px;
+      color: #66667d;
+      font-size: 11px;
+      z-index: 30;
     }
 
     /* =========================
        RECENT CHATS
-    ========================= */
+       ========================= */
 
     #recentPanel {
+      display: none;
       position: fixed;
-
-      top: 0;
-      right: -390px;
-
-      width: min(370px, 88vw);
-      height: 100dvh;
-
-      z-index: 80;
-
-      padding:
-        max(60px, calc(env(safe-area-inset-top) + 35px))
-        18px 20px;
-
-      background:
-        rgba(9, 9, 20, 0.97);
-
-      border-left:
-        1px solid rgba(0,220,255,0.16);
-
-      box-shadow:
-        -15px 0 45px rgba(0,0,0,0.45);
-
-      transition:
-        right 0.3s ease;
-
-      backdrop-filter: blur(20px);
+      inset: 0;
+      z-index: 500;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
     }
 
-    #recentPanel.open {
-      right: 0;
+    .recentCard {
+      position: absolute;
+      top: 70px;
+      right: 18px;
+      width: min(390px, calc(100% - 36px));
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding: 18px;
+      border-radius: 18px;
+      background: #111120;
+      border: 1px solid #30304c;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
     }
 
     .recentHeader {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      margin-bottom: 18px;
+      margin-bottom: 15px;
     }
 
     .recentHeader h3 {
       margin: 0;
-      font-size: 19px;
+      font-size: 17px;
     }
 
     #closeRecent {
-      width: 34px;
-      height: 34px;
-
-      border: 0;
-      border-radius: 10px;
-
-      background:
-        rgba(255,255,255,0.07);
-
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      border: 1px solid #30304c;
+      background: #181829;
       color: white;
-
       cursor: pointer;
-      font-size: 18px;
     }
 
     .recentItem {
-      padding: 13px;
+      padding: 12px;
       margin-bottom: 9px;
-
-      border:
-        1px solid rgba(255,255,255,0.07);
-
       border-radius: 12px;
-
-      background:
-        rgba(255,255,255,0.04);
-
+      background: #181829;
+      border: 1px solid #292940;
       cursor: pointer;
     }
 
     .recentItem:hover {
-      border-color:
-        rgba(0,220,255,0.25);
-
-      background:
-        rgba(0,220,255,0.06);
+      background: #202039;
     }
 
-    .recentTitle {
-      color: white;
+    .recentItemTitle {
       font-size: 13px;
-      font-weight: 600;
-
-      margin-bottom: 4px;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #eeeeff;
     }
 
-    .recentDate {
-      color: #77778c;
-      font-size: 10px;
+    .recentItemTime {
+      font-size: 11px;
+      color: #77778e;
     }
 
     .emptyRecent {
-      color: #77778c;
+      color: #77778e;
       text-align: center;
-
-      margin-top: 50px;
-
+      padding: 25px 10px;
       font-size: 13px;
     }
 
     /* =========================
        MOBILE
-    ========================= */
+       ========================= */
 
     @media (max-width: 600px) {
-
       .topBar {
-        padding:
-          max(9px, env(safe-area-inset-top))
-          10px 8px;
-
-        z-index: 30;
+        height: 48px;
+        padding: 0 10px;
       }
 
-      .topButtons {
-        width: 100%;
-        justify-content: space-between;
+      .brandSmall {
+        font-size: 14px;
       }
 
       .smallButton {
-        height: 34px;
-
-        padding: 0 10px;
-
-        font-size: 11px;
-      }
-
-      /* =====================
-         MOBILE HEADER
-      ===================== */
-
-      .logoWrap {
-        top: 47%;
+        padding: 7px 9px;
+        font-size: 10px;
       }
 
       .logoWrap.chatStarted {
         top: 48px;
-
-        transform:
-          translateX(-50%);
+        transform: translateX(-50%);
       }
 
       .logoWrap.chatStarted::before {
@@ -688,142 +593,67 @@
         height: 128px;
       }
 
-      .logo {
-        width: 67px;
-        height: 67px;
-
-        border-radius: 16px;
+      .mainLogo {
+        width: 85px;
+        height: 85px;
       }
 
-      .title {
-        margin-top: 4px;
+      .logoTitle {
+        margin-top: 5px;
         font-size: 21px;
       }
 
-      .subtitle {
-        margin-top: 2px;
-        font-size: 10px;
+      .logoSubtitle {
+        font-size: 11px;
       }
-
-      /* =====================
-         MOBILE CHAT
-      ===================== */
 
       #chat {
         top: 125px;
         bottom: 76px;
-
         width: 100%;
-
-        padding:
-          8px 12px 12px;
-
+        padding: 8px 12px 12px;
         z-index: 5;
       }
 
-      .message {
-        max-width: 90%;
-
-        padding:
-          11px 13px;
-
-        margin-bottom: 11px;
-
+      .messageBubble {
+        max-width: 91%;
         font-size: 14px;
-        line-height: 1.45;
-
-        border-radius: 15px;
       }
-
-      /* =====================
-         MOBILE INPUT
-      ===================== */
 
       .inputArea {
-        width: 100%;
-
-        padding:
-          7px 9px
-          max(9px, env(safe-area-inset-bottom));
-      }
-
-      .inputBox {
-        min-height: 54px;
-
-        padding: 5px;
-
-        border-radius: 17px;
-
-        gap: 5px;
+        bottom: 38px;
+        width: calc(100% - 16px);
       }
 
       .search {
-        height: 42px;
-
-        padding: 0 9px;
-
-        font-size: 15px;
+        gap: 5px;
+        padding: 5px;
       }
 
-      .micButton {
-        width: 44px;
-        height: 42px;
-      }
-
-      .micIcon {
-        width: 25px;
-        height: 32px;
+      #messageInput {
+        font-size: 14px;
+        padding: 0 7px;
       }
 
       #sendButton {
-        min-width: 65px;
-
-        height: 42px;
-
         padding: 0 12px;
+        font-size: 12px;
+      }
 
-        font-size: 13px;
+      .actionButton {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
       }
 
       .hint {
-        display: none;
+        bottom: 10px;
       }
 
-      #recentPanel {
-        width: 92vw;
-      }
-    }
-
-    /* =========================
-       VERY SMALL PHONES
-    ========================= */
-
-    @media (max-width: 360px) {
-
-      .smallButton {
-        font-size: 10px;
-        padding: 0 8px;
-      }
-
-      .search {
-        font-size: 14px;
-      }
-
-      #sendButton {
-        min-width: 58px;
-        padding: 0 9px;
-      }
-
-      .micButton {
-        width: 41px;
-      }
-
-      .logoWrap.chatStarted {
-        top: 45px;
-      }
-
-      #chat {
-        top: 118px;
+      .recentCard {
+        top: 58px;
+        right: 8px;
+        width: calc(100% - 16px);
       }
     }
   </style>
@@ -834,28 +664,30 @@
 
   <!-- =========================
        LOGIN
-  ========================= -->
+       ========================= -->
 
   <div id="loginScreen">
 
-```
-<div class="loginBox">
+
+<div class="loginCard">
 
   <img
     src="logo.jpeg"
+    alt="SESOMU"
     class="loginLogo"
-    alt="SESOMU School"
   >
 
-  <h2>SESOMU GPT</h2>
+  <h1 class="loginTitle">SESOMU GPT</h1>
 
-  <p>Enter your details to continue</p>
+  <p class="loginSubtitle">
+    Your intelligent AI companion
+  </p>
 
   <input
     id="nameInput"
     class="loginInput"
     type="text"
-    placeholder="Your name"
+    placeholder="Enter your name"
     autocomplete="name"
   >
 
@@ -863,7 +695,7 @@
     id="designationInput"
     class="loginInput"
     type="text"
-    placeholder="Designation / Class"
+    placeholder="Enter your designation"
   >
 
   <button id="loginButton">
@@ -871,22 +703,24 @@
   </button>
 
 </div>
-```
+
 
   </div>
 
   <!-- =========================
        MAIN APP
-  ========================= -->
+       ========================= -->
 
   <div id="app">
 
-```
-<!-- TOP BAR -->
 
 <div class="topBar">
 
-  <div class="topButtons">
+  <div class="brandSmall">
+    SESOMU GPT
+  </div>
+
+  <div class="topActions">
 
     <button
       class="smallButton"
@@ -907,24 +741,21 @@
 </div>
 
 
-<!-- FIXED HEADER -->
+<!-- LOGO -->
 
-<div
-  class="logoWrap"
-  id="logoWrap"
->
+<div class="logoWrap" id="logoWrap">
 
   <img
     src="logo.jpeg"
-    class="logo"
     alt="SESOMU GPT"
+    class="mainLogo"
   >
 
-  <div class="title">
+  <div class="logoTitle">
     SESOMU GPT
   </div>
 
-  <div class="subtitle">
+  <div class="logoSubtitle">
     Your intelligent AI companion
   </div>
 
@@ -940,17 +771,40 @@
 
 <div class="inputArea">
 
-  <div class="inputBox">
+  <div class="search">
 
     <input
       id="messageInput"
-      class="search"
       type="text"
       placeholder="Ask SESOMU GPT anything..."
       autocomplete="off"
     >
 
-    <!-- CYLINDRICAL MICROPHONE + STAND -->
+
+    <!-- GROK WEB SEARCH -->
+
+    <button
+      id="grokButton"
+      class="actionButton"
+      title="Grok Web Search"
+      aria-label="Grok Web Search"
+    >
+
+      <svg
+        class="grokIcon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M5 5l14 14"></path>
+        <path d="M19 5L5 19"></path>
+        <path d="M7 5h4"></path>
+        <path d="M13 19h4"></path>
+      </svg>
+
+    </button>
+
+
+    <!-- MICROPHONE -->
 
     <button
       id="micButton"
@@ -965,7 +819,6 @@
         aria-hidden="true"
       >
 
-        <!-- cylindrical microphone -->
         <rect
           class="micBody"
           x="9"
@@ -975,7 +828,6 @@
           rx="7"
         />
 
-        <!-- grille -->
         <path
           class="micLine"
           d="M11.5 9h9"
@@ -991,19 +843,16 @@
           d="M11.5 17h9"
         />
 
-        <!-- microphone support -->
         <path
           class="micLine"
           d="M5 18v2a11 11 0 0 0 22 0v-2"
         />
 
-        <!-- stand -->
         <path
           class="micLine"
           d="M16 31V25"
         />
 
-        <!-- base -->
         <rect
           class="micBase"
           x="9"
@@ -1020,19 +869,17 @@
 
     <!-- SEND -->
 
-    <button
-      id="sendButton"
-      class="actionButton"
-    >
+    <button id="sendButton">
       Send
     </button>
 
   </div>
 
-  <div class="hint">
-    Made with ❤️ by RG
-  </div>
+</div>
 
+
+<div class="hint">
+  Made with ❤️ by RG
 </div>
 
 
@@ -1040,30 +887,34 @@
 
 <div id="recentPanel">
 
-  <div class="recentHeader">
+  <div class="recentCard">
 
-    <h3>
-      Recent Chats
-    </h3>
+    <div class="recentHeader">
 
-    <button id="closeRecent">
-      ×
-    </button>
+      <h3>
+        Recent Chats
+      </h3>
+
+      <button id="closeRecent">
+        ×
+      </button>
+
+    </div>
+
+    <div id="recentList"></div>
 
   </div>
 
-  <div id="recentList"></div>
-
 </div>
-```
+
 
   </div>
 
   <script>
 
     /* =========================
-       CONFIGURATION
-    ========================= */
+       CONFIG
+       ========================= */
 
     const API_URL =
       "https://sesomu-gpt-api.ghanu-bhai01.workers.dev/";
@@ -1071,7 +922,7 @@
 
     /* =========================
        ELEMENTS
-    ========================= */
+       ========================= */
 
     const loginScreen =
       document.getElementById("loginScreen");
@@ -1088,24 +939,6 @@
     const loginButton =
       document.getElementById("loginButton");
 
-    const newChatButton =
-      document.getElementById("newChatButton");
-
-    const recentButton =
-      document.getElementById("recentButton");
-
-    const recentPanel =
-      document.getElementById("recentPanel");
-
-    const closeRecent =
-      document.getElementById("closeRecent");
-
-    const recentList =
-      document.getElementById("recentList");
-
-    const chat =
-      document.getElementById("chat");
-
     const messageInput =
       document.getElementById("messageInput");
 
@@ -1115,160 +948,132 @@
     const micButton =
       document.getElementById("micButton");
 
+    const grokButton =
+      document.getElementById("grokButton");
+
+    const chat =
+      document.getElementById("chat");
+
     const logoWrap =
       document.getElementById("logoWrap");
+
+    const newChatButton =
+      document.getElementById("newChatButton");
+
+    const recentButton =
+      document.getElementById("recentButton");
+
+    const recentPanel =
+      document.getElementById("recentPanel");
+
+    const recentList =
+      document.getElementById("recentList");
+
+    const closeRecent =
+      document.getElementById("closeRecent");
 
 
     /* =========================
        USER STORAGE
-    ========================= */
+       ========================= */
 
     function getSavedUser() {
-
       try {
-
         return JSON.parse(
-          localStorage.getItem(
-            "sesomuUser"
-          )
+          localStorage.getItem("sesomu_user") || "null"
         );
-
       } catch {
-
         return null;
-
       }
-
     }
 
-
     function saveUser(user) {
-
       localStorage.setItem(
-        "sesomuUser",
+        "sesomu_user",
         JSON.stringify(user)
       );
-
     }
 
 
     /* =========================
        CHAT STORAGE
-    ========================= */
+       ========================= */
 
     function getChats() {
-
       try {
-
         return JSON.parse(
-          localStorage.getItem(
-            "sesomuChats"
-          )
-        ) || [];
-
+          localStorage.getItem("sesomu_chats") || "[]"
+        );
       } catch {
-
         return [];
-
       }
-
     }
 
-
     function saveChats(chats) {
-
       localStorage.setItem(
-        "sesomuChats",
+        "sesomu_chats",
         JSON.stringify(chats)
       );
-
     }
 
 
     function saveCurrentChat() {
 
-      if (!chat.children.length) {
-        return;
-      }
-
-
       const messages = [];
 
+      chat.querySelectorAll(".messageRow")
+        .forEach(row => {
 
-      chat.querySelectorAll(".message")
-        .forEach(element => {
+          const bubble =
+            row.querySelector(".messageBubble");
+
+          if (!bubble) return;
 
           messages.push({
+            role: row.classList.contains("user")
+              ? "user"
+              : "bot",
 
-            type:
-              element.classList.contains(
-                "userMessage"
-              )
-                ? "user"
-                : "bot",
-
-            text:
-              element.textContent
-
+            text: bubble.textContent || ""
           });
 
         });
 
+      if (!messages.length) return;
 
-      if (!messages.length) {
-        return;
-      }
+      const firstUser =
+        messages.find(m => m.role === "user");
 
+      const title =
+        firstUser
+          ? firstUser.text.substring(0, 60)
+          : "New Chat";
 
-      const chats =
-        getChats();
-
+      const chats = getChats();
 
       chats.unshift({
-
         id: Date.now(),
-
-        title:
-          messages[0].text.substring(
-            0,
-            55
-          ),
-
-        date:
-          new Date().toLocaleString(),
-
+        title,
+        time: new Date().toLocaleString(),
         messages
-
       });
 
-
-      saveChats(
-        chats.slice(0, 20)
-      );
-
-    }
-
-
-    /* =========================
-       SHOW APP
-    ========================= */
-
-    function showApp() {
-
-      loginScreen.style.display =
-        "none";
-
-      app.style.display =
-        "block";
-
-      messageInput.focus();
-
+      saveChats(chats.slice(0, 30));
     }
 
 
     /* =========================
        LOGIN
-    ========================= */
+       ========================= */
+
+    function showApp() {
+
+      loginScreen.style.display = "none";
+      app.style.display = "block";
+
+      messageInput.focus();
+    }
+
 
     function login() {
 
@@ -1278,27 +1083,24 @@
       const designation =
         designationInput.value.trim();
 
-
       if (!name) {
-
+        alert("Please enter your name.");
         nameInput.focus();
-
         return;
-
       }
 
+      if (!designation) {
+        alert("Please enter your designation.");
+        designationInput.focus();
+        return;
+      }
 
       saveUser({
-
         name,
-
         designation
-
       });
 
-
       showApp();
-
     }
 
 
@@ -1311,13 +1113,9 @@
     nameInput.addEventListener(
       "keydown",
       event => {
-
         if (event.key === "Enter") {
-
           designationInput.focus();
-
         }
-
       }
     );
 
@@ -1325,24 +1123,22 @@
     designationInput.addEventListener(
       "keydown",
       event => {
-
         if (event.key === "Enter") {
-
           login();
-
         }
-
       }
     );
 
 
     /* =========================
        NEW CHAT
-    ========================= */
+       ========================= */
 
     function startNewChat() {
 
-      saveCurrentChat();
+      if (chat.children.length) {
+        saveCurrentChat();
+      }
 
       chat.innerHTML = "";
 
@@ -1351,13 +1147,7 @@
       );
 
       messageInput.value = "";
-
-      recentPanel.classList.remove(
-        "open"
-      );
-
       messageInput.focus();
-
     }
 
 
@@ -1369,64 +1159,51 @@
 
     /* =========================
        RECENT CHATS
-    ========================= */
+       ========================= */
 
     function showRecentChats() {
 
-      const chats =
-        getChats();
+      const chats = getChats();
 
       recentList.innerHTML = "";
-
 
       if (!chats.length) {
 
         recentList.innerHTML =
           '<div class="emptyRecent">No recent chats yet.</div>';
 
-      } else {
+        recentPanel.style.display = "block";
 
-        chats.forEach(item => {
-
-          const div =
-            document.createElement(
-              "div"
-            );
-
-          div.className =
-            "recentItem";
-
-
-          div.innerHTML = `
-            <div class="recentTitle">
-              ${escapeHTML(item.title)}
-            </div>
-
-            <div class="recentDate">
-              ${escapeHTML(item.date)}
-            </div>
-          `;
-
-
-          div.addEventListener(
-            "click",
-            () => loadChat(item)
-          );
-
-
-          recentList.appendChild(
-            div
-          );
-
-        });
-
+        return;
       }
 
+      chats.forEach(item => {
 
-      recentPanel.classList.add(
-        "open"
-      );
+        const div =
+          document.createElement("div");
 
+        div.className = "recentItem";
+
+        div.innerHTML = `
+          <div class="recentItemTitle">
+            ${escapeHTML(item.title)}
+          </div>
+
+          <div class="recentItemTime">
+            ${escapeHTML(item.time)}
+          </div>
+        `;
+
+        div.addEventListener(
+          "click",
+          () => loadChat(item)
+        );
+
+        recentList.appendChild(div);
+
+      });
+
+      recentPanel.style.display = "block";
     }
 
 
@@ -1439,451 +1216,687 @@
     closeRecent.addEventListener(
       "click",
       () => {
+        recentPanel.style.display = "none";
+      }
+    );
 
-        recentPanel.classList.remove(
-          "open"
-        );
+
+    recentPanel.addEventListener(
+      "click",
+      event => {
+
+        if (event.target === recentPanel) {
+          recentPanel.style.display = "none";
+        }
 
       }
     );
 
 
-    function loadChat(item) {
+    function loadChat(savedChat) {
 
       chat.innerHTML = "";
 
-
-      item.messages.forEach(
+      savedChat.messages.forEach(
         message => {
 
-          if (
-            message.type === "user"
-          ) {
-
+          if (message.role === "user") {
             addUserMessage(
-              message.text
+              message.text,
+              false
             );
-
           } else {
-
             addBotMessage(
-              message.text
+              message.text,
+              false
             );
-
           }
 
         }
       );
 
-
       logoWrap.classList.add(
         "chatStarted"
       );
 
+      recentPanel.style.display = "none";
 
-      recentPanel.classList.remove(
-        "open"
-      );
-
-
-      scrollChat();
-
+      messageInput.focus();
     }
 
 
     /* =========================
-       HTML ESCAPE
-    ========================= */
+       SAFE HTML
+       ========================= */
 
     function escapeHTML(text) {
 
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.textContent =
-        text;
-
-      return div.innerHTML;
-
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
 
     /* =========================
-       ADD USER MESSAGE
-    ========================= */
+       MARKDOWN RENDERER
+       ========================= */
 
-    function addUserMessage(text) {
+    function renderMarkdown(text) {
 
-      const div =
-        document.createElement(
-          "div"
-        );
+      let source =
+        escapeHTML(String(text || ""));
 
-      div.className =
-        "message userMessage";
+      const codeBlocks = [];
 
-      div.textContent =
-        text;
+      source = source.replace(
+        /([\s\S]*?)/g,
+        function (_, code) {
 
-      chat.appendChild(div);
+          const index =
+            codeBlocks.length;
 
+          codeBlocks.push(
+            "<pre><code>" +
+            code.trim() +
+            "</code></pre>"
+
+
+      );
+
+      return `@@CODEBLOCK${index}@@`;
+    }
+  );
+
+
+  source = source.replace(
+    /`([^`\n]+)`/g,
+    "<code>$1</code>"
+  );
+
+
+  source = source.replace(
+    /^### (.+)$/gm,
+    "<h3>$1</h3>"
+  );
+
+  source = source.replace(
+    /^## (.+)$/gm,
+    "<h2>$1</h2>"
+  );
+
+  source = source.replace(
+    /^# (.+)$/gm,
+    "<h1>$1</h1>"
+  );
+
+
+  source = source.replace(
+    /\*\*(.+?)\*\*/g,
+    "<strong>$1</strong>"
+  );
+
+  source = source.replace(
+    /__(.+?)__/g,
+    "<strong>$1</strong>"
+  );
+
+  source = source.replace(
+    /(^|[^*])\*([^*\n]+)\*/g,
+    "$1<em>$2</em>"
+  );
+
+  source = source.replace(
+    /(^|[^_])_([^_\n]+)_/g,
+    "$1<em>$2</em>"
+  );
+
+
+  const lines =
+    source.split("\n");
+
+  let result = "";
+  let inUL = false;
+  let inOL = false;
+
+  for (let i = 0; i < lines.length; i++) {
+
+    const line = lines[i];
+
+    const ulMatch =
+      line.match(/^\s*[-*+]\s+(.+)$/);
+
+    const olMatch =
+      line.match(/^\s*\d+\.\s+(.+)$/);
+
+
+    if (ulMatch) {
+
+      if (!inUL) {
+        result += "<ul>";
+        inUL = true;
+      }
+
+      result += "<li>" +
+        ulMatch[1] +
+        "</li>";
+
+      continue;
     }
 
 
-    /* =========================
-       ADD BOT MESSAGE
-    ========================= */
+    if (olMatch) {
 
-    function addBotMessage(text) {
+      if (!inOL) {
+        result += "<ol>";
+        inOL = true;
+      }
 
-      const div =
-        document.createElement(
-          "div"
-        );
+      result += "<li>" +
+        olMatch[1] +
+        "</li>";
 
-      div.className =
-        "message botMessage";
-
-      div.textContent =
-        text;
-
-      chat.appendChild(div);
-
+      continue;
     }
 
 
-    /* =========================
-       SCROLL CHAT
-    ========================= */
+    if (inUL) {
+      result += "</ul>";
+      inUL = false;
+    }
 
-    function scrollChat() {
+    if (inOL) {
+      result += "</ol>";
+      inOL = false;
+    }
 
-      requestAnimationFrame(() => {
 
-        chat.scrollTop =
-          chat.scrollHeight;
+    if (!line.trim()) {
+      result += "<br>";
+    } else if (
+      line.startsWith("<h1>") ||
+      line.startsWith("<h2>") ||
+      line.startsWith("<h3>") ||
+      line.startsWith("<pre>")
+    ) {
+      result += line;
+    } else {
+      result += "<p>" + line + "</p>";
+    }
+  }
+
+
+  if (inUL) result += "</ul>";
+  if (inOL) result += "</ol>";
+
+
+  result = result.replace(
+    /@@CODEBLOCK(\d+)@@/g,
+    (_, index) =>
+      codeBlocks[Number(index)]
+  );
+
+
+  return result;
+}
+
+
+/* =========================
+   ADD USER MESSAGE
+   ========================= */
+
+function addUserMessage(
+  text,
+  scroll = true
+) {
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "messageRow user";
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "messageBubble";
+
+  bubble.textContent =
+    text;
+
+  row.appendChild(bubble);
+
+  chat.appendChild(row);
+
+  if (scroll) {
+    chat.scrollTop =
+      chat.scrollHeight;
+  }
+}
+
+
+/* =========================
+   ADD BOT MESSAGE
+   ========================= */
+
+function addBotMessage(
+  text,
+  scroll = true
+) {
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "messageRow bot";
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "messageBubble";
+
+  bubble.innerHTML =
+    renderMarkdown(text);
+
+  row.appendChild(bubble);
+
+  chat.appendChild(row);
+
+  if (scroll) {
+    chat.scrollTop =
+      chat.scrollHeight;
+  }
+}
+
+
+/* =========================
+   TYPING MESSAGE
+   ========================= */
+
+function addTypingMessage() {
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "messageRow bot";
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "messageBubble typing";
+
+  bubble.textContent =
+    "Thinking...";
+
+  row.appendChild(bubble);
+
+  chat.appendChild(row);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+  return row;
+}
+
+
+/* =========================
+   NORMAL CHAT
+   ========================= */
+
+async function sendMessage() {
+
+  const message =
+    messageInput.value.trim();
+
+  if (!message) return;
+
+  addUserMessage(message);
+
+  logoWrap.classList.add(
+    "chatStarted"
+  );
+
+  messageInput.value = "";
+
+  const typing =
+    addTypingMessage();
+
+  sendButton.disabled = true;
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+          message
+        })
 
       });
 
+
+    const data =
+      await response.json();
+
+
+    typing.remove();
+
+
+    if (!response.ok) {
+
+      addBotMessage(
+        data?.answer ||
+        "The AI service is temporarily unavailable."
+      );
+
+      return;
     }
 
 
-    /* =========================
-       SEND MESSAGE
-    ========================= */
-
-    async function sendMessage() {
-
-      const message =
-        messageInput.value.trim();
-
-
-      if (!message) {
-        return;
-      }
-
-
-      logoWrap.classList.add(
-        "chatStarted"
-      );
-
-
-      addUserMessage(
-        message
-      );
-
-
-      messageInput.value = "";
-
-      scrollChat();
-
-
-      sendButton.disabled = true;
-
-      micButton.disabled = true;
-
-
-      const thinking =
-        document.createElement(
-          "div"
-        );
-
-      thinking.className =
-        "message botMessage";
-
-      thinking.textContent =
-        "Thinking...";
-
-
-      chat.appendChild(
-        thinking
-      );
-
-
-      scrollChat();
-
-
-      try {
-
-        const response =
-          await fetch(
-            API_URL,
-            {
-
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  message
-                })
-
-            }
-          );
-
-
-        let data;
-
-
-        try {
-
-          data =
-            await response.json();
-
-        } catch {
-
-          throw new Error(
-            "Invalid server response."
-          );
-
-        }
-
-
-        thinking.remove();
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            data.error ||
-            "Server error."
-          );
-
-        }
-
-
-        addBotMessage(
-          data.answer ||
-          "I could not generate a response."
-        );
-
-
-      } catch (error) {
-
-        thinking.remove();
-
-
-        addBotMessage(
-          "Sorry, I couldn't connect to SESOMU GPT right now. Please try again."
-        );
-
-
-        console.error(
-          "SESOMU GPT error:",
-          error
-        );
-
-      }
-
-
-      sendButton.disabled =
-        false;
-
-      micButton.disabled =
-        false;
-
-
-      scrollChat();
-
-    }
-
-
-    sendButton.addEventListener(
-      "click",
-      sendMessage
+    addBotMessage(
+      data?.answer ||
+      "I couldn't generate an answer."
     );
 
 
-    messageInput.addEventListener(
-      "keydown",
-      event => {
+  } catch (error) {
 
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey
-        ) {
+    typing.remove();
 
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
+    addBotMessage(
+      "Unable to connect to SESOMU GPT right now."
     );
 
+  } finally {
 
-    /* =========================
-       VOICE INPUT
-    ========================= */
+    sendButton.disabled =
+      false;
 
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
+    messageInput.focus();
 
-
-    let recognition =
-      null;
+  }
+}
 
 
-    if (SpeechRecognition) {
-
-      recognition =
-        new SpeechRecognition();
-
-
-      recognition.continuous =
-        false;
-
-      recognition.interimResults =
-        true;
-
-      recognition.lang =
-        "en-IN";
+sendButton.addEventListener(
+  "click",
+  sendMessage
+);
 
 
-      recognition.onstart = () => {
+messageInput.addEventListener(
+  "keydown",
+  event => {
 
-        micButton.classList.add(
-          "listening"
-        );
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      sendMessage();
+    }
 
-      };
-
-
-      recognition.onend = () => {
-
-        micButton.classList.remove(
-          "listening"
-        );
-
-      };
+  }
+);
 
 
-      recognition.onerror = () => {
+/* =========================
+   GROK WEB SEARCH
+   ========================= */
 
-        micButton.classList.remove(
-          "listening"
-        );
+async function askGrok() {
 
-      };
+  const message =
+    messageInput.value.trim();
 
+  if (!message) {
 
-      recognition.onresult =
-        event => {
+    messageInput.focus();
 
-          let transcript = "";
-
-
-          for (
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-          ) {
-
-            transcript +=
-              event.results[i][0]
-                .transcript;
-
-          }
+    return;
+  }
 
 
-          messageInput.value =
-            transcript;
+  addUserMessage(message);
 
-        };
+  logoWrap.classList.add(
+    "chatStarted"
+  );
+
+  messageInput.value = "";
+
+  const typing =
+    addTypingMessage();
+
+  grokButton.disabled = true;
+  grokButton.classList.add("active");
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+          message,
+          mode: "grok"
+        })
+
+      });
 
 
-      micButton.addEventListener(
-        "click",
-        () => {
+    const data =
+      await response.json();
 
-          try {
 
-            recognition.start();
+    typing.remove();
 
-          } catch {
 
-            /*
-              Prevent an error if
-              recognition is already running.
-            */
+    if (!response.ok) {
 
-          }
-
-        }
+      addBotMessage(
+        data?.answer ||
+        "Grok Web Search is unavailable right now."
       );
 
-
-    } else {
-
-      micButton.addEventListener(
-        "click",
-        () => {
-
-          alert(
-            "Voice input is not supported by this browser."
-          );
-
-        }
-      );
-
+      return;
     }
 
 
-    /* =========================
-       RETURNING USER
-    ========================= */
-
-    const savedUser =
-      getSavedUser();
+    addBotMessage(
+      data?.answer ||
+      "Grok did not return an answer."
+    );
 
 
-    if (savedUser) {
+  } catch (error) {
 
-      showApp();
+    typing.remove();
 
-    }
+    addBotMessage(
+      "Unable to connect to Grok Web Search."
+    );
+
+  } finally {
+
+    grokButton.disabled =
+      false;
+
+    grokButton.classList.remove(
+      "active"
+    );
+
+    messageInput.focus();
+
+  }
+}
 
 
-    /* =========================
-       SAVE BEFORE LEAVING
-    ========================= */
+grokButton.addEventListener(
+  "click",
+  askGrok
+);
 
-    window.addEventListener(
-      "beforeunload",
-      () => {
 
-        saveCurrentChat();
+/* =========================
+   VOICE INPUT
+   ========================= */
+
+let recognition = null;
+let isListening = false;
+
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+
+if (SpeechRecognition) {
+
+  recognition =
+    new SpeechRecognition();
+
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = "en-IN";
+
+
+  recognition.onstart =
+    () => {
+
+      isListening = true;
+
+      micButton.classList.add(
+        "active"
+      );
+
+    };
+
+
+  recognition.onresult =
+    event => {
+
+      let transcript = "";
+
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
+
+        transcript +=
+          event.results[i][0].transcript;
 
       }
-    );
+
+      messageInput.value =
+        transcript.trim();
+
+    };
+
+
+  recognition.onend =
+    () => {
+
+      isListening = false;
+
+      micButton.classList.remove(
+        "active"
+      );
+
+    };
+
+
+  recognition.onerror =
+    () => {
+
+      isListening = false;
+
+      micButton.classList.remove(
+        "active"
+      );
+
+    };
+
+
+  micButton.addEventListener(
+    "click",
+    () => {
+
+      if (isListening) {
+
+        recognition.stop();
+
+      } else {
+
+        recognition.start();
+
+      }
+
+    }
+  );
+
+} else {
+
+  micButton.addEventListener(
+    "click",
+    () => {
+
+      alert(
+        "Voice input is not supported in this browser."
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   STARTUP
+   ========================= */
+
+const savedUser =
+  getSavedUser();
+
+
+if (savedUser) {
+
+  nameInput.value =
+    savedUser.name || "";
+
+  designationInput.value =
+    savedUser.designation || "";
+
+  showApp();
+
+} else {
+
+  loginScreen.style.display =
+    "flex";
+
+  app.style.display =
+    "none";
+
+}
 
   </script>
 
