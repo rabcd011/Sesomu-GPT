@@ -20,8 +20,6 @@
   --purple: #a855f7;
   --pink: #ec4899;
   --bg: #03050d;
-  --panel: rgba(7, 12, 28, 0.78);
-  --border: rgba(0, 246, 255, 0.22);
   --text: #eefcff;
   --muted: #8ea4bd;
 }
@@ -36,14 +34,12 @@ body {
   background: var(--bg);
 }
 
-/* FUTURISTIC BACKGROUND */
-
 body {
   position: relative;
   background:
-    radial-gradient(circle at 15% 20%, rgba(0, 246, 255, 0.10), transparent 28%),
-    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.12), transparent 30%),
-    radial-gradient(circle at 50% 90%, rgba(59, 130, 255, 0.08), transparent 35%),
+    radial-gradient(circle at 15% 20%, rgba(0,246,255,.10), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(168,85,247,.12), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(59,130,255,.08), transparent 35%),
     #03050d;
 }
 
@@ -53,8 +49,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(0, 246, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 246, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(0,246,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,246,255,.035) 1px, transparent 1px);
   background-size: 45px 45px;
   mask-image: linear-gradient(to bottom, black, transparent);
   animation: gridMove 18s linear infinite;
@@ -66,11 +62,7 @@ body::after {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 246, 255, 0.08),
-    transparent 68%
-  );
+  background: radial-gradient(circle, rgba(0,246,255,.08), transparent 68%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -79,22 +71,18 @@ body::after {
 }
 
 @keyframes gridMove {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(45px);
-  }
+  from { transform: translateY(0); }
+  to { transform: translateY(45px); }
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.45;
-    transform: translate(-50%, -50%) scale(0.9);
+  0%,100% {
+    opacity: .45;
+    transform: translate(-50%,-50%) scale(.9);
   }
   50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.12);
+    opacity: .8;
+    transform: translate(-50%,-50%) scale(1.12);
   }
 }
 
@@ -109,7 +97,7 @@ body::after {
   align-items: center;
   padding: 20px;
   background:
-    radial-gradient(circle at center, rgba(0, 246, 255, 0.08), transparent 40%),
+    radial-gradient(circle at center, rgba(0,246,255,.08), transparent 40%),
     #03050d;
 }
 
@@ -117,21 +105,21 @@ body::after {
   width: 100%;
   max-width: 430px;
   padding: 38px 30px;
-  border: 1px solid rgba(0, 246, 255, 0.28);
+  border: 1px solid rgba(0,246,255,.28);
   border-radius: 24px;
-  background: rgba(5, 10, 24, 0.86);
+  background: rgba(5,10,24,.86);
   backdrop-filter: blur(22px);
   box-shadow:
-    0 0 45px rgba(0, 246, 255, 0.08),
-    inset 0 0 30px rgba(168, 85, 247, 0.035);
+    0 0 45px rgba(0,246,255,.08),
+    inset 0 0 30px rgba(168,85,247,.035);
   text-align: center;
-  animation: loginAppear 0.8s ease;
+  animation: loginAppear .8s ease;
 }
 
 @keyframes loginAppear {
   from {
     opacity: 0;
-    transform: translateY(25px) scale(0.97);
+    transform: translateY(25px) scale(.97);
   }
   to {
     opacity: 1;
@@ -146,20 +134,15 @@ body::after {
   border-radius: 50%;
   margin-bottom: 18px;
   filter:
-    drop-shadow(0 0 10px rgba(0, 246, 255, 0.7))
-    drop-shadow(0 0 28px rgba(168, 85, 247, 0.35));
+    drop-shadow(0 0 10px rgba(0,246,255,.7))
+    drop-shadow(0 0 28px rgba(168,85,247,.35));
 }
 
 .loginBox h1 {
   font-size: 32px;
   letter-spacing: 3px;
   margin-bottom: 7px;
-  background: linear-gradient(
-    90deg,
-    var(--cyan),
-    #ffffff,
-    var(--purple)
-  );
+  background: linear-gradient(90deg,var(--cyan),#fff,var(--purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -177,9 +160,9 @@ body::after {
   margin-bottom: 13px;
   padding: 0 15px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 246, 255, 0.18);
+  border: 1px solid rgba(0,246,255,.18);
   outline: none;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0,0,0,.35);
   color: white;
   font-size: 14px;
 }
@@ -187,7 +170,7 @@ body::after {
 .loginBox input:focus,
 .loginBox select:focus {
   border-color: var(--cyan);
-  box-shadow: 0 0 18px rgba(0, 246, 255, 0.12);
+  box-shadow: 0 0 18px rgba(0,246,255,.12);
 }
 
 .loginBox select option {
@@ -199,25 +182,25 @@ body::after {
   width: 100%;
   height: 48px;
   margin-top: 8px;
-  border: 1px solid rgba(0, 246, 255, 0.45);
+  border: 1px solid rgba(0,246,255,.45);
   border-radius: 12px;
   cursor: pointer;
   color: white;
   font-weight: bold;
   background: linear-gradient(
     90deg,
-    rgba(0, 246, 255, 0.18),
-    rgba(168, 85, 247, 0.18)
+    rgba(0,246,255,.18),
+    rgba(168,85,247,.18)
   );
-  box-shadow: 0 0 20px rgba(0, 246, 255, 0.08);
-  transition: 0.25s;
+  box-shadow: 0 0 20px rgba(0,246,255,.08);
+  transition: .25s;
 }
 
 .loginButton:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 0 25px rgba(0, 246, 255, 0.22),
-    0 0 35px rgba(168, 85, 247, 0.12);
+    0 0 25px rgba(0,246,255,.22),
+    0 0 35px rgba(168,85,247,.12);
 }
 
 /* MAIN APP */
@@ -233,8 +216,6 @@ body::after {
   padding: 18px;
 }
 
-/* TOP BAR */
-
 .topBar {
   width: 100%;
   max-width: 1050px;
@@ -247,24 +228,22 @@ body::after {
 }
 
 .smallButton {
-  border: 1px solid rgba(0, 246, 255, 0.20);
+  border: 1px solid rgba(0,246,255,.20);
   border-radius: 9px;
   padding: 8px 12px;
   color: #c9faff;
-  background: rgba(5, 15, 30, 0.65);
+  background: rgba(5,15,30,.65);
   backdrop-filter: blur(10px);
   cursor: pointer;
   font-size: 12px;
-  transition: 0.2s;
+  transition: .2s;
 }
 
 .smallButton:hover {
   border-color: var(--cyan);
   color: white;
-  box-shadow: 0 0 15px rgba(0, 246, 255, 0.12);
+  box-shadow: 0 0 15px rgba(0,246,255,.12);
 }
-
-/* MAIN CONTAINER */
 
 .container {
   width: 100%;
@@ -276,24 +255,22 @@ body::after {
   position: relative;
 }
 
-/* LOGO */
-
 .logoWrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%,-55%);
   text-align: center;
   z-index: 1;
   transition:
-    top 0.7s cubic-bezier(.2,.8,.2,1),
-    transform 0.7s cubic-bezier(.2,.8,.2,1);
+    top .7s cubic-bezier(.2,.8,.2,1),
+    transform .7s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
 }
 
 .logoWrap.chatStarted {
   top: 2px;
-  transform: translate(-50%, 0);
+  transform: translate(-50%,0);
 }
 
 .logo {
@@ -302,8 +279,8 @@ body::after {
   object-fit: contain;
   border-radius: 50%;
   filter:
-    drop-shadow(0 0 9px rgba(0, 246, 255, 0.8))
-    drop-shadow(0 0 28px rgba(168, 85, 247, 0.45));
+    drop-shadow(0 0 9px rgba(0,246,255,.8))
+    drop-shadow(0 0 28px rgba(168,85,247,.45));
   animation: logoFloat 4s ease-in-out infinite;
 }
 
@@ -313,12 +290,8 @@ body::after {
 }
 
 @keyframes logoFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 
 .title {
@@ -327,14 +300,9 @@ body::after {
   font-weight: 700;
   letter-spacing: 4px;
   text-shadow:
-    0 0 10px rgba(0, 246, 255, 0.35),
-    0 0 25px rgba(168, 85, 247, 0.2);
-  background: linear-gradient(
-    90deg,
-    var(--cyan),
-    white,
-    var(--purple)
-  );
+    0 0 10px rgba(0,246,255,.35),
+    0 0 25px rgba(168,85,247,.2);
+  background: linear-gradient(90deg,var(--cyan),white,var(--purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -346,8 +314,6 @@ body::after {
   letter-spacing: 1px;
 }
 
-/* CHAT */
-
 #chat {
   width: 100%;
   max-width: 950px;
@@ -355,12 +321,12 @@ body::after {
   overflow-y: auto;
   margin-top: 115px;
   padding: 15px;
-  border: 1px solid rgba(0, 246, 255, 0.10);
+  border: 1px solid rgba(0,246,255,.10);
   border-radius: 18px;
-  background: rgba(2, 7, 18, 0.32);
+  background: rgba(2,7,18,.32);
   backdrop-filter: blur(8px);
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 246, 255, 0.3) transparent;
+  scrollbar-color: rgba(0,246,255,.3) transparent;
 }
 
 #chat::-webkit-scrollbar {
@@ -368,7 +334,7 @@ body::after {
 }
 
 #chat::-webkit-scrollbar-thumb {
-  background: rgba(0, 246, 255, 0.35);
+  background: rgba(0,246,255,.35);
   border-radius: 10px;
 }
 
@@ -380,7 +346,7 @@ body::after {
   line-height: 1.55;
   font-size: 14px;
   white-space: pre-wrap;
-  animation: messageAppear 0.3s ease;
+  animation: messageAppear .3s ease;
 }
 
 @keyframes messageAppear {
@@ -396,29 +362,27 @@ body::after {
 
 .userMessage {
   margin-left: auto;
-  border: 1px solid rgba(0, 246, 255, 0.22);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0, 246, 255, 0.10),
-      rgba(59, 130, 255, 0.09)
-    );
-  box-shadow: 0 0 20px rgba(0, 246, 255, 0.05);
+  border: 1px solid rgba(0,246,255,.22);
+  background: linear-gradient(
+    135deg,
+    rgba(0,246,255,.10),
+    rgba(59,130,255,.09)
+  );
+  box-shadow: 0 0 20px rgba(0,246,255,.05);
 }
 
 .botMessage {
   margin-right: auto;
-  border: 1px solid rgba(168, 85, 247, 0.20);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(168, 85, 247, 0.08),
-      rgba(0, 246, 255, 0.05)
-    );
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.04);
+  border: 1px solid rgba(168,85,247,.20);
+  background: linear-gradient(
+    135deg,
+    rgba(168,85,247,.08),
+    rgba(0,246,255,.05)
+  );
+  box-shadow: 0 0 20px rgba(168,85,247,.04);
 }
 
-/* INPUT AREA */
+/* SEARCH AREA */
 
 .searchArea {
   width: 100%;
@@ -434,22 +398,22 @@ body::after {
   height: 50px;
   padding: 0 17px;
   border-radius: 14px;
-  border: 1px solid rgba(0, 246, 255, 0.20);
+  border: 1px solid rgba(0,246,255,.20);
   outline: none;
   color: white;
-  background: rgba(5, 12, 27, 0.78);
+  background: rgba(5,12,27,.78);
   backdrop-filter: blur(15px);
   box-shadow:
-    inset 0 0 20px rgba(0, 246, 255, 0.025),
-    0 0 20px rgba(0, 0, 0, 0.2);
-  transition: 0.25s;
+    inset 0 0 20px rgba(0,246,255,.025),
+    0 0 20px rgba(0,0,0,.2);
+  transition: .25s;
 }
 
 .search:focus {
-  border-color: rgba(0, 246, 255, 0.55);
+  border-color: rgba(0,246,255,.55);
   box-shadow:
-    0 0 20px rgba(0, 246, 255, 0.10),
-    inset 0 0 15px rgba(0, 246, 255, 0.03);
+    0 0 20px rgba(0,246,255,.10),
+    inset 0 0 15px rgba(0,246,255,.03);
 }
 
 .search::placeholder {
@@ -463,37 +427,61 @@ body::after {
   cursor: pointer;
   color: white;
   font-weight: 600;
-  border: 1px solid rgba(0, 246, 255, 0.28);
+  border: 1px solid rgba(0,246,255,.28);
   background: linear-gradient(
     135deg,
-    rgba(0, 246, 255, 0.13),
-    rgba(59, 130, 255, 0.10)
+    rgba(0,246,255,.13),
+    rgba(59,130,255,.10)
   );
-  transition: 0.2s;
+  transition: .2s;
   white-space: nowrap;
 }
 
 .actionButton:hover {
   transform: translateY(-2px);
   border-color: var(--cyan);
-  box-shadow: 0 0 20px rgba(0, 246, 255, 0.16);
+  box-shadow: 0 0 20px rgba(0,246,255,.16);
+}
+
+/* MICROPHONE */
+
+.micButton {
+  width: 50px;
+  padding: 0;
+  font-size: 19px;
+}
+
+.micButton.listening {
+  border-color: #ff3b81;
+  background: rgba(255,59,129,.15);
+  box-shadow:
+    0 0 15px rgba(255,59,129,.35),
+    0 0 30px rgba(255,59,129,.15);
+  animation: micPulse 1s infinite;
+}
+
+@keyframes micPulse {
+  0%,100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
 }
 
 .aiButton {
-  border-color: rgba(168, 85, 247, 0.35);
+  border-color: rgba(168,85,247,.35);
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.15),
-    rgba(236, 72, 153, 0.10)
+    rgba(168,85,247,.15),
+    rgba(236,72,153,.10)
   );
 }
 
 .aiButton:hover {
   border-color: var(--purple);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.20);
+  box-shadow: 0 0 20px rgba(168,85,247,.20);
 }
-
-/* STATUS */
 
 .status {
   min-height: 18px;
@@ -503,14 +491,12 @@ body::after {
   text-align: center;
 }
 
-/* FOOTER */
-
 .footer {
   margin-top: auto;
   padding-top: 5px;
   font-size: 10px;
   color: #50657d;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
 }
 
 /* RECENT CHATS */
@@ -521,13 +507,13 @@ body::after {
   z-index: 200;
   top: 0;
   right: 0;
-  width: min(390px, 92vw);
+  width: min(390px,92vw);
   height: 100vh;
   padding: 22px;
-  background: rgba(3, 8, 20, 0.96);
-  border-left: 1px solid rgba(0, 246, 255, 0.18);
+  background: rgba(3,8,20,.96);
+  border-left: 1px solid rgba(0,246,255,.18);
   backdrop-filter: blur(20px);
-  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.35);
+  box-shadow: -15px 0 45px rgba(0,0,0,.35);
   overflow-y: auto;
 }
 
@@ -556,17 +542,17 @@ body::after {
   padding: 13px;
   margin-bottom: 9px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 246, 255, 0.10);
-  background: rgba(0, 246, 255, 0.035);
+  border: 1px solid rgba(0,246,255,.10);
+  background: rgba(0,246,255,.035);
   color: #dffaff;
   cursor: pointer;
   text-align: left;
-  transition: 0.2s;
+  transition: .2s;
 }
 
 .recentItem:hover {
-  border-color: rgba(0, 246, 255, 0.30);
-  background: rgba(0, 246, 255, 0.07);
+  border-color: rgba(0,246,255,.30);
+  background: rgba(0,246,255,.07);
 }
 
 .emptyRecent {
@@ -578,7 +564,7 @@ body::after {
 
 /* MOBILE */
 
-@media (max-width: 700px) {
+@media (max-width:700px) {
 
   #app {
     padding: 10px;
@@ -637,6 +623,12 @@ body::after {
     height: 47px;
     padding: 0 11px;
     font-size: 12px;
+  }
+
+  .micButton {
+    width: 47px;
+    padding: 0;
+    font-size: 18px;
   }
 
   .footer {
@@ -782,6 +774,15 @@ body::after {
   >
 
   <button
+    id="micButton"
+    class="actionButton micButton"
+    title="Voice input"
+    aria-label="Voice input"
+  >
+    🎙️
+  </button>
+
+  <button
     id="sendButton"
     class="actionButton"
   >
@@ -850,6 +851,9 @@ const sendButton =
 
 const grokButton =
   document.getElementById("grokButton");
+
+const micButton =
+  document.getElementById("micButton");
 
 const chat =
   document.getElementById("chat");
@@ -1132,7 +1136,7 @@ function showRecentChats() {
 
         button.textContent =
           firstMessage
-            ? firstMessage.text.slice(0, 70)
+            ? firstMessage.text.slice(0,70)
             : "Untitled chat";
 
         button.title =
@@ -1253,7 +1257,6 @@ function addBotMessage(text) {
 
 /* ================================
    NORMAL AI
-   CLOUDFLARE WORKER
 ================================ */
 
 async function sendMessage() {
@@ -1273,11 +1276,9 @@ async function sendMessage() {
 
   messageInput.value = "";
 
-  sendButton.disabled =
-    true;
-
-  grokButton.disabled =
-    true;
+  sendButton.disabled = true;
+  grokButton.disabled = true;
+  micButton.disabled = true;
 
   status.textContent =
     "AI is thinking...";
@@ -1323,9 +1324,7 @@ async function sendMessage() {
       "I couldn't generate a response."
     );
 
-
-    status.textContent =
-      "";
+    status.textContent = "";
 
 
   } catch (error) {
@@ -1342,11 +1341,9 @@ async function sendMessage() {
   }
 
 
-  sendButton.disabled =
-    false;
-
-  grokButton.disabled =
-    false;
+  sendButton.disabled = false;
+  grokButton.disabled = false;
+  micButton.disabled = false;
 
   chat.scrollTop =
     chat.scrollHeight;
@@ -1356,7 +1353,6 @@ async function sendMessage() {
 
 /* ================================
    + AI
-   PUTER AI
 ================================ */
 
 async function sendToGrok() {
@@ -1376,11 +1372,9 @@ async function sendToGrok() {
 
   messageInput.value = "";
 
-  sendButton.disabled =
-    true;
-
-  grokButton.disabled =
-    true;
+  sendButton.disabled = true;
+  grokButton.disabled = true;
+  micButton.disabled = true;
 
   status.textContent =
     "AI is thinking...";
@@ -1394,7 +1388,6 @@ async function sendToGrok() {
         {
           model:
             "x-ai/grok-4.7",
-
           stream:
             false
         }
@@ -1405,12 +1398,10 @@ async function sendToGrok() {
 
 
     if (
-      typeof response ===
-      "string"
+      typeof response === "string"
     ) {
 
-      answer =
-        response;
+      answer = response;
 
     } else if (
       response &&
@@ -1437,13 +1428,9 @@ async function sendToGrok() {
     }
 
 
-    addBotMessage(
-      answer
-    );
+    addBotMessage(answer);
 
-
-    status.textContent =
-      "";
+    status.textContent = "";
 
 
   } catch (error) {
@@ -1460,14 +1447,138 @@ async function sendToGrok() {
   }
 
 
-  sendButton.disabled =
-    false;
-
-  grokButton.disabled =
-    false;
+  sendButton.disabled = false;
+  grokButton.disabled = false;
+  micButton.disabled = false;
 
   chat.scrollTop =
     chat.scrollHeight;
+
+}
+
+
+/* ================================
+   VOICE INPUT
+================================ */
+
+let recognition = null;
+
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+
+if (SpeechRecognition) {
+
+  recognition =
+    new SpeechRecognition();
+
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = "en-IN";
+
+
+  recognition.onstart = () => {
+
+    micButton.classList.add(
+      "listening"
+    );
+
+    status.textContent =
+      "Listening... speak now";
+
+  };
+
+
+  recognition.onresult = event => {
+
+    let transcript = "";
+
+    for (
+      let i = event.resultIndex;
+      i < event.results.length;
+      i++
+    ) {
+
+      transcript +=
+        event.results[i][0].transcript;
+
+    }
+
+    messageInput.value =
+      transcript;
+
+  };
+
+
+  recognition.onend = () => {
+
+    micButton.classList.remove(
+      "listening"
+    );
+
+    status.textContent =
+      "Voice captured";
+
+  };
+
+
+  recognition.onerror = event => {
+
+    micButton.classList.remove(
+      "listening"
+    );
+
+    if (
+      event.error ===
+      "not-allowed"
+    ) {
+
+      status.textContent =
+        "Microphone permission was denied.";
+
+    } else {
+
+      status.textContent =
+        "Voice input error.";
+
+    }
+
+  };
+
+
+  micButton.addEventListener(
+    "click",
+    () => {
+
+      if (
+        micButton.classList.contains(
+          "listening"
+        )
+      ) {
+
+        recognition.stop();
+
+      } else {
+
+        recognition.start();
+
+      }
+
+    }
+  );
+
+} else {
+
+  micButton.addEventListener(
+    "click",
+    () => {
+
+      status.textContent =
+        "Voice input is not supported by this browser.";
+
+    }
+  );
 
 }
 
@@ -1522,7 +1633,7 @@ if (savedUser) {
 
 
 /* ================================
-   SAVE CHAT BEFORE LEAVING
+   SAVE CHAT
 ================================ */
 
 window.addEventListener(
